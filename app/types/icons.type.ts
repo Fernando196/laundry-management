@@ -1,1 +1,3 @@
-export type Icons = 'dashboard' | 'laundry' | 'inventory' | 'users' | 'config'
+import type { Icons } from '~/const/icons.const';
+
+export type Icons = (typeof Icons)[number];
