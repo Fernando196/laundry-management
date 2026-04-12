@@ -1,6 +1,14 @@
-export type MachineType = 'washer' | 'dryer'
+export const machineTypes = ['washer', 'dryer'] as const
+export const machineStatus = [
+  'idle',
+  'running',
+  'maintenance',
+  'out-of-service',
+] as const
 
-export type MachineStatus = 'idle' | 'running' | 'maintenance' | 'out-of-service'
+export type MachineType = (typeof machineTypes)[number]
+
+export type MachineStatus = (typeof machineStatus)[number]
 
 export interface Machine {
   id: number
@@ -10,8 +18,8 @@ export interface Machine {
   model?: string
   color?: string
   status: MachineStatus
-  timeCycle: number        // duración estándar del ciclo en minutos
-  buyDate?: string         // ISO date string
+  timeCycle: number // duración estándar del ciclo en minutos
+  buyDate?: string // ISO date string
   lastMaintenanceDate?: string
   nextMaintenanceDate?: string
   description?: string
@@ -19,4 +27,5 @@ export interface Machine {
   createdBy?: string
   updatedAt?: string
   updatedBy?: string
+  image?: string
 }
