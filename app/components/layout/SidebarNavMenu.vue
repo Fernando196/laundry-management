@@ -14,7 +14,7 @@ const menuItems: MenuItem[] = [
     {
         id: 2,
         label: 'Control',
-        href: '/laundry-control',
+        href: '/machine-control',
         icon: 'laundry'
     },
     {
