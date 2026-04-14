@@ -7,7 +7,8 @@ const componentMap: Record<Icons, Component> = {
     inventory: defineAsyncComponent(() => import('./icons/IventoryIcon.vue')),
     users: defineAsyncComponent(() => import('./icons/UsersIcon.vue')),
     config: defineAsyncComponent(() => import('./icons/ConfigIcon.vue')),
-    info: defineAsyncComponent(() => import('./icons/InfoIcon.vue'))
+    info: defineAsyncComponent(() => import('./icons/InfoIcon.vue')),
+    order: defineAsyncComponent(() => import('./icons/OrderIcon.vue'))
 }
 defineProps<{
     name: Icons

@@ -1,1 +1,1 @@
-export const Icons = ['dashboard', 'laundry', 'inventory', 'users', 'config', 'info'];
+export const Icons = ['dashboard', 'laundry', 'inventory', 'users', 'config', 'info', 'order'];
