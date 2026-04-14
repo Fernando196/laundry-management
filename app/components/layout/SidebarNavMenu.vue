@@ -13,18 +13,24 @@ const menuItems: MenuItem[] = [
     },
     {
         id: 2,
+        label: 'Pedidos',
+        href: '/orders',
+        icon: 'order'
+    },
+    {
+        id: 3,
         label: 'Control',
         href: '/machine-control',
         icon: 'laundry'
     },
     {
-        id: 3,
+        id: 4,
         label: 'Inventario',
         href: '/inventory',
         icon: 'inventory'
     },
     {
-        id: 4,
+        id: 5,
         label: 'Usuarios',
         href: '/users',
         icon: 'users'
