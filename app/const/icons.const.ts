@@ -1,4 +1,4 @@
-export const Icons = [
+export const CAT_ICONS = [
   'dashboard',
   'laundry',
   'inventory',
@@ -8,4 +8,5 @@ export const Icons = [
   'order',
   'file',
   'close',
-]
+  'search',
+] as const

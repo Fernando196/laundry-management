@@ -1,3 +1,3 @@
-import type { Icons } from '~/const/icons.const';
+import type { CAT_ICONS } from '~/const/icons.const'
 
-export type Icons = (typeof Icons)[number];
+export type Icons = (typeof CAT_ICONS)[number]

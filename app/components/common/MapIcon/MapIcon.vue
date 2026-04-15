@@ -11,6 +11,7 @@
     order: defineAsyncComponent(() => import('./icons/OrderIcon.vue')),
     file: defineAsyncComponent(() => import('./icons/FileIcon.vue')),
     close: defineAsyncComponent(() => import('./icons/CloseIcon.vue')),
+    search: defineAsyncComponent(() => import('./icons/SearchIcon.vue')),
   }
   defineProps<{
     name: Icons
