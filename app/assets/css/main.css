@@ -1,42 +1,40 @@
 /* assets/css/main.css */
 
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @theme {
-
   /* Primario — Indigo */
-  --color-primary-light:   #EEF2FF;
-  --color-primary:         #4F46E5;
-  --color-primary-dark:    #3730A3;
-  --color-primary-darker:  #1E1B6E;
+  --color-primary-light: #eef2ff;
+  --color-primary: #4f46e5;
+  --color-primary-dark: #3730a3;
+  --color-primary-darker: #1e1b6e;
 
   /* Secundario — Cyan */
-  --color-secondary-light:  #ECFEFF;
-  --color-secondary:        #06B6D4;
-  --color-secondary-dark:   #0E7490;
-  --color-secondary-darker: #164E63;
+  --color-secondary-light: #ecfeff;
+  --color-secondary: #06b6d4;
+  --color-secondary-dark: #0e7490;
+  --color-secondary-darker: #164e63;
 
   /* Acento — Rose */
-  --color-accent-light:   #FFF1F2;
-  --color-accent:         #F43F5E;
-  --color-accent-dark:    #BE123C;
-  --color-accent-darker:  #881337;
+  --color-accent-light: #fff1f2;
+  --color-accent: #f43f5e;
+  --color-accent-dark: #be123c;
+  --color-accent-darker: #881337;
 
   /* 📦 Estados de pedidos */
-  --color-status-proceso:     #06B6D4;
-  --color-status-proceso-bg:  #ECFEFF;
-  --color-status-pendiente:   #F59E0B;
-  --color-status-pendiente-bg:#FFFBEB;
-  --color-status-listo:       #10B981;
-  --color-status-listo-bg:    #ECFDF5;
-  --color-status-cancelado:   #F43F5E;
-  --color-status-cancelado-bg:#FFF1F2;
+  --color-status-in-process: #06b6d4;
+  --color-status-in-process-bg: #ecfeff;
+  --color-status-pending: #f59e0b;
+  --color-status-pending-bg: #fffbeb;
+  --color-status-ready: #10b981;
+  --color-status-ready-bg: #ecfdf5;
+  --color-status-cancelled: #f43f5e;
+  --color-status-cancelled-bg: #fff1f2;
 
   /* Neutros — Slate */
-  --color-neutral-50:  #F8FAFC;
-  --color-neutral-100: #E2E8F0;
-  --color-neutral-400: #94A3B8;
+  --color-neutral-50: #f8fafc;
+  --color-neutral-100: #e2e8f0;
+  --color-neutral-400: #94a3b8;
   --color-neutral-700: #334155;
-  --color-neutral-900: #0F172A;
-
+  --color-neutral-900: #0f172a;
 }
