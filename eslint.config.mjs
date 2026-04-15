@@ -1,57 +1,21 @@
-import js from '@eslint/js'
-import tseslint from 'typescript-eslint'
-import vueParser from 'vue-eslint-parser'
+// @ts-check
+import withNuxt from './.nuxt/eslint.config.mjs'
 
-export default [
-  {
-    ignores: ['.nuxt/**', '.output/**', 'dist/**', 'node_modules/**'],
-  },
-  js.configs.recommended,
-  ...tseslint.configs.recommended,
-  {
-    files: ['**/*.{ts,tsx}'],
-    languageOptions: {
-      parser: tseslint.parser,
-      sourceType: 'module',
-    },
-    plugins: {
-      '@typescript-eslint': tseslint.plugin,
-    },
-    rules: {
-      'no-undef': 'off',
-      '@typescript-eslint/no-explicit-any': 'error',
-      'no-restricted-syntax': [
-        'error',
-        {
-          selector: "CallExpression[callee.name='ref'][arguments.length=0]",
-          message: 'No uses ref() vacío. Usa ref<T>(valorInicial).',
+export default withNuxt({
+  rules: {
+    // Esto le dice a ESLint que permita (y exija) el cierre /> en etiquetas como <img>
+    // Así se pone de acuerdo con lo que hace Prettier automáticamente
+    'vue/html-self-closing': [
+      'error',
+      {
+        html: {
+          void: 'always',
+          normal: 'always',
+          component: 'always',
         },
-      ],
-    },
-  },
-  {
-    files: ['**/*.vue'],
-    languageOptions: {
-      parser: vueParser,
-      parserOptions: {
-        parser: tseslint.parser,
-        extraFileExtensions: ['.vue'],
-        sourceType: 'module',
+        svg: 'always',
+        math: 'always',
       },
-    },
-    plugins: {
-      '@typescript-eslint': tseslint.plugin,
-    },
-    rules: {
-      'no-undef': 'off',
-      '@typescript-eslint/no-explicit-any': 'error',
-      'no-restricted-syntax': [
-        'error',
-        {
-          selector: "CallExpression[callee.name='ref'][arguments.length=0]",
-          message: 'No uses ref() vacío. Usa ref<T>(valorInicial).',
-        },
-      ],
-    },
+    ],
   },
-]
+})
