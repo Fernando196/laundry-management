@@ -71,7 +71,7 @@
 </script>
 
 <template>
-  <div class="bg-primary-light grid h-full w-full grid-cols-[1fr_auto] overflow-hidden">
+  <div class="grid h-full w-full grid-cols-[1fr_auto] overflow-hidden">
     <div class="flex flex-col overflow-auto">
       <!-- Header -->
       <div class="flex flex-col gap-4 border-b border-neutral-100 bg-white px-5 py-2">
@@ -107,7 +107,7 @@
       </div>
     </div>
 
-    <div class="flex hidden flex-col sm:flex sm:w-80 xl:w-112.5">
+    <div class="hidden flex-col border-l border-l-neutral-100 sm:flex sm:w-80 xl:w-112.5">
       <OrderDetailPanel
         v-if="selectedOrder"
         :order="selectedOrder"
