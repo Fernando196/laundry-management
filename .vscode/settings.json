@@ -1,5 +1,5 @@
 {
-  "tailwindCSS.experimental.configFile": "./src/style.css",
+  "tailwindCSS.experimental.configFile": "./app/assets/css/main.css",
   "editor.formatOnSave": true,
   // Configuración de Prettier
   "editor.defaultFormatter": "esbenp.prettier-vscode",
