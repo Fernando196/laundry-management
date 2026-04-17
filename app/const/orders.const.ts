@@ -7,18 +7,31 @@ export const CAT_ORDER_ESTATUS: {
   key: OrderStatus
   label: string
   classChip: string
+  dot: string
 }[] = [
-  { key: 'pending', label: 'Pendiente', classChip: 'text-status-pending bg-status-pending-bg' },
+  {
+    key: 'pending',
+    label: 'Pendiente',
+    classChip: 'text-status-pending bg-status-pending-bg',
+    dot: 'bg-status-pending',
+  },
   {
     key: 'in-process',
     label: 'En proceso',
     classChip: 'text-status-in-process bg-status-in-process-bg',
+    dot: 'bg-status-in-process',
   },
-  { key: 'ready', label: 'Listo', classChip: 'text-status-ready bg-status-ready-bg' },
+  {
+    key: 'ready',
+    label: 'Listo',
+    classChip: 'text-status-ready bg-status-ready-bg',
+    dot: 'bg-status-ready',
+  },
   {
     key: 'cancelled',
     label: 'Cancelado',
     classChip: 'text-status-cancelled bg-status-cancelled-bg',
+    dot: 'bg-status-cancelled',
   },
 ]
 export const CAT_SERVICE_TYPE: {

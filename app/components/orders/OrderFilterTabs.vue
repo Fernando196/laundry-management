@@ -24,7 +24,7 @@
     <button
       v-for="tab in filterTabs"
       :key="tab.key"
-      class="shrink-0 cursor-pointer rounded-full px-3 py-1 text-sm font-semibold transition-colors"
+      class="shrink-0 cursor-pointer rounded-full px-3 py-1 text-[14px] font-semibold transition-colors"
       :class="
         selected === tab.key
           ? tab.classChip
