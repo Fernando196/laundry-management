@@ -1,24 +1,35 @@
 <script setup lang="ts">
-import type { InputTypeHTMLAttribute } from 'vue';
+  import type { InputTypeHTMLAttribute } from 'vue'
 
-interface Props {
+  interface Props {
     label: string
     type: InputTypeHTMLAttribute
-    disabled?: boolean;
-    isTextArea?: boolean;
+    disabled?: boolean
+    isTextArea?: boolean
     rows?: number
-}
-defineProps<Props>();
+    placeholder?: string
+  }
+  defineProps<Props>()
 
-const value = defineModel<number | string | null>();
-
+  const value = defineModel<number | string | null>()
 </script>
 <template>
-    <div class="flex flex-col w-full">
-        <label class="truncae whitespace-nowrap">{{ label }}</label>
-        <input v-model="value" v-if="!isTextArea" :disabled="disabled" :type="type"
-            class="outline-none w-full border border-gray-200 rounded-sm mt-2 py-2 px-2" />
-        <textarea v-else :rows="rows" v-model="value"
-            class="outline-none w-full border border-gray-200 rounded-sm mt-2 py-2 px-2" />
-    </div>
+  <div class="flex w-full flex-col">
+    <label class="truncae whitespace-nowrap">{{ label }}</label>
+    <input
+      v-if="!isTextArea"
+      v-model="value"
+      :placeholder="placeholder"
+      :disabled="disabled"
+      :type="type"
+      class="mt-2 w-full rounded-sm border border-gray-200 px-2 py-2 outline-none"
+    />
+    <textarea
+      v-else
+      v-model="value"
+      :placeholder="placeholder"
+      :rows="rows"
+      class="mt-2 w-full rounded-sm border border-gray-200 px-2 py-2 outline-none"
+    />
+  </div>
 </template>
