@@ -6,6 +6,7 @@
   import Empty from '~/components/common/Empty.vue'
   import Search from '~/components/common/Search.vue'
   import OrderFilterTabs from '~/components/orders/OrderFilterTabs.vue'
+  import { ORDER_ESTATUS_TYPE } from '~/const/orders.const'
 
   definePageMeta({ title: 'Pedidos' })
 
@@ -55,7 +56,10 @@
 
   // ── Actions ────────────────────────────────────────────────────────────────
   function advance(order: IOrder) {
-    order.status = order.status === 'pending' ? 'in-process' : 'ready'
+    order.status =
+      order.status === ORDER_ESTATUS_TYPE.PEDING
+        ? ORDER_ESTATUS_TYPE['IN-PROCESS']
+        : ORDER_ESTATUS_TYPE.READY
   }
 
   function collect(order: IOrder) {
