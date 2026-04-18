@@ -8,10 +8,17 @@
 
   const props = defineProps<Props>()
 
-  const filterTabs: { key: OrderFilterTab; label: string; classChip: string }[] = [
-    { key: 'all', label: 'Todos', classChip: 'bg-primary text-primary-light' },
-    ...CAT_ORDER_ESTATUS,
-  ]
+  const keys = Object.keys(CAT_ORDER_ESTATUS) as OrderStatus[]
+  const filterTabs = computed<{ key: OrderFilterTab; label: string; classChip: string }[]>(() => {
+    return [
+      { key: 'all', label: 'Todos', classChip: 'bg-primary text-primary-light' },
+      ...keys.map((key) => ({
+        key,
+        label: CAT_ORDER_ESTATUS[key].label,
+        classChip: CAT_ORDER_ESTATUS[key].classChip,
+      })),
+    ]
+  })
 
   const selected = defineModel<OrderFilterTab>()
 
@@ -23,7 +30,7 @@
   <div class="flex gap-2 overflow-x-auto pb-2">
     <button
       v-for="tab in filterTabs"
-      :key="tab.key"
+      :key="'tab-' + tab.key"
       class="shrink-0 cursor-pointer rounded-full px-3 py-1 text-[14px] font-semibold transition-colors"
       :class="
         selected === tab.key

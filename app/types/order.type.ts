@@ -1,7 +1,7 @@
 import type { ORDER_ESTATUS_TYPE, SERVICE_TYPE } from '~/const/orders.const'
 
-export type OrderStatus = (typeof ORDER_ESTATUS_TYPE)[number]
-export type ServiceType = (typeof SERVICE_TYPE)[number]
+export type OrderStatus = (typeof ORDER_ESTATUS_TYPE)[keyof typeof ORDER_ESTATUS_TYPE]
+export type ServiceType = (typeof SERVICE_TYPE)[keyof typeof SERVICE_TYPE]
 export type OrderFilterTab = 'all' | OrderStatus
 
 export interface IOrder {
@@ -13,3 +13,13 @@ export interface IOrder {
   createdAt: string // ISO date string
   completedAt?: string
 }
+
+export type OrderCatalog = Record<
+  OrderStatus,
+  {
+    label: string
+    classChip: string
+    dot: string
+  }
+>
+export type ServiceTypeCatalog = Record<ServiceType, { label: string }>

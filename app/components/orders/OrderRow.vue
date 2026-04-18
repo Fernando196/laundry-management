@@ -11,7 +11,7 @@
   const props = defineProps<Props>()
   defineEmits<{ select: [order: IOrder] }>()
 
-  const orderStatus = computed(() => CAT_ORDER_ESTATUS.find((o) => o.key === props.order.status))
+  const orderStatus = computed(() => CAT_ORDER_ESTATUS[props.order.status])
   const formatTime = computed(() => dayjs(props.order.completedAt).format('DD/MM/YYYY HH:MM'))
 
   const serviceMap: Record<IOrder['service'], string> = {

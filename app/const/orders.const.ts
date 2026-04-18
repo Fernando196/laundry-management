@@ -1,61 +1,61 @@
-import type { OrderStatus, ServiceType } from '~/types/order.type'
+import type { OrderCatalog, ServiceTypeCatalog } from '~/types/order.type'
 
-export const ORDER_ESTATUS_TYPE = ['pending', 'in-process', 'ready', 'cancelled'] as const
-export const SERVICE_TYPE = ['wash', 'dry', 'wash-dry', 'ironing', 'express'] as const
+export const ORDER_ESTATUS_TYPE = {
+  PEDING: 'pending',
+  'IN-PROCESS': 'in-process',
+  READY: 'ready',
+  CANCELLED: 'cancelled',
+  COMPLETED: 'completed',
+} as const
+export const SERVICE_TYPE = {
+  WASH: 'wash',
+  DRY: 'dry',
+  'WASH-DRY': 'wash-dry',
+  IRONING: 'ironing',
+  EXPRESS: 'express',
+} as const
 
-export const CAT_ORDER_ESTATUS: {
-  key: OrderStatus
-  label: string
-  classChip: string
-  dot: string
-}[] = [
-  {
-    key: 'pending',
+export const CAT_ORDER_ESTATUS: OrderCatalog = {
+  pending: {
     label: 'Pendiente',
     classChip: 'text-status-pending bg-status-pending-bg',
     dot: 'bg-status-pending',
   },
-  {
-    key: 'in-process',
+  'in-process': {
     label: 'En proceso',
     classChip: 'text-status-in-process bg-status-in-process-bg',
     dot: 'bg-status-in-process',
   },
-  {
-    key: 'ready',
+  ready: {
     label: 'Listo',
     classChip: 'text-status-ready bg-status-ready-bg',
     dot: 'bg-status-ready',
   },
-  {
-    key: 'cancelled',
+  cancelled: {
     label: 'Cancelado',
     classChip: 'text-status-cancelled bg-status-cancelled-bg',
     dot: 'bg-status-cancelled',
   },
-]
-export const CAT_SERVICE_TYPE: {
-  type: ServiceType
-  label: string
-}[] = [
-  {
-    type: 'wash',
+  completed: {
+    label: 'Completado',
+    classChip: 'text-status-ready bg-status-ready-bg',
+    dot: 'bg-status-ready',
+  },
+}
+export const CAT_SERVICE_TYPE: ServiceTypeCatalog = {
+  wash: {
     label: 'lavar',
   },
-  {
-    type: 'dry',
+  dry: {
     label: 'Secar',
   },
-  {
-    type: 'wash-dry',
+  'wash-dry': {
     label: 'Secar y Lavar',
   },
-  {
-    type: 'ironing',
+  ironing: {
     label: 'Planchar',
   },
-  {
-    type: 'express',
+  express: {
     label: 'Express',
   },
-]
+}

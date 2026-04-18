@@ -1,27 +1,34 @@
-export const MACHINE_TYPES = ['washer', 'dryer'] as const;
-export const MACHINE_STATUS = [
-  {
+import type { IMachineEstatusCatalog } from '~/types/machine.type'
+
+export const MACHINE_TYPES = {
+  WASHER: 'washer',
+  DRYER: 'dryer',
+} as const
+export const MACHINE_STATUS = {
+  ACTIVE: 'active',
+  RUNNING: 'running',
+  MAINTENANCE: 'maintenance',
+  'OUT-OF-SERVICE': 'out-of-service',
+} as const
+export const MACHINE_ESTATUS_CATALOG: IMachineEstatusCatalog = {
+  active: {
     label: 'Activo',
-    type: 'active',
-    classChip: 'text-white bg-status-listo',
-    class: 'bg-status-listo-bg text-status-listo',
+    classChip: 'text-white bg-status-ready',
+    class: 'bg-status-ready-bg text-status-ready',
   },
-  {
+  running: {
     label: 'En ciclo',
-    type: 'running',
-    classChip: 'text-white bg-status-proceso',
-    class: 'bg-status-proceso-bg text-status-proceso',
+    classChip: 'text-white bg-status-in-process',
+    class: 'bg-status-in-process-bg text-status-in-process',
   },
-  {
+  maintenance: {
     label: 'Mantenimiento',
-    type: 'maintenance',
-    classChip: 'text-white bg-status-pendiente',
-    class: 'bg-status-pendiente-bg text-status-pendiente',
+    classChip: 'text-white bg-status-pending',
+    class: 'bg-status-pending-bg text-status-pending',
   },
-  {
+  'out-of-service': {
     label: 'Fuera de servicio',
-    type: 'out-of-service',
-    classChip: 'text-white bg-status-cancelado',
-    class: 'bg-status-cancelado-bg text-status-cancelado',
+    classChip: 'text-white bg-status-cancelled',
+    class: 'bg-status-cancelled-bg text-status-cancelled',
   },
-] as const;
+} as const
