@@ -1,4 +1,5 @@
 export const CAT_ICONS = [
+  'add',
   'dashboard',
   'laundry',
   'inventory',
@@ -9,4 +10,8 @@ export const CAT_ICONS = [
   'file',
   'close',
   'search',
+  'delete',
+  'edit',
+  'money',
+  'time',
 ] as const

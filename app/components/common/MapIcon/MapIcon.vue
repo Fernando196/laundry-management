@@ -12,6 +12,11 @@
     file: defineAsyncComponent(() => import('./icons/FileIcon.vue')),
     close: defineAsyncComponent(() => import('./icons/CloseIcon.vue')),
     search: defineAsyncComponent(() => import('./icons/SearchIcon.vue')),
+    add: defineAsyncComponent(() => import('./icons/AddIcon.vue')),
+    time: defineAsyncComponent(() => import('./icons/TimeIcon.vue')),
+    delete: defineAsyncComponent(() => import('./icons/DeleteIcon.vue')),
+    money: defineAsyncComponent(() => import('./icons/Money.vue')),
+    edit: defineAsyncComponent(() => import('./icons/EditIcon.vue')),
   }
   defineProps<{
     name: Icons
