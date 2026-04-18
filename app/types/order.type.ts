@@ -5,12 +5,12 @@ export type ServiceType = (typeof SERVICE_TYPE)[keyof typeof SERVICE_TYPE]
 export type OrderFilterTab = 'all' | OrderStatus
 
 export interface IOrder {
-  id: number
+  id?: number
   status: OrderStatus
-  service: ServiceType
+  service?: ServiceType
   customerName: string
   amount: number // MXN
-  createdAt: string // ISO date string
+  createdAt?: string // ISO date string
   completedAt?: string
 }
 
