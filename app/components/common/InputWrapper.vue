@@ -28,8 +28,8 @@
       v-else
       v-model="value"
       :placeholder="placeholder"
-      :rows="rows"
-      class="mt-2 h-9 w-full rounded-sm border border-gray-200 px-2 py-2 outline-none"
+      :rows="rows || 3"
+      class="mt-2 w-full rounded-sm border border-gray-200 px-2 py-2 outline-none"
     />
   </div>
 </template>

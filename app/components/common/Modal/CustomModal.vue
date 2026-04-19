@@ -18,7 +18,7 @@
         <MapIcon name="close" class="stroke-black" />
       </button>
     </header>
-    <main class="flex-1 overflow-hidden">
+    <main class="flex-1 overflow-hidden pb-20">
       <div class="overflow-y-auto">
         <slot />
       </div>

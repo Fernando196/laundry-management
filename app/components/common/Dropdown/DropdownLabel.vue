@@ -2,7 +2,7 @@
   import MapIcon from '../MapIcon/MapIcon.vue'
 
   interface Option {
-    id: number
+    id: number | string
     label: string
   }
 
@@ -14,7 +14,7 @@
   }
 
   const props = defineProps<Props>()
-  const modelValue = defineModel<number | null>({ default: null })
+  const modelValue = defineModel<number | string | null>({ default: null })
 
   const open = ref(false)
   const triggerRef = ref<HTMLElement | null>(null)
