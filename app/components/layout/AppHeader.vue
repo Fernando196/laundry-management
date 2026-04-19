@@ -1,10 +1,11 @@
 <script setup lang="ts">
+  import type { IOrder } from '~/types/order.type'
   import MapIcon from '../common/MapIcon/MapIcon.vue'
   import OrderFormModal from '../orders/OrderFormModal.vue'
 
   const { open: openModal } = useModal()
   const handleAddOrder = async () => {
-    await openModal(OrderFormModal)
+    await openModal<IOrder>(OrderFormModal)
   }
 </script>
 
