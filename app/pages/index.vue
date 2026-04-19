@@ -1,11 +1,14 @@
 <script setup lang="ts">
-  import { orders } from '~/data/orders.data'
   import { machines } from '~/data/machines.data'
   import KpiCard from '~/components/dashboard/KpiCard.vue'
   import OrdersBarChart from '~/components/dashboard/OrdersBarChart.vue'
   import StatusDonutChart from '~/components/dashboard/StatusDonutChart.vue'
   import RevenueLineChart from '~/components/dashboard/RevenueLineChart.vue'
+  import { useOrderStore } from '~/store/orders.store'
+  import { ORDER_STATUS_TYPE } from '~/const/orders.const'
 
+  const ordersStore = useOrderStore()
+  const orders = ordersStore.orders
   // ── Helpers ────────────────────────────────────────────────
   const DAY_LABELS = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb']
 
@@ -61,10 +64,10 @@
 
   // ── Donut: distribución de estados ─────────────────────────
   const statusCounts = computed(() => ({
-    pending: orders.filter((o) => o.status === 'pending').length,
-    inProcess: orders.filter((o) => o.status === 'in-process').length,
-    ready: orders.filter((o) => o.status === 'ready').length,
-    cancelled: orders.filter((o) => o.status === 'cancelled').length,
+    pending: orders.filter((o) => o.status === ORDER_STATUS_TYPE.PENDING).length,
+    inProcess: orders.filter((o) => o.status === ORDER_STATUS_TYPE['IN-PROCESS']).length,
+    ready: orders.filter((o) => o.status === ORDER_STATUS_TYPE.READY).length,
+    canceled: orders.filter((o) => o.status === ORDER_STATUS_TYPE.CANCELED).length,
   }))
 
   // ── Line chart: ingresos últimos 30 días ───────────────────

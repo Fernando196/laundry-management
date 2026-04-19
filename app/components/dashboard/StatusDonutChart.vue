@@ -1,56 +1,55 @@
 <script setup lang="ts">
-import { Doughnut } from 'vue-chartjs'
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
+  import { Doughnut } from 'vue-chartjs'
+  import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
 
-ChartJS.register(ArcElement, Tooltip, Legend)
+  ChartJS.register(ArcElement, Tooltip, Legend)
 
-interface Props {
-  pending: number
-  inProcess: number
-  ready: number
-  cancelled: number
-}
+  interface Props {
+    pending: number
+    inProcess: number
+    ready: number
+    canceled: number
+  }
 
-const props = defineProps<Props>()
+  const props = defineProps<Props>()
 
-const chartData = computed(() => ({
-  labels: ['Pendiente', 'En proceso', 'Listo', 'Cancelado'],
-  datasets: [
-    {
-      data: [props.pending, props.inProcess, props.ready, props.cancelled],
-      backgroundColor: ['#F59E0B', '#06B6D4', '#10B981', '#F43F5E'],
-      borderWidth: 0,
-      hoverOffset: 6,
-    },
-  ],
-}))
+  const chartData = computed(() => ({
+    labels: ['Pendiente', 'En proceso', 'Listo', 'Cancelado'],
+    datasets: [
+      {
+        data: [props.pending, props.inProcess, props.ready, props.canceled],
+        backgroundColor: ['#F59E0B', '#06B6D4', '#10B981', '#F43F5E'],
+        borderWidth: 0,
+        hoverOffset: 6,
+      },
+    ],
+  }))
 
-const chartOptions = {
-  responsive: true,
-  maintainAspectRatio: false,
-  cutout: '68%',
-  plugins: {
-    legend: {
-      position: 'bottom' as const,
-      labels: {
-        color: '#334155',
-        font: { size: 12 },
-        boxWidth: 10,
-        boxHeight: 10,
-        borderRadius: 3,
-        padding: 16,
+  const chartOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    cutout: '68%',
+    plugins: {
+      legend: {
+        position: 'bottom' as const,
+        labels: {
+          color: '#334155',
+          font: { size: 12 },
+          boxWidth: 10,
+          boxHeight: 10,
+          borderRadius: 3,
+          padding: 16,
+        },
+      },
+      tooltip: {
+        callbacks: {
+          label: (ctx: { label: string; parsed: number }) => `  ${ctx.label}: ${ctx.parsed}`,
+        },
       },
     },
-    tooltip: {
-      callbacks: {
-        label: (ctx: { label: string; parsed: number }) =>
-          `  ${ctx.label}: ${ctx.parsed}`,
-      },
-    },
-  },
-}
+  }
 
-const total = computed(() => props.pending + props.inProcess + props.ready + props.cancelled)
+  const total = computed(() => props.pending + props.inProcess + props.ready + props.canceled)
 </script>
 
 <template>
