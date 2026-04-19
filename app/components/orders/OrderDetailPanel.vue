@@ -1,4 +1,5 @@
 <script setup lang="ts">
+  import { ORDER_SERVICE_TYPE_CATALOG, ORDER_STATUS_CATALOG } from '~/const/orders.const'
   import type { IOrder } from '~/types/order.type'
 
   interface Props {
@@ -11,21 +12,6 @@
     collect: [order: IOrder]
     cancel: [order: IOrder]
   }>()
-
-  const statusMap: Record<IOrder['status'], { label: string; class: string }> = {
-    pending: { label: 'Pendiente', class: 'bg-status-pendding-bg text-status-pendding' },
-    'in-process': { label: 'En proceso', class: 'bg-status-in-process-bg text-status-in-process' },
-    ready: { label: 'Listo', class: 'bg-status-listo-bg text-status-listo' },
-    cancelled: { label: 'Cancelado', class: 'bg-status-cancelled-bg text-status-cancelled' },
-  }
-
-  const serviceMap: Record<IOrder['service'], { label: string; desc: string }> = {
-    wash: { label: 'Lavado', desc: 'Lavado estándar de ropa' },
-    dry: { label: 'Secado', desc: 'Secado de ropa' },
-    'wash-dry': { label: 'Lavado + Secado', desc: 'Servicio completo de lavado y secado' },
-    ironing: { label: 'Planchado', desc: 'Planchado de prendas' },
-    express: { label: 'Express', desc: 'Servicio urgente en 2 horas' },
-  }
 
   function formatDateTime(iso: string) {
     return new Date(iso).toLocaleString('es-MX', {
@@ -61,9 +47,9 @@
         </div>
         <span
           class="mt-1 rounded-full px-3 py-1 text-xs font-semibold"
-          :class="statusMap[order.status].class"
+          :class="ORDER_STATUS_CATALOG[order.status].classChip"
         >
-          {{ statusMap[order.status].label }}
+          {{ ORDER_STATUS_CATALOG[order.status].label }}
         </span>
       </div>
     </div>
@@ -87,8 +73,12 @@
       <section>
         <p class="mb-2 text-xs font-medium tracking-wide text-neutral-400 uppercase">Servicio</p>
         <div class="rounded-xl border border-neutral-100 bg-neutral-50 px-4 py-3">
-          <p class="font-semibold text-neutral-900">{{ serviceMap[order.service].label }}</p>
-          <p class="mt-0.5 text-sm text-neutral-400">{{ serviceMap[order.service].desc }}</p>
+          <p class="font-semibold text-neutral-900">
+            {{ ORDER_SERVICE_TYPE_CATALOG[order.service!].label }}
+          </p>
+          <p class="mt-0.5 text-sm text-neutral-400">
+            {{ ORDER_SERVICE_TYPE_CATALOG[order.service!].description }}
+          </p>
         </div>
       </section>
 
@@ -102,7 +92,7 @@
           </div>
           <div v-if="order.completedAt" class="flex items-center justify-between text-sm">
             <span class="text-neutral-400">Completado</span>
-            <span class="text-status-listo font-medium">{{
+            <span :class="ORDER_STATUS_CATALOG[order.status].classChip" class="font-medium">{{
               formatDateTime(order.completedAt)
             }}</span>
           </div>
