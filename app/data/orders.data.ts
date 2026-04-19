@@ -7,14 +7,25 @@ function sr(seed: number): number {
 }
 
 const customers = [
-  'María García', 'Juan López', 'Ana Martínez', 'Carlos Hernández',
-  'Rosa Jiménez', 'Pedro Sánchez', 'Laura Díaz', 'Miguel Torres',
-  'Elena Ruiz', 'Antonio Moreno',
+  'María García',
+  'Juan López',
+  'Ana Martínez',
+  'Carlos Hernández',
+  'Rosa Jiménez',
+  'Pedro Sánchez',
+  'Laura Díaz',
+  'Miguel Torres',
+  'Elena Ruiz',
+  'Antonio Moreno',
 ]
 
 const services: IOrder['service'][] = ['wash', 'dry', 'wash-dry', 'ironing', 'express']
 const baseAmounts: Record<IOrder['service'], number> = {
-  wash: 80, dry: 70, 'wash-dry': 140, ironing: 60, express: 200,
+  wash: 80,
+  dry: 70,
+  'wash-dry': 140,
+  ironing: 60,
+  express: 200,
 }
 
 function generateOrders(): IOrder[] {
@@ -33,10 +44,13 @@ function generateOrders(): IOrder[] {
       const service = services[Math.floor(sr(seed) * services.length)]!
       const statusRand = sr(seed + 1)
       const status: IOrder['status'] =
-        statusRand < 0.38 ? 'ready'
-        : statusRand < 0.65 ? 'pending'
-        : statusRand < 0.88 ? 'in-process'
-        : 'cancelled'
+        statusRand < 0.38
+          ? 'ready'
+          : statusRand < 0.65
+            ? 'pending'
+            : statusRand < 0.88
+              ? 'in-process'
+              : 'cancelled'
 
       const hour = 8 + Math.floor(sr(seed + 2) * 11) // 8–18h
       const min = Math.floor(sr(seed + 3) * 60)
@@ -60,4 +74,4 @@ function generateOrders(): IOrder[] {
   return result
 }
 
-export const orders = generateOrders()
+export const ordersData = generateOrders()
