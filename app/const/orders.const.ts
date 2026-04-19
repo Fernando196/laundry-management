@@ -15,7 +15,7 @@ export const SERVICE_TYPE = {
   EXPRESS: 'express',
 } as const
 
-export const CAT_ORDER_ESTATUS: OrderCatalog = {
+export const ORDER_ESTATUS_CATALOG: OrderCatalog = {
   pending: {
     label: 'Pendiente',
     classChip: 'text-status-pending bg-status-pending-bg',
@@ -42,9 +42,9 @@ export const CAT_ORDER_ESTATUS: OrderCatalog = {
     dot: 'bg-status-ready',
   },
 }
-export const CAT_SERVICE_TYPE: ServiceTypeCatalog = {
+export const SERVICE_TYPE_CATALOG: ServiceTypeCatalog = {
   wash: {
-    label: 'lavar',
+    label: 'Lavar',
   },
   dry: {
     label: 'Secar',

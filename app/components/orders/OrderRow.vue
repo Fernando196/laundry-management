@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import dayjs from '#build/dayjs.imports.mjs'
-  import { CAT_ORDER_ESTATUS } from '~/const/orders.const'
-  import type { IOrder } from '~/types/order.type'
+  import { ORDER_ESTATUS_CATALOG } from '~/const/orders.const'
+  import type { IOrder, ServiceType } from '~/types/order.type'
 
   interface Props {
     order: IOrder
@@ -11,10 +11,10 @@
   const props = defineProps<Props>()
   defineEmits<{ select: [order: IOrder] }>()
 
-  const orderStatus = computed(() => CAT_ORDER_ESTATUS[props.order.status])
+  const orderStatus = computed(() => ORDER_ESTATUS_CATALOG[props.order.status])
   const formatTime = computed(() => dayjs(props.order.completedAt).format('DD/MM/YYYY HH:MM'))
 
-  const serviceMap: Record<IOrder['service'], string> = {
+  const serviceMap: Record<ServiceType, string> = {
     wash: 'Lavado',
     dry: 'Secado',
     'wash-dry': 'Lav. + Sec.',
@@ -49,7 +49,9 @@
         <span class="rounded px-1.5 py-0.5 text-xs font-medium" :class="orderStatus?.classChip">
           {{ orderStatus?.label }}
         </span>
-        <span class="text-xs text-neutral-400">{{ serviceMap[order.service] }}</span>
+        <span class="text-xs text-neutral-400">{{
+          serviceMap[order?.service as ServiceType]
+        }}</span>
         <span class="ml-auto shrink-0 text-xs text-neutral-400">{{ formatTime }}</span>
       </div>
     </div>

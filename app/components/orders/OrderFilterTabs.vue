@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { CAT_ORDER_ESTATUS } from '~/const/orders.const'
+  import { ORDER_ESTATUS_CATALOG } from '~/const/orders.const'
   import type { IOrder, OrderFilterTab, OrderStatus } from '~/types/order.type'
 
   interface Props {
@@ -8,14 +8,14 @@
 
   const props = defineProps<Props>()
 
-  const keys = Object.keys(CAT_ORDER_ESTATUS) as OrderStatus[]
+  const keys = Object.keys(ORDER_ESTATUS_CATALOG) as OrderStatus[]
   const filterTabs = computed<{ key: OrderFilterTab; label: string; classChip: string }[]>(() => {
     return [
       { key: 'all', label: 'Todos', classChip: 'bg-primary text-primary-light' },
       ...keys.map((key) => ({
         key,
-        label: CAT_ORDER_ESTATUS[key].label,
-        classChip: CAT_ORDER_ESTATUS[key].classChip,
+        label: ORDER_ESTATUS_CATALOG[key].label,
+        classChip: ORDER_ESTATUS_CATALOG[key].classChip,
       })),
     ]
   })
