@@ -28,8 +28,8 @@
   --color-status-pending-bg: #fffbeb;
   --color-status-ready: #10b981;
   --color-status-ready-bg: #ecfdf5;
-  --color-status-cancelled: #f43f5e;
-  --color-status-cancelled-bg: #fff1f2;
+  --color-status-canceled: #f43f5e;
+  --color-status-canceled-bg: #fff1f2;
   --color-status-completed: #22c55e;
   --color-status-completed-bg: #dcfce7;
 

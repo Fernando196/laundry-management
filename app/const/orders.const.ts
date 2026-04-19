@@ -1,10 +1,10 @@
 import type { OrderCatalog, ServiceTypeCatalog } from '~/types/order.type'
 
 export const ORDER_STATUS_TYPE = {
-  PEDING: 'pending',
+  PENDING: 'pending',
   'IN-PROCESS': 'in-process',
   READY: 'ready',
-  CANCELLED: 'cancelled',
+  CANCELED: 'canceled',
   COMPLETED: 'completed',
 } as const
 export const ORDER_SERVICE_TYPE = {
@@ -16,58 +16,58 @@ export const ORDER_SERVICE_TYPE = {
 } as const
 
 export const ORDER_STATUS_CATALOG: OrderCatalog = {
-  pending: {
+  [ORDER_STATUS_TYPE.PENDING]: {
     label: 'Pendiente',
-    classChip: 'text-status-pending bg-status-pending-bg',
-    dot: 'bg-status-pending',
+    classChip: `text-status-${ORDER_STATUS_TYPE.PENDING} bg-status-${ORDER_STATUS_TYPE.PENDING}-bg`,
+    dot: `bg-status-${ORDER_STATUS_TYPE.PENDING}`,
   },
-  'in-process': {
+  [ORDER_STATUS_TYPE['IN-PROCESS']]: {
     label: 'En proceso',
-    classChip: 'text-status-in-process bg-status-in-process-bg',
-    dot: 'bg-status-in-process',
+    classChip: `text-status-${ORDER_STATUS_TYPE['IN-PROCESS']} bg-status-${ORDER_STATUS_TYPE['IN-PROCESS']}-bg`,
+    dot: `bg-status-${ORDER_STATUS_TYPE['IN-PROCESS']}`,
   },
-  ready: {
+  [ORDER_STATUS_TYPE.READY]: {
     label: 'Listo',
-    classChip: 'text-status-ready bg-status-ready-bg',
-    dot: 'bg-status-ready',
+    classChip: `text-status-${ORDER_STATUS_TYPE.READY} bg-status-${ORDER_STATUS_TYPE.READY}-bg`,
+    dot: `bg-status-${ORDER_STATUS_TYPE.READY}`,
   },
-  cancelled: {
+  [ORDER_STATUS_TYPE.CANCELED]: {
     label: 'Cancelado',
-    classChip: 'text-status-cancelled bg-status-cancelled-bg',
-    dot: 'bg-status-cancelled',
+    classChip: `text-status-${ORDER_STATUS_TYPE.CANCELED} bg-status-${ORDER_STATUS_TYPE.CANCELED}-bg`,
+    dot: `bg-status-${ORDER_STATUS_TYPE.CANCELED}`,
   },
-  completed: {
+  [ORDER_STATUS_TYPE.COMPLETED]: {
     label: 'Completado',
-    classChip: 'text-status-completed bg-status-completed-bg',
-    dot: 'bg-status-completed',
+    classChip: `text-status-${ORDER_STATUS_TYPE.COMPLETED} bg-status-${ORDER_STATUS_TYPE.COMPLETED}-bg`,
+    dot: `bg-status-${ORDER_STATUS_TYPE.COMPLETED}`,
   },
 }
 export const ORDER_SERVICE_TYPE_CATALOG: ServiceTypeCatalog = {
-  wash: {
+  [ORDER_SERVICE_TYPE.WASH]: {
     label: 'Lavar',
     serviceCost: 100,
     description:
       'Servicio de lavado para prendas de ropa. Incluye el uso de detergentes y suavizantes adecuados para cada tipo de tela, garantizando una limpieza efectiva y cuidado de las prendas.',
   },
-  dry: {
+  [ORDER_SERVICE_TYPE.DRY]: {
     label: 'Secar',
     serviceCost: 150,
     description:
       'Servicio de secado para prendas de ropa. Utiliza técnicas y equipos adecuados para asegurar un secado uniforme y cuidado de las prendas.',
   },
-  'wash-dry': {
+  [ORDER_SERVICE_TYPE['WASH-DRY']]: {
     label: 'Secar y Lavar',
     serviceCost: 250,
     description:
       'Servicio combinado de lavado y secado para prendas de ropa. Garantiza una limpieza completa y un secado adecuado, cuidando cada tipo de tela.',
   },
-  ironing: {
+  [ORDER_SERVICE_TYPE.IRONING]: {
     label: 'Planchar',
     serviceCost: 50,
     description:
       'Servicio de planchado para prendas de ropa. Utiliza técnicas y equipos adecuados para asegurar un planchado uniforme y cuidado de las prendas.',
   },
-  express: {
+  [ORDER_SERVICE_TYPE.EXPRESS]: {
     label: 'Express',
     serviceCost: 300,
     description:
