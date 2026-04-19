@@ -25,3 +25,5 @@ logs
 
 claude.md
 .claude
+*storybook.log
+storybook-static
