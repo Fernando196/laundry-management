@@ -1,16 +1,18 @@
 <script setup lang="ts">
-  import { orders as ordersData } from '~/data/orders.data'
   import type { IOrder, OrderStatus } from '~/types/order.type'
   import OrderRow from '~/components/orders/OrderRow.vue'
   import OrderDetailPanel from '~/components/orders/OrderDetailPanel.vue'
   import Empty from '~/components/common/Empty.vue'
   import Search from '~/components/common/Search.vue'
   import OrderFilterTabs from '~/components/orders/OrderFilterTabs.vue'
-  import { ORDER_ESTATUS_TYPE } from '~/const/orders.const'
+  import { ORDER_STATUS_TYPE } from '~/const/orders.const'
+  import { useOrderStore } from '~/store/orders.store'
 
   definePageMeta({ title: 'Pedidos' })
 
-  const orders = useState('orders', () => ordersData)
+  const orderStore = useOrderStore()
+  const orders = orderStore.orders
+  // const orders = useState('orders', () => ordersData)
 
   // ── Filters ────────────────────────────────────────────────────────────────
   type FilterTab = 'all' | OrderStatus
@@ -19,7 +21,7 @@
   const search = ref('')
 
   const filteredOrders = computed(() => {
-    let list = orders.value
+    let list = orders
 
     if (activeFilter.value !== 'all') {
       list = list.filter((o) => o.status === activeFilter.value)
@@ -31,7 +33,6 @@
         (o) => o.customerName.toLowerCase().includes(q) || String(o.id).includes(q)
       )
     }
-
     // Most recent first
     return [...list].sort((a, b) => b.createdAt.localeCompare(a.createdAt))
   })
@@ -57,9 +58,9 @@
   // ── Actions ────────────────────────────────────────────────────────────────
   function advance(order: IOrder) {
     order.status =
-      order.status === ORDER_ESTATUS_TYPE.PEDING
-        ? ORDER_ESTATUS_TYPE['IN-PROCESS']
-        : ORDER_ESTATUS_TYPE.READY
+      order.status === ORDER_STATUS_TYPE.PEDING
+        ? ORDER_STATUS_TYPE['IN-PROCESS']
+        : ORDER_STATUS_TYPE.READY
   }
 
   function collect(order: IOrder) {
@@ -96,7 +97,7 @@
       <!-- Orders list -->
       <div class="flex-1 overflow-auto">
         <template v-if="filteredOrders.length">
-          <div class="grid h-full w-full grid-cols-12 gap-4 p-4">
+          <div class="grid h-full w-full grid-cols-12 content-start gap-4 p-4">
             <OrderRow
               v-for="order in filteredOrders"
               :key="order.id"
