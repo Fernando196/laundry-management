@@ -1,5 +1,9 @@
 <script setup lang="ts">
-  import { ORDER_SERVICE_TYPE_CATALOG, ORDER_STATUS_CATALOG } from '~/const/orders.const'
+  import {
+    ORDER_SERVICE_TYPE_CATALOG,
+    ORDER_STATUS_CATALOG,
+    ORDER_STATUS_TYPE,
+  } from '~/const/orders.const'
   import type { IOrder } from '~/types/order.type'
 
   interface Props {
@@ -140,7 +144,10 @@
       </button>
 
       <!-- Estado final -->
-      <p v-if="order.status === 'cancelled'" class="py-2 text-center text-sm text-neutral-400">
+      <p
+        v-if="order.status === ORDER_STATUS_TYPE.CANCELED"
+        class="py-2 text-center text-sm text-neutral-400"
+      >
         Este pedido fue cancelado.
       </p>
     </div>

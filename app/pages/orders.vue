@@ -58,20 +58,20 @@
   // ── Actions ────────────────────────────────────────────────────────────────
   function advance(order: IOrder) {
     order.status =
-      order.status === ORDER_STATUS_TYPE.PEDING
+      order.status === ORDER_STATUS_TYPE.PENDING
         ? ORDER_STATUS_TYPE['IN-PROCESS']
         : ORDER_STATUS_TYPE.READY
   }
 
   function collect(order: IOrder) {
-    order.status = 'ready'
+    order.status = ORDER_STATUS_TYPE.COMPLETED
     order.completedAt = new Date().toISOString()
     // In a real app: open payment modal here
     selectedOrder.value = null
   }
 
   function cancel(order: IOrder) {
-    order.status = 'cancelled'
+    order.status = ORDER_STATUS_TYPE.CANCELED
   }
 </script>
 

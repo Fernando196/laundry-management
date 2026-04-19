@@ -1,3 +1,4 @@
+import { ORDER_STATUS_TYPE } from '~/const/orders.const'
 import type { IOrder } from '~/types/order.type'
 
 // Seeded pseudo-random — same output on every reload
@@ -45,12 +46,12 @@ function generateOrders(): IOrder[] {
       const statusRand = sr(seed + 1)
       const status: IOrder['status'] =
         statusRand < 0.38
-          ? 'ready'
+          ? ORDER_STATUS_TYPE.READY
           : statusRand < 0.65
-            ? 'pending'
+            ? ORDER_STATUS_TYPE.PENDING
             : statusRand < 0.88
-              ? 'in-process'
-              : 'cancelled'
+              ? ORDER_STATUS_TYPE['IN-PROCESS']
+              : ORDER_STATUS_TYPE.CANCELED
 
       const hour = 8 + Math.floor(sr(seed + 2) * 11) // 8–18h
       const min = Math.floor(sr(seed + 3) * 60)
