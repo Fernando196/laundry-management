@@ -24,7 +24,7 @@
       </div>
     </main>
     <footer
-      class="absolute bottom-0 flex w-full justify-end gap-3 border-t border-gray-200 px-3 py-4"
+      class="absolute bottom-0 flex w-full justify-end gap-3 border-t border-gray-200 bg-white px-3 py-4"
     >
       <slot name="footer" />
     </footer>
