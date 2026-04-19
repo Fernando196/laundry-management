@@ -10,7 +10,7 @@ export const MACHINE_STATUS = {
   MAINTENANCE: 'maintenance',
   'OUT-OF-SERVICE': 'out-of-service',
 } as const
-export const MACHINE_ESTATUS_CATALOG: IMachineEstatusCatalog = {
+export const MACHINE_STATUS_CATALOG: IMachineEstatusCatalog = {
   active: {
     label: 'Activo',
     classChip: 'text-white bg-status-ready',

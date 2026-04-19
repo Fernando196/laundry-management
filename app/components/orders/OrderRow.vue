@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import dayjs from '#build/dayjs.imports.mjs'
-  import { ORDER_ESTATUS_CATALOG } from '~/const/orders.const'
+  import { ORDER_STATUS_CATALOG } from '~/const/orders.const'
   import type { IOrder, ServiceType } from '~/types/order.type'
 
   interface Props {
@@ -11,7 +11,7 @@
   const props = defineProps<Props>()
   defineEmits<{ select: [order: IOrder] }>()
 
-  const orderStatus = computed(() => ORDER_ESTATUS_CATALOG[props.order.status])
+  const orderStatus = computed(() => ORDER_STATUS_CATALOG[props.order.status])
   const formatTime = computed(() => dayjs(props.order.completedAt).format('DD/MM/YYYY HH:MM'))
 
   const serviceMap: Record<ServiceType, string> = {

@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import type { IMachine, MachineStatusType } from '~/types/machine.type'
   import MapIcon from '../common/MapIcon/MapIcon.vue'
-  import { MACHINE_ESTATUS_CATALOG, MACHINE_STATUS } from '~/const/machine.const'
+  import { MACHINE_STATUS_CATALOG, MACHINE_STATUS } from '~/const/machine.const'
 
   interface Props {
     machine: IMachine
@@ -19,7 +19,7 @@
     dryer: 'Secadora',
   }
 
-  const machineStatus = computed(() => MACHINE_ESTATUS_CATALOG[props.machine.status] || null)
+  const machineStatus = computed(() => MACHINE_STATUS_CATALOG[props.machine.status] || null)
   const isDisabled = computed(() =>
     [MACHINE_STATUS.MAINTENANCE, MACHINE_STATUS['OUT-OF-SERVICE'] as MachineStatusType].includes(
       props.machine.status
