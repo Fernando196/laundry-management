@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@nuxt/eslint": "^1.15.2",
+    "@pinia/nuxt": "^0.11.3",
     "@tailwindcss/vite": "^4.2.2",
     "@tanstack/vue-table": "^8.21.3",
     "chart.js": "^4.5.1",
@@ -28,5 +29,8 @@
     "typescript-eslint": "^8.58.1",
     "vue-eslint-parser": "^10.4.0",
     "vue-tsc": "^3.2.6"
+  },
+  "overrides": {
+    "vue": "latest"
   }
 }
