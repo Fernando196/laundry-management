@@ -1,12 +1,15 @@
 import type { Icons } from './icons.type'
 
-export interface Menu {
-  items: MenuItem[]
+export interface IMenu {
+  items: IMenuItem[]
 }
 
-export interface MenuItem {
+export interface IMenuItem {
   id: number
   label: string
-  href: string
+  description?: string
+  path: string
   icon: Icons
+  type: 'item' | 'group'
+  children?: IMenuItem[]
 }
