@@ -10,6 +10,9 @@ export interface IMachine {
   brand: string
   model?: string
   color?: string
+  serialNumber?: string
+  capacityKg?: number
+  location?: string
   status: MachineStatusType
   timeCycle: number // duración estándar del ciclo en minutos
   buyDate?: string // ISO date string
