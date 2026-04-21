@@ -18,28 +18,28 @@ export const ORDER_SERVICE_TYPE = {
 export const ORDER_STATUS_CATALOG: OrderCatalog = {
   [ORDER_STATUS_TYPE.PENDING]: {
     label: 'Pendiente',
-    classChip: `text-status-${ORDER_STATUS_TYPE.PENDING} bg-status-${ORDER_STATUS_TYPE.PENDING}-bg`,
-    dot: `bg-status-${ORDER_STATUS_TYPE.PENDING}`,
+    classChip: `text-status-pending bg-status-pending-bg`,
+    dot: `bg-status-pending`,
   },
   [ORDER_STATUS_TYPE['IN-PROCESS']]: {
     label: 'En proceso',
-    classChip: `text-status-${ORDER_STATUS_TYPE['IN-PROCESS']} bg-status-${ORDER_STATUS_TYPE['IN-PROCESS']}-bg`,
-    dot: `bg-status-${ORDER_STATUS_TYPE['IN-PROCESS']}`,
+    classChip: `text-status-in-process bg-status-in-process-bg`,
+    dot: `bg-status-in-process`,
   },
   [ORDER_STATUS_TYPE.READY]: {
     label: 'Listo',
-    classChip: `text-status-${ORDER_STATUS_TYPE.READY} bg-status-${ORDER_STATUS_TYPE.READY}-bg`,
-    dot: `bg-status-${ORDER_STATUS_TYPE.READY}`,
+    classChip: `text-status-ready bg-status-ready-bg`,
+    dot: `bg-status-ready`,
   },
   [ORDER_STATUS_TYPE.CANCELED]: {
     label: 'Cancelado',
-    classChip: `text-status-${ORDER_STATUS_TYPE.CANCELED} bg-status-${ORDER_STATUS_TYPE.CANCELED}-bg`,
-    dot: `bg-status-${ORDER_STATUS_TYPE.CANCELED}`,
+    classChip: `text-status-canceled bg-status-canceled-bg`,
+    dot: `bg-status-canceled`,
   },
   [ORDER_STATUS_TYPE.COMPLETED]: {
     label: 'Completado',
-    classChip: `text-status-${ORDER_STATUS_TYPE.COMPLETED} bg-status-${ORDER_STATUS_TYPE.COMPLETED}-bg`,
-    dot: `bg-status-${ORDER_STATUS_TYPE.COMPLETED}`,
+    classChip: `text-status-completed bg-status-completed-bg`,
+    dot: `bg-status-completed`,
   },
 }
 export const ORDER_SERVICE_TYPE_CATALOG: ServiceTypeCatalog = {
