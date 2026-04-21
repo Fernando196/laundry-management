@@ -1,15 +1,18 @@
 <script setup lang="ts">
-import { MACHINE_STATUS } from '~/const/machine.const';
-import type { MachineStatusType } from '~/types/machine.type';
-const selected = defineModel<MachineStatusType | null>();
+  import { MACHINE_STATUS_CATALOG } from '~/const/machine.const'
+  import type { MachineStatusType } from '~/types/machine.type'
+  const selected = defineModel<MachineStatusType | null>()
 </script>
 <template>
-    <div class="flex gap-4 flex-wrap py-4">
-        <div v-for="state in MACHINE_STATUS" :class="{
-            [state.classChip]: selected?.type === state.type,
-            'bg-gray-400 text-white': selected?.type !== state.type
-        }" class="w-40 px-4 py-2 rounded-md cursor-pointer" @click="selected = state">
-            {{ state.label }}
-        </div>
+  <div class="flex flex-wrap gap-4 py-4">
+    <div
+      v-for="(state, key) in MACHINE_STATUS_CATALOG"
+      :key="'status-chip-' + key"
+      :class="[selected === key ? state.classChip : 'bg-gray-400 text-white']"
+      class="w-40 cursor-pointer rounded-md px-4 py-2"
+      @click="selected = key"
+    >
+      {{ state.label }}
     </div>
+  </div>
 </template>
