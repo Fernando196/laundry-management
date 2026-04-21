@@ -7,7 +7,9 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "api": "node api/server.cjs",
+    "api:watch": "node --watch api/server.cjs"
   },
   "dependencies": {
     "@nuxt/eslint": "^1.15.2",
@@ -23,6 +25,8 @@
     "vue-router": "^5.0.4"
   },
   "devDependencies": {
+    "json-server": "^0.17.4",
+    "multer": "^2.1.1",
     "prettier": "^3.8.2",
     "prettier-plugin-tailwindcss": "^0.7.2",
     "typescript": "^6.0.2",
