@@ -1,23 +1,31 @@
 import { defineStore } from 'pinia'
-import { MOCK_MACHINES } from '~/data/machines.data'
+import { machineService } from '~/services/machine'
 import type { IMachine } from '~/types/machine.type'
 
 export const useMachineStore = defineStore('machine', () => {
-  const machines = ref<IMachine[]>(MOCK_MACHINES)
-  let nextId = MOCK_MACHINES.length + 1
+  const machines = ref<IMachine[]>([])
 
-  function addMachine(machine: Omit<IMachine, 'id'>) {
-    machines.value.push({ ...machine, id: nextId++ })
+  async function fetchMachines() {
+    const data = await machineService.getMachines()
+    machines.value = data
+    return data
   }
 
-  function updateMachine(updated: IMachine) {
-    const idx = machines.value.findIndex((m) => m.id === updated.id)
-    if (idx !== -1) machines.value[idx] = updated
+  async function addMachine(machine: Omit<IMachine, 'id'>) {
+    const newMachine = await machineService.postMachine(machine)
+    machines.value.push(newMachine)
   }
 
-  function deleteMachine(id: number) {
+  async function updateMachine(updated: IMachine) {
+    const updatedMachine = await machineService.putMachine(updated.id, updated)
+    const idx = machines.value.findIndex((m) => m.id === updatedMachine.id)
+    if (idx !== -1) machines.value[idx] = updatedMachine
+  }
+
+  async function deleteMachine(id: number) {
+    await machineService.deleteMachine(id)
     machines.value = machines.value.filter((m) => m.id !== id)
   }
 
-  return { machines, addMachine, updateMachine, deleteMachine }
+  return { machines, fetchMachines, addMachine, updateMachine, deleteMachine }
 })

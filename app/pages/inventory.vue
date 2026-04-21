@@ -12,6 +12,8 @@
   const machineStore = useMachineStore()
   const { open: openModal } = useModal()
 
+  await useAsyncData('machines', () => machineStore.fetchMachines())
+
   const columns: TableColumn[] = [
     { key: 'name', label: 'Nombre' },
     { key: 'type', label: 'Tipo', width: '110px' },
