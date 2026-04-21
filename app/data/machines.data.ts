@@ -1,18 +1,82 @@
 import { MACHINE_STATUS, MACHINE_TYPES } from '~/const/machine.const'
 import type { IMachine } from '~/types/machine.type'
 
-const machines: IMachine[] = []
-
-for (let i = 0; i < 8; i++) {
-  machines.push({
-    id: i + 1,
-    name: 'Lavadora ' + (i + 1),
-    type: i % 2 === 0 ? MACHINE_TYPES.WASHER : MACHINE_TYPES.DRYER,
-    brand: 'Mabe',
-    status: MACHINE_STATUS[Math.floor(Math.random() * MACHINE_STATUS.length)]!,
+const MOCK_MACHINES: IMachine[] = [
+  {
+    id: 1,
+    name: 'Lavadora A1',
+    type: MACHINE_TYPES.WASHER,
+    brand: 'LG',
+    model: 'WM3900HBA',
+    serialNumber: 'LG-2021-001',
+    capacityKg: 15,
+    location: 'Área 1',
+    status: MACHINE_STATUS.ACTIVE,
     timeCycle: 45,
-    image: 'https://www.viu.mx/img/1024/1024/resize/L/G/LG_01440_x3_1.jpg',
-  })
-}
+    buyDate: '2021-03-10',
+    lastMaintenanceDate: '2024-01-15',
+    nextMaintenanceDate: '2025-01-15',
+  },
+  {
+    id: 2,
+    name: 'Secadora B2',
+    type: MACHINE_TYPES.DRYER,
+    brand: 'Samsung',
+    model: 'DV25BB6900H',
+    serialNumber: 'SAM-2022-004',
+    capacityKg: 12,
+    location: 'Área 2',
+    status: MACHINE_STATUS.RUNNING,
+    timeCycle: 60,
+    buyDate: '2022-07-20',
+    lastMaintenanceDate: '2024-03-01',
+    nextMaintenanceDate: '2025-03-01',
+  },
+  {
+    id: 3,
+    name: 'Lavadora C3',
+    type: MACHINE_TYPES.WASHER,
+    brand: 'Whirlpool',
+    model: 'WTW5000DW',
+    serialNumber: 'WP-2020-009',
+    capacityKg: 20,
+    location: 'Área 1',
+    status: MACHINE_STATUS.MAINTENANCE,
+    timeCycle: 50,
+    buyDate: '2020-11-05',
+    lastMaintenanceDate: '2023-11-05',
+    nextMaintenanceDate: '2025-05-05',
+  },
+  {
+    id: 4,
+    name: 'Secadora D4',
+    type: MACHINE_TYPES.DRYER,
+    brand: 'Mabe',
+    model: 'MSS1718WBB0',
+    serialNumber: 'MB-2019-002',
+    capacityKg: 10,
+    location: 'Área 3',
+    status: MACHINE_STATUS['OUT-OF-SERVICE'],
+    timeCycle: 40,
+    buyDate: '2019-06-15',
+    lastMaintenanceDate: '2023-06-15',
+    nextMaintenanceDate: '2024-06-15',
+  },
+  {
+    id: 5,
+    name: 'Lavadora E5',
+    type: MACHINE_TYPES.WASHER,
+    brand: 'Electrolux',
+    model: 'EWFLS70TIW',
+    serialNumber: 'EL-2023-007',
+    capacityKg: 18,
+    location: 'Área 2',
+    status: MACHINE_STATUS.ACTIVE,
+    timeCycle: 55,
+    buyDate: '2023-01-25',
+    lastMaintenanceDate: '2024-04-10',
+    nextMaintenanceDate: '2025-04-10',
+  },
+]
 
-export { machines }
+export { MOCK_MACHINES }
