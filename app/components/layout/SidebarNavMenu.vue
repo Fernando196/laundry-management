@@ -1,41 +1,10 @@
 <script setup lang="ts">
-  import type { MenuItem } from '~/types/menu.type'
+  import { useMenuStore } from '~/store/menu.store'
   import MapIcon from '../common/MapIcon/MapIcon.vue'
 
   const router = useRoute()
-
-  const menuItems: MenuItem[] = [
-    {
-      id: 1,
-      label: 'Dashboard',
-      href: '/',
-      icon: 'dashboard',
-    },
-    {
-      id: 2,
-      label: 'Pedidos',
-      href: '/orders',
-      icon: 'order',
-    },
-    {
-      id: 3,
-      label: 'Control',
-      href: '/machine-control',
-      icon: 'laundry',
-    },
-    {
-      id: 4,
-      label: 'Inventario',
-      href: '/inventory',
-      icon: 'inventory',
-    },
-    {
-      id: 5,
-      label: 'Usuarios',
-      href: '/users',
-      icon: 'users',
-    },
-  ]
+  const menuStore = useMenuStore()
+  const menuItems = menuStore.menuItems
 </script>
 <template>
   <div
@@ -49,9 +18,9 @@
       >
         <NuxtLink
           class="flex flex-col items-center gap-2 fill-none px-2 py-3 text-[13px] xl:text-base"
-          :to="item.href"
+          :to="item.path"
           :class="[
-            router.path === item.href
+            router.path === item.path
               ? 'bg-primary-light text-primary stroke-primary'
               : 'stroke-primary',
           ]"
