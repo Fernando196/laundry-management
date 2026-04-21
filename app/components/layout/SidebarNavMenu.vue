@@ -5,11 +5,11 @@
   const router = useRoute()
   const menuStore = useMenuStore()
   const menuItems = menuStore.menuItems
+
+  const closeMenu = inject<() => void>('closeMenu')
 </script>
 <template>
-  <div
-    class="relative flex h-full w-25 flex-col border-r-gray-300 bg-white text-black shadow-md xl:w-40"
-  >
+  <div class="relative flex h-full w-full flex-col border-r-gray-300 bg-white text-black shadow-md">
     <ul>
       <li
         v-for="item in menuItems"
@@ -19,6 +19,7 @@
         <NuxtLink
           class="flex flex-col items-center gap-2 fill-none px-2 py-3 text-[13px] xl:text-base"
           :to="item.path"
+          @click="closeMenu?.()"
           :class="[
             router.path === item.path
               ? 'bg-primary-light text-primary stroke-primary'
