@@ -1,14 +1,16 @@
 <script setup lang="ts">
-  import { machines } from '~/data/machines.data'
   import KpiCard from '~/components/dashboard/KpiCard.vue'
   import OrdersBarChart from '~/components/dashboard/OrdersBarChart.vue'
   import StatusDonutChart from '~/components/dashboard/StatusDonutChart.vue'
   import RevenueLineChart from '~/components/dashboard/RevenueLineChart.vue'
   import { useOrderStore } from '~/store/orders.store'
   import { ORDER_STATUS_TYPE } from '~/const/orders.const'
+  import { useMachineStore } from '~/store/machine.store'
 
+  const machineStore = useMachineStore()
+  const machines = computed(() => machineStore.machines)
   const ordersStore = useOrderStore()
-  const orders = ordersStore.orders
+  const orders = computed(() => ordersStore.orders)
   // ── Helpers ────────────────────────────────────────────────
   const DAY_LABELS = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb']
 
@@ -26,19 +28,19 @@
   const todayStr = toDateStr(offsetDate(0))
   const yesterdayStr = toDateStr(offsetDate(-1))
 
-  const todayOrders = computed(() => orders.filter((o) => o?.createdAt?.startsWith(todayStr)))
+  const todayOrders = computed(() => orders.value.filter((o) => o?.createdAt?.startsWith(todayStr)))
   const yesterdayOrders = computed(() =>
-    orders.filter((o) => o?.createdAt?.startsWith(yesterdayStr))
+    orders.value.filter((o) => o?.createdAt?.startsWith(yesterdayStr))
   )
 
   const todayRevenue = computed(() =>
     todayOrders.value.filter((o) => o.status === 'ready').reduce((s, o) => s + o.amount, 0)
   )
 
-  const pendingOrders = computed(() => orders.filter((o) => o.status === 'pending').length)
+  const pendingOrders = computed(() => orders.value.filter((o) => o.status === 'pending').length)
 
   const activeMachines = computed(
-    () => machines.filter((m) => m.status === 'running' || m.status === 'active').length
+    () => machines.value.filter((m) => m.status === 'running' || m.status === 'active').length
   )
 
   const orderDiff = computed(() => todayOrders.value.length - yesterdayOrders.value.length)
@@ -58,16 +60,16 @@
   const barData = computed(() =>
     Array.from({ length: 7 }, (_, i) => {
       const ds = toDateStr(offsetDate(i - 6))
-      return orders.filter((o) => o?.createdAt?.startsWith(ds)).length
+      return orders.value.filter((o) => o?.createdAt?.startsWith(ds)).length
     })
   )
 
   // ── Donut: distribución de estados ─────────────────────────
   const statusCounts = computed(() => ({
-    pending: orders.filter((o) => o.status === ORDER_STATUS_TYPE.PENDING).length,
-    inProcess: orders.filter((o) => o.status === ORDER_STATUS_TYPE['IN-PROCESS']).length,
-    ready: orders.filter((o) => o.status === ORDER_STATUS_TYPE.READY).length,
-    canceled: orders.filter((o) => o.status === ORDER_STATUS_TYPE.CANCELED).length,
+    pending: orders.value.filter((o) => o.status === ORDER_STATUS_TYPE.PENDING).length,
+    inProcess: orders.value.filter((o) => o.status === ORDER_STATUS_TYPE['IN-PROCESS']).length,
+    ready: orders.value.filter((o) => o.status === ORDER_STATUS_TYPE.READY).length,
+    canceled: orders.value.filter((o) => o.status === ORDER_STATUS_TYPE.CANCELED).length,
   }))
 
   // ── Line chart: ingresos últimos 30 días ───────────────────
@@ -81,7 +83,7 @@
   const lineData = computed(() =>
     Array.from({ length: 30 }, (_, i) => {
       const ds = toDateStr(offsetDate(i - 29))
-      return orders
+      return orders.value
         .filter((o) => o.status === 'ready' && o?.createdAt?.startsWith(ds))
         .reduce((s, o) => s + o.amount, 0)
     })
