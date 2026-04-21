@@ -10,16 +10,18 @@
 </script>
 
 <template>
-  <div class="flex h-20 items-center justify-between border-b border-b-gray-300 px-10 shadow-sm">
+  <div
+    class="flex h-20 items-center justify-between border-b border-b-gray-300 px-3 shadow-sm md:px-10"
+  >
     <div>
-      <h1 class="text-primary text-2xl font-semibold">Nombre de lavanderia</h1>
+      <h1 class="text-primary text-base font-semibold md:text-2xl">Nombre de lavanderia</h1>
     </div>
     <div>
       <button
-        class="bg-primary flex cursor-pointer items-center gap-2 rounded-lg px-3 py-2 font-semibold text-white"
+        class="bg-primary flex cursor-pointer items-center gap-2 rounded-lg px-3 py-2 text-base font-semibold text-white"
         @click="handleAddOrder"
       >
-        <MapIcon name="add" class="h-6 w-6 stroke-white" />
+        <MapIcon name="add" class="hidden h-6 w-6 stroke-white md:flex" />
         Nueva Orden
       </button>
     </div>
