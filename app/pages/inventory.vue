@@ -7,6 +7,7 @@
   import { MACHINE_STATUS_CATALOG, MACHINE_TYPES } from '~/const/machine.const'
   import { useMachineStore } from '~/store/machine.store'
   import MapIcon from '~/components/common/MapIcon/MapIcon.vue'
+  import ConfirmModal from '~/components/common/Modal/ConfirmModal.vue'
 
   const machineStore = useMachineStore()
   const { open: openModal } = useModal()
@@ -46,7 +47,13 @@
     machineStore.updateMachine(result as IMachine)
   }
 
-  function handleDelete(row: Record<string, unknown>) {
+  async function handleDelete(row: Record<string, unknown>) {
+    const result = await openModal(ConfirmModal, {
+      title: 'Máquina a eliminar',
+      description: '¿Estás seguro de que deseas eliminar esta máquina?',
+      confirmText: 'Eliminar',
+    })
+    if (!result) return
     machineStore.deleteMachine(row.id as number)
   }
 </script>
