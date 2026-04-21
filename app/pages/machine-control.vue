@@ -3,14 +3,15 @@
   import MachineCycleModal from '~/components/machine-control/MachineCycleModal.vue'
   import MachineEstateModal from '~/components/machine-control/MachineEstateModal.vue'
   import { MACHINE_STATUS } from '~/const/machine.const'
-  import { machines as machinesData } from '~/data/machines.data'
+  import { useMachineStore } from '~/store/machine.store'
   import type { IMachine, MachineStatusType } from '~/types/machine.type'
 
-  const machines = useState('machines', () => machinesData)
+  const machineStore = useMachineStore()
+  const machines = computed(() => machineStore.machines)
   const { open: openModal } = useModal()
 
   const handleChangeCycle = async (machine: IMachine) => {
-    if (machine.status === 'running') {
+    if (machine.status === MACHINE_STATUS.RUNNING) {
       machine.status = MACHINE_STATUS.ACTIVE
       return
     }
