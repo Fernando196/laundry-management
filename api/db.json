@@ -390,9 +390,20 @@
       "name": "Admin",
       "email": "admin@admin.mx",
       "role": "admin",
-      "phone": "+52 55 1234 5678",
       "active": true,
       "createdAt": "2024-01-01T00:00:00.000Z"
+    }
+  ],
+  "user-role": [
+    {
+      "id": 1,
+      "role": "admin",
+      "description": "Usuario con acceso completo a todas las funciones del sistema."
+    },
+    {
+      "id": 2,
+      "role": "employee",
+      "description": "Usuario con acceso limitado a funciones operativas, como gestión de órdenes y máquinas."
     }
   ],
   "products": [
