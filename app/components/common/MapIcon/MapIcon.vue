@@ -19,6 +19,12 @@
     [CAT_ICONS.MONEY]: defineAsyncComponent(() => import('./icons/Money.vue')),
     [CAT_ICONS.EDIT]: defineAsyncComponent(() => import('./icons/EditIcon.vue')),
     [CAT_ICONS.ARROW_DOWN]: defineAsyncComponent(() => import('./icons/ArrowDownIcon.vue')),
+    [CAT_ICONS.CATALOGS]: defineAsyncComponent(() => import('./icons/CatalogsIcon.vue')),
+    [CAT_ICONS.BRANDS]: defineAsyncComponent(() => import('./icons/BrandsIcon.vue')),
+    [CAT_ICONS.STATUS]: defineAsyncComponent(() => import('./icons/StatusIcon.vue')),
+    [CAT_ICONS.USER_ROLE]: defineAsyncComponent(() => import('./icons/UserRoleIcon.vue')),
+    [CAT_ICONS.SOAP]: defineAsyncComponent(() => import('./icons/SoapIcon.vue')),
+    [CAT_ICONS.MENU]: defineAsyncComponent(() => import('./icons/MenuIcon.vue')),
   }
   defineProps<{
     name: Icons

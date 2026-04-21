@@ -15,4 +15,10 @@ export const CAT_ICONS = {
   MONEY: 'money',
   TIME: 'time',
   ARROW_DOWN: 'arrow-down',
+  CATALOGS: 'catalogs',
+  BRANDS: 'brands',
+  STATUS: 'status',
+  USER_ROLE: 'user-role',
+  SOAP: 'soap',
+  MENU: 'menu',
 } as const
