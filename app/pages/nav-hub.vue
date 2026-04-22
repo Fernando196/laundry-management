@@ -17,7 +17,7 @@
         <MapIcon :name="item.icon" class="fill-primary w-6 stroke-white xl:w-8" />
         <h1 class="text-base font-bold">{{ item.label }}</h1>
       </div>
-      <span class="text-sm text-gray-500">{{ item.description }}</span>
+      <span class="text-justify text-sm text-gray-500">{{ item.description }}</span>
     </NuxtLink>
   </div>
 </template>
