@@ -113,7 +113,7 @@
       </div>
     </div>
 
-    <div class="hidden flex-col p-8 sm:flex sm:w-80 xl:w-112.5">
+    <div class="hidden overflow-hidden p-8 sm:flex sm:w-80 xl:w-120">
       <OrderDetailPanel
         v-if="selectedOrder"
         :order="selectedOrder"
