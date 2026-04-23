@@ -9,23 +9,19 @@
   defineEmits(['close'])
 </script>
 <template>
-  <div class="relative flex h-auto w-auto flex-col rounded-md bg-white">
-    <header
-      class="flex items-center justify-between rounded-t-md border-b border-gray-200 bg-white px-3 py-2 font-bold"
-    >
-      <h2 class="text-xl">{{ title }}</h2>
+  <div class="relative flex h-auto w-auto flex-col rounded-2xl bg-white">
+    <header class="flex items-center justify-between rounded-t-2xl bg-white p-5 font-bold">
+      <h2 class="text-[16px] font-semibold">{{ title }}</h2>
       <button class="h-6 w-6 cursor-pointer" @click="$emit('close')">
-        <MapIcon name="close" class="fill-primary stroke-white" />
+        <MapIcon name="close" class="stroke-muted fill-none" />
       </button>
     </header>
-    <main class="flex-1 overflow-hidden pb-20">
+    <main class="flex-1 overflow-hidden px-5">
       <div class="overflow-y-auto">
         <slot />
       </div>
     </main>
-    <footer
-      class="absolute bottom-0 flex w-full justify-end gap-3 rounded-b-md border-t border-gray-200 bg-white px-3 py-4"
-    >
+    <footer class="bg-subtle-bg w-full gap-3 rounded-b-2xl border-t border-gray-200 px-5.5 py-3.5">
       <slot name="footer" />
     </footer>
   </div>

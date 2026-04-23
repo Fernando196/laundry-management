@@ -60,11 +60,13 @@
 
 <template>
   <div class="flex w-full flex-col">
-    <label class="truncate text-sm whitespace-nowrap">{{ label }}</label>
+    <label class="text-muted truncate text-[12.5px] font-medium whitespace-nowrap">{{
+      label
+    }}</label>
     <button
       ref="triggerRef"
       type="button"
-      class="mt-2 flex h-9 w-full items-center justify-between rounded-sm border border-gray-200 px-2 transition-colors outline-none"
+      class="border-border focus:border-primary mt-2 flex h-9 w-full items-center justify-between rounded-sm border px-2 transition-colors outline-none"
       :class="disabled ? 'cursor-not-allowed bg-gray-50 text-gray-400' : 'cursor-pointer bg-white'"
       @click="openDropdown"
     >
@@ -82,7 +84,7 @@
       <div
         v-if="open"
         :style="menuStyle"
-        class="fixed z-9999 max-h-60 overflow-y-auto rounded-sm border border-gray-200 bg-white shadow-md"
+        class="border-border fixed z-9999 max-h-60 overflow-y-auto rounded-sm border bg-white shadow-md"
       >
         <ul>
           <li
