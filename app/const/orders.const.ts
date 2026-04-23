@@ -18,28 +18,18 @@ export const ORDER_SERVICE_TYPE = {
 export const ORDER_STATUS_CATALOG: OrderCatalog = {
   [ORDER_STATUS_TYPE.PENDING]: {
     label: 'Pendiente',
-    classChip: `text-status-pending bg-status-pending-bg`,
-    dot: `bg-status-pending`,
   },
   [ORDER_STATUS_TYPE['IN-PROCESS']]: {
     label: 'En proceso',
-    classChip: `text-status-in-process bg-status-in-process-bg`,
-    dot: `bg-status-in-process`,
   },
   [ORDER_STATUS_TYPE.READY]: {
     label: 'Listo',
-    classChip: `text-status-ready bg-status-ready-bg`,
-    dot: `bg-status-ready`,
   },
   [ORDER_STATUS_TYPE.CANCELED]: {
     label: 'Cancelado',
-    classChip: `text-status-canceled bg-status-canceled-bg`,
-    dot: `bg-status-canceled`,
   },
   [ORDER_STATUS_TYPE.COMPLETED]: {
     label: 'Completado',
-    classChip: `text-status-completed bg-status-completed-bg`,
-    dot: `bg-status-completed`,
   },
 }
 export const ORDER_SERVICE_TYPE_CATALOG: ServiceTypeCatalog = {
