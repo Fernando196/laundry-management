@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import MapIcon from '~/components/common/MapIcon/MapIcon.vue'
   import AppHeader from '~/components/layout/AppHeader.vue'
-  import SidebarNavMenu from '~/components/layout/SidebarNavMenu.vue'
+  import AsideMenu from '~/components/layout/AsideMenu.vue'
 
   const isOpenMenu = ref(false)
 
@@ -24,12 +24,12 @@
     </Transition>
     <AppHeader class="col-span-2" />
     <div
-      class="absolute h-screen w-[40vw] transition-transform duration-300 ease-in-out md:relative md:h-full md:w-25 xl:w-40"
+      class="absolute h-screen w-[40vw] transition-transform duration-300 ease-in-out md:relative md:h-full md:w-25 xl:w-28"
       :class="isOpenMenu ? 'z-10 translate-x-0' : '-translate-x-full md:translate-x-0'"
     >
-      <SidebarNavMenu />
+      <AsideMenu />
     </div>
-    <main class="col-span-2 overflow-x-hidden overflow-y-auto bg-neutral-50 md:col-span-1">
+    <main class="bg-content-bg col-span-2 overflow-x-hidden overflow-y-auto md:col-span-1">
       <slot />
     </main>
     <button
