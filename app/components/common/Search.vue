@@ -14,7 +14,7 @@
   <div class="relative">
     <MapIcon
       :name="icon || 'search'"
-      class="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-neutral-400"
+      class="stroke-subtle absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2"
     />
     <input
       v-model="search"
