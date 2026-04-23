@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import dayjs from '#build/dayjs.imports.mjs'
-  import { ORDER_STATUS_CATALOG } from '~/const/orders.const'
-  import type { IOrder, ServiceType } from '~/types/order.type'
+  import { ORDER_SERVICE_TYPE_CATALOG, ORDER_STATUS_CATALOG } from '~/const/orders.const'
+  import type { IOrder } from '~/types/order.type'
 
   interface Props {
     order: IOrder
@@ -13,47 +13,41 @@
 
   const orderStatus = computed(() => ORDER_STATUS_CATALOG[props.order.status])
   const formatTime = computed(() => dayjs(props.order.completedAt).format('DD/MM/YYYY HH:MM'))
-
-  const serviceMap: Record<ServiceType, string> = {
-    wash: 'Lavado',
-    dry: 'Secado',
-    'wash-dry': 'Lav. + Sec.',
-    ironing: 'Planchado',
-    express: 'Express',
-  }
 </script>
 
 <template>
-  <button
-    class="flex w-full cursor-pointer items-center gap-3 rounded-md border border-neutral-100 px-4 py-3 text-left shadow-md transition-colors last:border-b-0"
-    :class="selected ? 'bg-primary-light' : 'bg-white hover:bg-neutral-50'"
+  <div
+    class="border-border ring-primary flex w-full cursor-pointer flex-col gap-3 rounded-md border px-4 py-3.5 shadow-md transition-colors"
+    :class="selected ? 'border-primary-dark shadow-primary' : 'border-strong shadow-sm'"
     @click="$emit('select', order)"
   >
-    <!-- Status dot -->
-    <span class="mt-0.5 h-2.5 w-2.5 shrink-0 rounded-full" :class="[orderStatus?.dot]" />
-
     <!-- Main info -->
-    <div class="min-w-0 flex-1">
-      <div class="flex items-baseline justify-between gap-2">
-        <span class="truncate text-sm font-semibold text-neutral-900">{{
-          order.customerName
-        }}</span>
-        <span
-          class="shrink-0 text-sm font-bold"
-          :class="selected ? 'text-primary' : 'text-neutral-700'"
-        >
-          ${{ order.amount }}
-        </span>
+    <section class="flex items-baseline justify-between gap-2">
+      <div class="min-w-0">
+        <div class="truncate text-sm font-semibold text-neutral-900">{{ order.customerName }}</div>
+        <div class="text-subtle font-mono text-xs font-medium">ORD-{{ order.id }}</div>
       </div>
-      <div class="mt-0.5 flex items-center gap-2">
-        <span class="rounded px-1.5 py-0.5 text-xs font-medium" :class="orderStatus?.classChip">
-          {{ orderStatus?.label }}
-        </span>
-        <span class="text-xs text-neutral-400">{{
-          serviceMap[order?.service as ServiceType]
-        }}</span>
-        <span class="ml-auto shrink-0 text-xs text-neutral-400">{{ formatTime }}</span>
-      </div>
-    </div>
-  </button>
+      <span
+        class="badge rounded px-1.5 py-0.5 text-xs font-medium"
+        :class="'badge-' + order.status"
+      >
+        {{ orderStatus?.label }}
+      </span>
+    </section>
+    <section
+      class="text-muted border-border bg-subtle-bg mt-0.5 flex items-center gap-2 rounded-lg border px-2 py-1"
+    >
+      <span>{{ ORDER_SERVICE_TYPE_CATALOG[order.service!].label }}</span>
+      <span class="text-x ml-auto shrink-0">{{ formatTime }}</span>
+    </section>
+    <section class="border-border flex justify-between border-t border-dashed pt-2">
+      <span class="text-sm text-neutral-500">Total</span>
+      <span
+        class="shrink-0 text-base font-bold"
+        :class="selected ? 'text-primary' : 'text-neutral-700'"
+      >
+        ${{ order.amount }}
+      </span>
+    </section>
+  </div>
 </template>

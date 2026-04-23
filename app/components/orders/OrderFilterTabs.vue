@@ -9,13 +9,12 @@
   const props = defineProps<Props>()
 
   const keys = Object.keys(ORDER_STATUS_CATALOG) as OrderStatus[]
-  const filterTabs = computed<{ key: OrderFilterTab; label: string; classChip: string }[]>(() => {
+  const filterTabs = computed<{ key: OrderFilterTab; label: string }[]>(() => {
     return [
-      { key: 'all', label: 'Todos', classChip: 'bg-primary text-primary-light' },
+      { key: 'all', label: 'Todos' },
       ...keys.map((key) => ({
         key,
         label: ORDER_STATUS_CATALOG[key].label,
-        classChip: ORDER_STATUS_CATALOG[key].classChip,
       })),
     ]
   })
@@ -31,12 +30,8 @@
     <button
       v-for="tab in filterTabs"
       :key="'tab-' + tab.key"
-      class="shrink-0 cursor-pointer rounded-full px-3 py-1 text-[14px] font-semibold transition-colors"
-      :class="
-        selected === tab.key
-          ? tab.classChip
-          : 'bg-neutral-100 text-neutral-400 hover:bg-neutral-200'
-      "
+      class="btn btn-sm"
+      :class="selected === tab.key ? 'btn-primary' : ''"
       @click="selected = tab.key"
     >
       {{ tab.label }}

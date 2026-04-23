@@ -5,6 +5,7 @@
     ORDER_STATUS_TYPE,
   } from '~/const/orders.const'
   import type { IOrder } from '~/types/order.type'
+  import MapIcon from '../common/MapIcon/MapIcon.vue'
 
   interface Props {
     order: IOrder
@@ -41,75 +42,60 @@
 </script>
 
 <template>
-  <div class="flex h-full flex-col bg-white">
+  <div class="border-border flex h-full flex-col rounded-lg border bg-white">
     <!-- Header -->
-    <div class="border-b border-neutral-100 px-6 py-5">
-      <div class="flex items-start justify-between gap-3">
-        <div>
-          <p class="text-xs font-medium tracking-wide text-neutral-400 uppercase">Pedido</p>
-          <p class="text-2xl font-bold text-neutral-900">#{{ order.id }}</p>
-        </div>
-        <span
-          class="mt-1 rounded-full px-3 py-1 text-xs font-semibold"
-          :class="ORDER_STATUS_CATALOG[order.status].classChip"
-        >
+    <div class="border-border bg-subtle-bg flex flex-col border-b px-5 pt-4 pb-3.5">
+      <div class="flex justify-between">
+        <div class="text-subtle font-mono text-xs">FACTURA · ORD-{{ order.id }}</div>
+        <div class="badge" :class="'badge-' + order.status">
           {{ ORDER_STATUS_CATALOG[order.status].label }}
-        </span>
+        </div>
+      </div>
+      <h1 class="text-base font-semibold">{{ order.customerName }}</h1>
+      <div class="flex justify-between">
+        <button class="btn btn-sm mt-2 w-max">
+          <MapIcon name="edit" class="h-4 w-4" />
+          Editar
+        </button>
+
+        <button class="btn btn-sm btn-ghost stroke-error">
+          <MapIcon name="delete" class="h-4 w-4 fill-none" />
+        </button>
       </div>
     </div>
 
     <!-- Body -->
     <div class="flex-1 space-y-6 overflow-auto px-6 py-5">
-      <!-- Cliente -->
-      <section>
-        <p class="mb-2 text-xs font-medium tracking-wide text-neutral-400 uppercase">Cliente</p>
-        <div class="flex items-center gap-3">
-          <div
-            class="bg-primary-light text-primary flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-sm font-bold"
-          >
-            {{ order.customerName.charAt(0) }}
-          </div>
-          <span class="text-base font-semibold text-neutral-900">{{ order.customerName }}</span>
+      <section class="">
+        <div
+          class="text-faint border-border mb-1.5 border-b border-dashed pb-1 text-[12px] font-semibold uppercase"
+        >
+          DETALLE DEL SERVICIO
         </div>
-      </section>
-
-      <!-- Servicio -->
-      <section>
-        <p class="mb-2 text-xs font-medium tracking-wide text-neutral-400 uppercase">Servicio</p>
-        <div class="rounded-xl border border-neutral-100 bg-neutral-50 px-4 py-3">
-          <p class="font-semibold text-neutral-900">
+        <dl class="text-12.5 grid grid-cols-[1fr_auto] gap-[6px_12px] p-0">
+          <dt>Fecha de recepción</dt>
+          <dd>
+            {{ formatDateTime(order.createdAt) }}
+          </dd>
+          <dt>Tipo de servicio</dt>
+          <dd class="text-right">
             {{ ORDER_SERVICE_TYPE_CATALOG[order.service!].label }}
-          </p>
-          <p class="mt-0.5 text-sm text-neutral-400">
-            {{ ORDER_SERVICE_TYPE_CATALOG[order.service!].description }}
-          </p>
-        </div>
+          </dd>
+          <dt>Peso / Cantidad</dt>
+          <dd>{{ order.quantity || 0 }} Kg</dd>
+          <dt>Tarifa base</dt>
+          <dd>${{ ORDER_SERVICE_TYPE_CATALOG[order.service!].serviceCost }}</dd>
+          <dt>Máquina asignada</dt>
+          <dd>
+            {{ order.assignedMachine ?? 'Sin asignar' }}
+          </dd>
+        </dl>
       </section>
-
-      <!-- Tiempos -->
-      <section>
-        <p class="mb-2 text-xs font-medium tracking-wide text-neutral-400 uppercase">Tiempos</p>
-        <div class="space-y-2">
-          <div class="flex items-center justify-between text-sm">
-            <span class="text-neutral-400">Entrada</span>
-            <span class="font-medium text-neutral-700">{{ formatDateTime(order.createdAt) }}</span>
-          </div>
-          <div v-if="order.completedAt" class="flex items-center justify-between text-sm">
-            <span class="text-neutral-400">Completado</span>
-            <span :class="ORDER_STATUS_CATALOG[order.status].classChip" class="font-medium">{{
-              formatDateTime(order.completedAt)
-            }}</span>
-          </div>
-        </div>
-      </section>
-
-      <!-- Monto -->
-      <section class="rounded-xl border border-neutral-100 bg-neutral-50 px-4 py-4">
-        <div class="flex items-center justify-between">
-          <span class="text-sm font-medium text-neutral-400">Total</span>
-          <span class="text-2xl font-bold text-neutral-900"
-            >${{ order.amount }} <span class="text-sm font-normal text-neutral-400">MXN</span></span
-          >
+      <section class="">
+        <div
+          class="text-faint border-border mb-1.5 border-b border-dashed pb-1 text-[12px] font-semibold uppercase"
+        >
+          CONCEPTO
         </div>
       </section>
     </div>
@@ -153,3 +139,12 @@
     </div>
   </div>
 </template>
+<style scoped>
+  @import '~/assets/css/main.css';
+  dt {
+    @apply text-muted;
+  }
+  dd {
+    @apply text-right font-mono font-medium;
+  }
+</style>
