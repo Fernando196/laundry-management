@@ -20,7 +20,7 @@
   const orderStore = useOrderStore()
 
   const order = ref<IOrder>({
-    status: props.order?.status ?? ORDER_STATUS_TYPE.PEDING,
+    status: props.order?.status ?? ORDER_STATUS_TYPE.PENDING,
     customerName: props.order?.customerName ?? '',
     amount: props.order?.amount ?? 0,
     service: props.order?.service ?? undefined,
