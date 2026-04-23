@@ -31,7 +31,11 @@
   const optionsServiceType = (Object.keys(ORDER_SERVICE_TYPE_CATALOG) as ServiceType[]).map(
     (service) => ({
       id: service,
-      label: ORDER_SERVICE_TYPE_CATALOG[service].label,
+      label:
+        ORDER_SERVICE_TYPE_CATALOG[service].label +
+        ' — $' +
+        ORDER_SERVICE_TYPE_CATALOG[service].serviceCost +
+        ' MXN',
     })
   )
   const optionsOrderEstatus = (Object.keys(ORDER_STATUS_CATALOG) as OrderStatus[]).map(
@@ -58,36 +62,40 @@
 
 <template>
   <CustomModal title="Crear nueva orden">
-    <div class="grid h-max w-125 grid-cols-12 content-start gap-4 p-5">
+    <div class="grid h-max w-full grid-cols-12 content-start gap-4 md:w-150">
       <InputWrapper
         v-model="order.customerName"
         label="Nombre del cliente"
         type="text"
-        class="col-span-12"
+        class="col-span-12 md:col-span-6"
       />
       <DropdownLabel
-        class="col-span-12"
+        v-model="order.status"
+        class="col-span-12 md:col-span-6"
         :options="optionsOrderEstatus"
         label="Seleccione el estado de la orden"
         :disabled="false"
         placeholder="Seleccione el estado de la orden"
-        v-model="order.status"
       />
       <DropdownLabel
-        class="col-span-12"
+        v-model="order.service"
+        class="col-span-12 md:col-span-6"
         :options="optionsServiceType"
         label="Seleccione el tipo de servicio"
         :disabled="false"
         placeholder="Seleccione el tipo de servicio"
-        v-model="order.service"
         @update:model-value="handleChangeService"
       />
-      <InputWrapper
-        v-model="order.amount"
-        label="Total a cobrar"
-        type="number"
-        class="col-span-12"
-      />
+      <div class="col-span-12 md:col-span-6">
+        <InputWrapper v-model="order.quantity" label="Cantidad" type="number" />
+        <span class="text-subtle text-xs"
+          >Base: ${{ ORDER_SERVICE_TYPE_CATALOG[order.service as ServiceType]?.serviceCost || 0 }} x
+          {{ order.quantity || 0 }} = ${{
+            (ORDER_SERVICE_TYPE_CATALOG[order.service as ServiceType]?.serviceCost || 0) *
+            (order.quantity || 0)
+          }}</span
+        >
+      </div>
       <InputWrapper
         v-model="order.comments"
         label="Comentarios adicionales"
@@ -98,16 +106,20 @@
       />
     </div>
     <template #footer>
-      <div class="flex justify-end gap-2">
-        <button
-          class="cursor-pointer rounded-sm bg-gray-300 px-3 py-1 text-gray-600"
-          @click="close(false)"
-        >
-          Cancelar
-        </button>
-        <button @click="onSave" class="bg-primary cursor-pointer rounded-sm px-3 py-1 text-white">
-          Crear
-        </button>
+      <div class="flex w-full justify-between gap-2">
+        <div class="flex items-center">
+          <span class="">Total calculado</span>
+          <p class="ml-2 text-lg font-bold">
+            ${{
+              (ORDER_SERVICE_TYPE_CATALOG[order.service as ServiceType]?.serviceCost || 0) *
+              (order.quantity || 0)
+            }}
+          </p>
+        </div>
+        <div class="flex gap-2">
+          <button class="btn" @click="close(false)">Cancelar</button>
+          <button class="btn btn-primary" @click="onSave">Crear pedido</button>
+        </div>
       </div>
     </template>
   </CustomModal>
