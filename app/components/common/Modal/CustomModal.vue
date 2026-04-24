@@ -19,7 +19,9 @@
     <main class="min-h-0 flex-1 overflow-y-auto px-5">
       <slot />
     </main>
-    <footer class="bg-subtle-bg w-full shrink-0 gap-3 rounded-b-2xl border-t border-gray-200 px-5.5 py-3.5">
+    <footer
+      class="bg-subtle-bg w-full shrink-0 gap-3 rounded-b-2xl border-t border-gray-200 px-5.5 py-3.5"
+    >
       <slot name="footer" />
     </footer>
   </div>
