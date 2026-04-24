@@ -6,9 +6,3 @@ export interface IProduct {
   price: number
   description: string
 }
-
-export interface IProductOrder {
-  productId: number
-  quantity: number
-  totalPrice?: number
-}
