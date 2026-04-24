@@ -7,7 +7,8 @@
   }
 
   interface Props {
-    label: string
+    id: number | string
+    label?: string
     options: Option[]
     placeholder?: string
     disabled?: boolean
@@ -60,11 +61,15 @@
 
 <template>
   <div class="flex w-full flex-col">
-    <label class="text-muted truncate text-[12.5px] font-medium whitespace-nowrap">{{
-      label
-    }}</label>
+    <span
+      v-if="label"
+      :id="`dropdown-label-${id}`"
+      class="text-muted truncate text-[12.5px] font-medium whitespace-nowrap"
+      >{{ label }}</span
+    >
     <button
       ref="triggerRef"
+      :aria-labelledby="'dropdown-label-' + id"
       type="button"
       class="border-border focus:border-primary mt-2 flex h-9 w-full items-center justify-between rounded-sm border px-2 transition-colors outline-none"
       :class="disabled ? 'cursor-not-allowed bg-gray-50 text-gray-400' : 'cursor-pointer bg-white'"
