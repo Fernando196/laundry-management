@@ -21,4 +21,5 @@ export const CAT_ICONS = {
   USER_ROLE: 'user-role',
   SOAP: 'soap',
   MENU: 'menu',
+  LABEL: 'label',
 } as const

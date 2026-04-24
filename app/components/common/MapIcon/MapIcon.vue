@@ -25,6 +25,7 @@
     [CAT_ICONS.USER_ROLE]: defineAsyncComponent(() => import('./icons/UserRoleIcon.vue')),
     [CAT_ICONS.SOAP]: defineAsyncComponent(() => import('./icons/SoapIcon.vue')),
     [CAT_ICONS.MENU]: defineAsyncComponent(() => import('./icons/MenuIcon.vue')),
+    [CAT_ICONS.LABEL]: defineAsyncComponent(() => import('./icons/LabelIcon.vue')),
   }
   defineProps<{
     name: Icons
