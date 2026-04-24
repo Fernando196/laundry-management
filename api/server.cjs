@@ -58,6 +58,7 @@ server.listen(PORT, () => {
   console.log('  Recursos disponibles:')
   console.log('    GET/POST   http://localhost:' + PORT + '/machines')
   console.log('    GET/POST   http://localhost:' + PORT + '/orders')
+  console.log('    GET/POST   http://localhost:' + PORT + '/order_products')
   console.log('    GET/POST   http://localhost:' + PORT + '/users')
   console.log('    GET/POST   http://localhost:' + PORT + '/products')
   console.log('')

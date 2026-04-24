@@ -134,274 +134,38 @@
   ],
   "orders": [
     {
-      "id": 1,
-      "customerName": "Ana García López",
-      "status": "completed",
-      "service": "wash-dry",
-      "amount": 250,
-      "comments": "Ropa delicada, usar ciclo suave",
-      "createdAt": "2026-03-22T09:15:00.000Z",
-      "completedAt": "2026-03-22T14:30:00.000Z"
-    },
-    {
-      "id": 2,
-      "customerName": "Carlos Mendoza",
-      "status": "completed",
-      "service": "wash",
-      "amount": 100,
-      "comments": null,
-      "createdAt": "2026-03-23T10:00:00.000Z",
-      "completedAt": "2026-03-23T13:00:00.000Z"
-    },
-    {
-      "id": 3,
-      "customerName": "María Torres",
-      "status": "canceled",
-      "service": "ironing",
-      "amount": 50,
-      "comments": "Cliente canceló por falta de tiempo",
-      "createdAt": "2026-03-24T11:30:00.000Z",
-      "completedAt": null
-    },
-    {
-      "id": 4,
-      "customerName": "Luis Hernández",
-      "status": "completed",
-      "service": "express",
-      "amount": 300,
-      "comments": "Urgente, necesita para las 6pm",
-      "createdAt": "2026-03-25T08:45:00.000Z",
-      "completedAt": "2026-03-25T17:50:00.000Z"
-    },
-    {
-      "id": 5,
-      "customerName": "Sofía Ramírez",
-      "status": "ready",
-      "service": "wash-dry",
-      "amount": 250,
-      "comments": null,
-      "createdAt": "2026-03-28T09:00:00.000Z",
-      "completedAt": null
-    },
-    {
-      "id": 6,
-      "customerName": "Diego Pérez",
-      "status": "completed",
-      "service": "dry",
-      "amount": 150,
-      "comments": null,
-      "createdAt": "2026-03-29T10:30:00.000Z",
-      "completedAt": "2026-03-29T12:30:00.000Z"
-    },
-    {
-      "id": 7,
-      "customerName": "Valentina Cruz",
-      "status": "completed",
-      "service": "wash",
-      "amount": 100,
-      "comments": "Separar ropa de color y blanca",
-      "createdAt": "2026-04-01T08:00:00.000Z",
-      "completedAt": "2026-04-01T11:30:00.000Z"
-    },
-    {
-      "id": 8,
-      "customerName": "Roberto Castillo",
-      "status": "canceled",
-      "service": "wash-dry",
-      "amount": 250,
-      "comments": null,
-      "createdAt": "2026-04-02T14:00:00.000Z",
-      "completedAt": null
-    },
-    {
-      "id": 9,
-      "customerName": "Paola Jiménez",
-      "status": "completed",
-      "service": "ironing",
-      "amount": 50,
-      "comments": "Camisas de vestir, muy cuidadoso",
-      "createdAt": "2026-04-03T09:15:00.000Z",
-      "completedAt": "2026-04-03T11:00:00.000Z"
-    },
-    {
-      "id": 10,
-      "customerName": "Fernando Vega",
-      "status": "completed",
-      "service": "express",
-      "amount": 300,
-      "comments": null,
-      "createdAt": "2026-04-05T07:30:00.000Z",
-      "completedAt": "2026-04-05T12:00:00.000Z"
-    },
-    {
-      "id": 11,
-      "customerName": "Laura Morales",
-      "status": "ready",
-      "service": "wash",
-      "amount": 100,
-      "comments": null,
-      "createdAt": "2026-04-08T10:00:00.000Z",
-      "completedAt": null
-    },
-    {
-      "id": 12,
-      "customerName": "Andrés Ruiz",
-      "status": "completed",
-      "service": "wash-dry",
-      "amount": 250,
-      "comments": "Incluye sábanas y toallas",
-      "createdAt": "2026-04-09T09:00:00.000Z",
-      "completedAt": "2026-04-09T15:00:00.000Z"
-    },
-    {
-      "id": 13,
-      "customerName": "Isabel Vargas",
-      "status": "completed",
-      "service": "dry",
-      "amount": 150,
-      "comments": null,
-      "createdAt": "2026-04-10T11:00:00.000Z",
-      "completedAt": "2026-04-10T13:30:00.000Z"
-    },
-    {
-      "id": 14,
-      "customerName": "Miguel Ángel Soto",
-      "status": "completed",
-      "service": "wash",
-      "amount": 100,
-      "comments": null,
-      "createdAt": "2026-04-12T08:30:00.000Z",
-      "completedAt": "2026-04-12T12:00:00.000Z"
-    },
-    {
-      "id": 15,
-      "customerName": "Natalia Flores",
-      "status": "canceled",
-      "service": "ironing",
-      "amount": 50,
-      "comments": "No recogió",
-      "createdAt": "2026-04-13T10:00:00.000Z",
-      "completedAt": null
-    },
-    {
-      "id": 16,
-      "customerName": "Javier Medina",
-      "status": "completed",
-      "service": "express",
-      "amount": 300,
-      "comments": "Entrega a domicilio",
-      "createdAt": "2026-04-14T09:00:00.000Z",
-      "completedAt": "2026-04-14T14:00:00.000Z"
-    },
-    {
-      "id": 17,
-      "customerName": "Camila Ortega",
-      "status": "ready",
-      "service": "wash-dry",
-      "amount": 250,
-      "comments": null,
-      "createdAt": "2026-04-16T08:00:00.000Z",
-      "completedAt": null
-    },
-    {
-      "id": 18,
-      "customerName": "Ricardo Guerrero",
-      "status": "completed",
-      "service": "wash",
-      "amount": 100,
-      "comments": null,
-      "createdAt": "2026-04-17T10:30:00.000Z",
-      "completedAt": "2026-04-17T14:00:00.000Z"
-    },
-    {
-      "id": 19,
-      "customerName": "Elena Romero",
-      "status": "in-process",
-      "service": "wash-dry",
-      "amount": 250,
-      "comments": "Ropa de bebé, detergente especial",
-      "createdAt": "2026-04-19T09:00:00.000Z",
-      "completedAt": null
-    },
-    {
-      "id": 20,
-      "customerName": "Héctor Aguilar",
-      "status": "in-process",
-      "service": "dry",
-      "amount": 150,
-      "comments": null,
-      "createdAt": "2026-04-19T11:00:00.000Z",
-      "completedAt": null
-    },
-    {
-      "id": 21,
-      "customerName": "Patricia Navarro",
       "status": "pending",
-      "service": "ironing",
-      "amount": 50,
-      "comments": "Traje de boda, máximo cuidado",
-      "createdAt": "2026-04-20T08:00:00.000Z",
-      "completedAt": null
-    },
-    {
-      "id": 22,
-      "customerName": "Sebastián Reyes",
-      "status": "ready",
       "service": "wash",
-      "amount": 100,
-      "comments": null,
-      "createdAt": "2026-04-20T09:30:00.000Z",
-      "completedAt": null,
-      "Service": {
-        "id": 1,
-        "label": "Lavar",
-        "serviceCost": 100,
-        "description": "Servicio de lavado para prendas de ropa. Incluye el uso de detergentes y suavizantes adecuados para cada tipo de tela, garantizando una limpieza efectiva y cuidado de las prendas."
-      },
-      "Status": {
-        "id": 3,
-        "label": "Listo"
-      }
+      "customerName": "Fernando Morales",
+      "amount": 130,
+      "createdAt": "2026-04-24T23:22:54.829Z",
+      "completedAt": "",
+      "id": 1
     },
     {
-      "id": 23,
-      "customerName": "Gabriela Santos",
-      "status": "completed",
-      "service": "express",
-      "amount": 300,
-      "comments": "Necesita para hoy en la tarde",
-      "createdAt": "2026-04-20T10:15:00.000Z",
-      "completedAt": null,
-      "Service": {
-        "id": 5,
-        "label": "Express",
-        "serviceCost": 300,
-        "description": "Servicio express para prendas de ropa. Garantiza una limpieza y entrega rápida, ideal para situaciones de urgencia."
-      },
-      "Status": {
-        "id": 5,
-        "label": "Completado"
-      }
-    },
-    {
-      "id": 24,
-      "customerName": "Tomás Ibáñez",
-      "status": "completed",
-      "service": "wash-dry",
-      "amount": 250,
-      "comments": null,
-      "createdAt": "2026-04-18T08:30:00.000Z",
-      "completedAt": "2026-04-18T14:30:00.000Z"
-    },
-    {
-      "id": 25,
-      "customerName": "Andrea López",
-      "status": "ready",
+      "status": "pending",
       "service": "wash",
-      "amount": 100,
-      "comments": null,
-      "createdAt": "2026-04-19T14:00:00.000Z",
-      "completedAt": null
+      "customerName": "Cecilia Mendoza",
+      "amount": 85,
+      "createdAt": "2026-04-24T23:24:17.040Z",
+      "completedAt": "",
+      "id": 2
+    }
+  ],
+  "order_products": [
+    {
+      "orderId": 1,
+      "productId": 2,
+      "quantity": "2",
+      "totalPrice": 130,
+      "id": 1
+    },
+    {
+      "orderId": 2,
+      "productId": 1,
+      "quantity": 1,
+      "totalPrice": 85,
+      "id": 2
     }
   ],
   "users": [
