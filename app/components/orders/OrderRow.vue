@@ -1,6 +1,5 @@
 <script setup lang="ts">
   import dayjs from '#build/dayjs.imports.mjs'
-  import { ORDER_SERVICE_TYPE_CATALOG, ORDER_STATUS_CATALOG } from '~/const/orders.const'
   import type { IOrder } from '~/types/order.type'
 
   interface Props {
@@ -11,8 +10,7 @@
   const props = defineProps<Props>()
   defineEmits<{ select: [order: IOrder] }>()
 
-  const orderStatus = computed(() => ORDER_STATUS_CATALOG[props.order.status])
-  const formatTime = computed(() => dayjs(props.order.completedAt).format('DD/MM/YYYY HH:MM'))
+  const formatTime = computed(() => dayjs(props.order.createdAt).format('DD/MM/YYYY HH:MM'))
 </script>
 
 <template>
@@ -31,13 +29,13 @@
         class="badge rounded px-1.5 py-0.5 text-xs font-medium"
         :class="'badge-' + order.status"
       >
-        {{ orderStatus?.label }}
+        {{ order.Status?.label || '' }}
       </span>
     </section>
     <section
       class="text-muted border-border bg-subtle-bg mt-0.5 flex items-center gap-2 rounded-lg border px-2 py-1"
     >
-      <span>{{ ORDER_SERVICE_TYPE_CATALOG[order.service!].label }}</span>
+      <span>{{ order.Service?.label || '' }}</span>
       <span class="text-x ml-auto shrink-0">{{ formatTime }}</span>
     </section>
     <section class="border-border flex justify-between border-t border-dashed pt-2">

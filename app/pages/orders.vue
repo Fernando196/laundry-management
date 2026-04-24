@@ -1,27 +1,27 @@
 <script setup lang="ts">
-  import type { IOrder, OrderStatus } from '~/types/order.type'
+  import type { IOrder, IOrderStatusType } from '~/types/order.type'
   import OrderRow from '~/components/orders/OrderRow.vue'
   import OrderDetailPanel from '~/components/orders/OrderDetailPanel.vue'
   import Empty from '~/components/common/Empty.vue'
   import Search from '~/components/common/Search.vue'
   import OrderFilterTabs from '~/components/orders/OrderFilterTabs.vue'
-  import { ORDER_STATUS_TYPE } from '~/const/orders.const'
   import { useOrderStore } from '~/store/orders.store'
+  import { ORDER_STATUS_CATALOG } from '~/const/orders.const'
 
   definePageMeta({ title: 'Pedidos' })
 
   const orderStore = useOrderStore()
-  const orders = orderStore.orders
-  // const orders = useState('orders', () => ordersData)
+  const { orders } = storeToRefs(orderStore)
+  const { pending } = await useAsyncData('orders', () => orderStore.fetchOrders())
 
   // ── Filters ────────────────────────────────────────────────────────────────
-  type FilterTab = 'all' | OrderStatus
+  type FilterTab = 'all' | IOrderStatusType
 
   const activeFilter = ref<FilterTab>('all')
   const search = ref('')
 
   const filteredOrders = computed(() => {
-    let list = orders
+    let list = orders.value
 
     if (activeFilter.value !== 'all') {
       list = list.filter((o) => o.status === activeFilter.value)
@@ -56,22 +56,14 @@
   )
 
   // ── Actions ────────────────────────────────────────────────────────────────
-  function advance(order: IOrder) {
-    order.status =
-      order.status === ORDER_STATUS_TYPE.PENDING
-        ? ORDER_STATUS_TYPE['IN-PROCESS']
-        : ORDER_STATUS_TYPE.READY
-  }
-
-  function collect(order: IOrder) {
-    order.status = ORDER_STATUS_TYPE.COMPLETED
-    order.completedAt = new Date().toISOString()
-    // In a real app: open payment modal here
-    selectedOrder.value = null
-  }
-
-  function cancel(order: IOrder) {
-    order.status = ORDER_STATUS_TYPE.CANCELED
+  function handleChangeStatus(order: IOrder, newStatus: IOrderStatusType) {
+    if (!selectedOrder.value) return
+    order.status = newStatus
+    order.Status = ORDER_STATUS_CATALOG[newStatus]
+    orderStore.updatedOrder(selectedOrder.value.id!, {
+      ...selectedOrder.value,
+      status: newStatus,
+    })
   }
 </script>
 
@@ -117,9 +109,7 @@
       <OrderDetailPanel
         v-if="selectedOrder"
         :order="selectedOrder"
-        @advance="advance"
-        @collect="collect"
-        @cancel="cancel"
+        @on-change-status="handleChangeStatus"
       />
 
       <!-- Empty state -->

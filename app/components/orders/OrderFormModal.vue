@@ -1,11 +1,12 @@
 <script setup lang="ts">
-  import type { IOrder, OrderStatus, ServiceType } from '~/types/order.type'
+  import type { IOrder, IOrderStatusType, IOrderServiceType } from '~/types/order.type'
   import InputWrapper from '../common/InputWrapper.vue'
   import CustomModal from '../common/Modal/CustomModal.vue'
   import {
     ORDER_STATUS_CATALOG,
     ORDER_STATUS_TYPE,
     ORDER_SERVICE_TYPE_CATALOG,
+    ORDER_SERVICE_TYPE,
   } from '~/const/orders.const'
   import DropdownLabel from '../common/Dropdown/DropdownLabel.vue'
   import { useOrderStore } from '~/store/orders.store'
@@ -23,12 +24,12 @@
     status: props.order?.status ?? ORDER_STATUS_TYPE.PENDING,
     customerName: props.order?.customerName ?? '',
     amount: props.order?.amount ?? 0,
-    service: props.order?.service ?? undefined,
+    service: props.order?.service ?? ORDER_SERVICE_TYPE.WASH,
     comments: props.order?.comments ?? '',
     createdAt: props.order?.createdAt ?? new Date().toString(),
   })
 
-  const optionsServiceType = (Object.keys(ORDER_SERVICE_TYPE_CATALOG) as ServiceType[]).map(
+  const optionsServiceType = (Object.keys(ORDER_SERVICE_TYPE_CATALOG) as IOrderServiceType[]).map(
     (service) => ({
       id: service,
       label:
@@ -38,7 +39,7 @@
         ' MXN',
     })
   )
-  const optionsOrderEstatus = (Object.keys(ORDER_STATUS_CATALOG) as OrderStatus[]).map(
+  const optionsOrderEstatus = (Object.keys(ORDER_STATUS_CATALOG) as IOrderStatusType[]).map(
     (status) => ({
       id: status,
       label: ORDER_STATUS_CATALOG[status].label,
@@ -47,12 +48,12 @@
 
   const handleChangeService = (service: string | number | null) => {
     if (!service) return
-    order.value.amount = ORDER_SERVICE_TYPE_CATALOG[service as ServiceType].serviceCost
+    order.value.amount = ORDER_SERVICE_TYPE_CATALOG[service as IOrderServiceType].serviceCost
   }
 
   const onSave = () => {
     if (props.isEdit) {
-      orderStore.updateOrder(order.value)
+      orderStore.updatedOrder(order.value.id!, order.value)
     } else {
       orderStore.addOrder(order.value)
     }
@@ -89,9 +90,11 @@
       <div class="col-span-12 md:col-span-6">
         <InputWrapper v-model="order.quantity" label="Cantidad" type="number" />
         <span class="text-subtle text-xs"
-          >Base: ${{ ORDER_SERVICE_TYPE_CATALOG[order.service as ServiceType]?.serviceCost || 0 }} x
-          {{ order.quantity || 0 }} = ${{
-            (ORDER_SERVICE_TYPE_CATALOG[order.service as ServiceType]?.serviceCost || 0) *
+          >Base: ${{
+            ORDER_SERVICE_TYPE_CATALOG[order.service as IOrderServiceType]?.serviceCost || 0
+          }}
+          x {{ order.quantity || 0 }} = ${{
+            (ORDER_SERVICE_TYPE_CATALOG[order.service as IOrderServiceType]?.serviceCost || 0) *
             (order.quantity || 0)
           }}</span
         >
@@ -111,7 +114,7 @@
           <span class="">Total calculado</span>
           <p class="ml-2 text-lg font-bold">
             ${{
-              (ORDER_SERVICE_TYPE_CATALOG[order.service as ServiceType]?.serviceCost || 0) *
+              (ORDER_SERVICE_TYPE_CATALOG[order.service as IOrderServiceType]?.serviceCost || 0) *
               (order.quantity || 0)
             }}
           </p>

@@ -4,7 +4,7 @@
     ORDER_STATUS_CATALOG,
     ORDER_STATUS_TYPE,
   } from '~/const/orders.const'
-  import type { IOrder, OrderStatus } from '~/types/order.type'
+  import type { IOrder, IOrderStatusType } from '~/types/order.type'
   import MapIcon from '../common/MapIcon/MapIcon.vue'
 
   interface Props {
@@ -13,9 +13,7 @@
 
   const props = defineProps<Props>()
   const emit = defineEmits<{
-    advance: [order: IOrder]
-    collect: [order: IOrder]
-    cancel: [order: IOrder]
+    onChangeStatus: [order: IOrder, newStatus: IOrderStatusType]
   }>()
 
   function formatDateTime(iso: string) {
@@ -44,21 +42,35 @@
     props.order.status === ORDER_STATUS_TYPE.PENDING ? 'Iniciar proceso' : 'Marcar como listo'
   )
 
-  const indexEstausCurrent = computed(() =>
-    Object.keys(ORDER_STATUS_CATALOG).findIndex((key) => key === props.order.status)
-  )
+  const handleChangeStatus = (newStatus: IOrderStatusType | null) => {
+    if (newStatus === null) {
+      if (props.order.status === ORDER_STATUS_TYPE.PENDING) {
+        newStatus = ORDER_STATUS_TYPE['IN-PROCESS']
+      } else if (props.order.status === ORDER_STATUS_TYPE['IN-PROCESS']) {
+        newStatus = ORDER_STATUS_TYPE.READY
+      } else {
+        return
+      }
+    }
+    emit('onChangeStatus', props.order, newStatus)
+  }
+
+  const statusCurrentId = computed(() => props.order?.Status?.id ?? ORDER_STATUS_CATALOG.pending.id)
   const orderEstatus = computed(() =>
-    Object.keys(ORDER_STATUS_CATALOG).map((key, index) => ({
-      done: index < indexEstausCurrent.value,
-      current: index === indexEstausCurrent.value,
-      label: ORDER_STATUS_CATALOG[key as OrderStatus].label,
-      time:
-        index < indexEstausCurrent.value
-          ? 'Completado'
-          : index === indexEstausCurrent.value
-            ? 'En curso'
-            : '',
-    }))
+    (Object.keys(ORDER_STATUS_CATALOG) as IOrderStatusType[]).map((key) => {
+      const statusId = ORDER_STATUS_CATALOG[key].id
+      return {
+        done: statusId < statusCurrentId.value,
+        current: statusId === statusCurrentId.value,
+        label: ORDER_STATUS_CATALOG[key].label,
+        time:
+          statusId < statusCurrentId.value
+            ? 'Completado'
+            : statusId === statusCurrentId.value
+              ? 'En curso'
+              : '',
+      }
+    })
   )
 </script>
 
@@ -177,7 +189,7 @@
       <button
         v-if="canCollect"
         class="bg-status-ready flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold text-white shadow-sm transition-opacity hover:opacity-90"
-        @click="emit('collect', order)"
+        @click="handleChangeStatus(ORDER_STATUS_TYPE.COMPLETED)"
       >
         Cobrar y cerrar · ${{ order.amount }} MXN
       </button>
@@ -186,7 +198,7 @@
       <button
         v-if="canAdvance"
         class="bg-primary flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold text-white shadow-sm transition-opacity hover:opacity-90"
-        @click="emit('advance', order)"
+        @click="handleChangeStatus(null)"
       >
         {{ advanceLabel }}
       </button>
@@ -195,17 +207,25 @@
       <button
         v-if="canCancel"
         class="hover:border-accent hover:text-accent flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl border border-neutral-100 bg-white px-4 py-2.5 text-sm font-medium text-neutral-400 transition-colors"
-        @click="emit('cancel', order)"
+        @click="handleChangeStatus(ORDER_STATUS_TYPE.CANCELED)"
       >
         Cancelar pedido
       </button>
 
       <!-- Estado final -->
       <p
-        v-if="order.status === ORDER_STATUS_TYPE.CANCELED"
-        class="py-2 text-center text-sm text-neutral-400"
+        v-if="
+          order.status === ORDER_STATUS_TYPE.CANCELED ||
+          order.status === ORDER_STATUS_TYPE.COMPLETED
+        "
+        class="py-2 text-center text-sm"
+        :class="{
+          'text-status-completed': order.status === ORDER_STATUS_TYPE.COMPLETED,
+          'text-status-canceled': order.status === ORDER_STATUS_TYPE.CANCELED,
+        }"
       >
-        Este pedido fue cancelado.
+        Este pedido fue
+        {{ order.status === ORDER_STATUS_TYPE.CANCELED ? 'cancelado' : 'completado' }}.
       </p>
     </div>
   </div>

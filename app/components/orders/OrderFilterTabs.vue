@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { ORDER_STATUS_CATALOG } from '~/const/orders.const'
-  import type { IOrder, OrderFilterTab, OrderStatus } from '~/types/order.type'
+  import type { IOrder, OrderFilterTab, IOrderStatusType } from '~/types/order.type'
 
   interface Props {
     orders: IOrder[]
@@ -8,7 +8,7 @@
 
   const props = defineProps<Props>()
 
-  const keys = Object.keys(ORDER_STATUS_CATALOG) as OrderStatus[]
+  const keys = Object.keys(ORDER_STATUS_CATALOG) as IOrderStatusType[]
   const filterTabs = computed<{ key: OrderFilterTab; label: string }[]>(() => {
     return [
       { key: 'all', label: 'Todos' },
@@ -21,7 +21,7 @@
 
   const selected = defineModel<OrderFilterTab>()
 
-  function countByStatus(status: OrderStatus) {
+  function countByStatus(status: IOrderStatusType) {
     return props.orders.filter((o) => o.status === status).length
   }
 </script>
@@ -36,7 +36,7 @@
     >
       {{ tab.label }}
       <span v-if="tab.key !== 'all'" class="ml-1 opacity-70">
-        {{ countByStatus(tab.key as OrderStatus) }}
+        {{ countByStatus(tab.key as IOrderStatusType) }}
       </span>
     </button>
   </div>
