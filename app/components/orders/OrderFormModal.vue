@@ -166,9 +166,16 @@
         label="Comentarios adicionales"
         type="text"
         class="col-span-12"
-        :rows="4"
+        :rows="3"
         :is-text-area="true"
+        placeholder="Observaciones, preferencias, alergias, etc."
       />
+      <div
+        class="bg-primary-light border-primary text-primary col-span-12 flex w-full items-center justify-between rounded-md border px-3 py-2"
+      >
+        <p class="font-medium">Total a cobrar</p>
+        <p class="font-mono text-xl font-semibold">${{ totalProductsPrice }} MXN</p>
+      </div>
     </div>
     <template #footer>
       <div class="flex w-full justify-between gap-2">
