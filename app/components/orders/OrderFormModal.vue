@@ -10,6 +10,9 @@
   } from '~/const/orders.const'
   import DropdownLabel from '../common/Dropdown/DropdownLabel.vue'
   import { useOrderStore } from '~/store/orders.store'
+  import MapIcon from '../common/MapIcon/MapIcon.vue'
+  import ProductListForm from './OrderProductInput.vue'
+  import type { IProductOrder } from '~/types/products.type'
 
   interface Props {
     order?: IOrder
@@ -59,18 +62,33 @@
     }
     close(order.value)
   }
+
+  const products = ref<IProductOrder[]>([])
+
+  const addProduct = () => {
+    products.value.push({
+      productId: 0,
+      quantity: 1,
+      totalPrice: 0,
+    })
+  }
+  const removeProduct = (id: number) => {
+    products.value.splice(id, 1)
+  }
 </script>
 
 <template>
-  <CustomModal title="Crear nueva orden">
-    <div class="grid h-max w-full grid-cols-12 content-start gap-4 md:w-150">
+  <CustomModal title="Crear nuevo pedido">
+    <div class="grid h-max w-full grid-cols-12 content-start gap-4 pb-10 md:w-150">
       <InputWrapper
+        id="order-form-modal-customerName"
         v-model="order.customerName"
         label="Nombre del cliente"
         type="text"
         class="col-span-12 md:col-span-6"
       />
       <DropdownLabel
+        id="order-form-modal-status"
         v-model="order.status"
         class="col-span-12 md:col-span-6"
         :options="optionsOrderEstatus"
@@ -79,6 +97,7 @@
         placeholder="Seleccione el estado de la orden"
       />
       <DropdownLabel
+        id="order-form-modal-service"
         v-model="order.service"
         class="col-span-12 md:col-span-6"
         :options="optionsServiceType"
@@ -88,7 +107,12 @@
         @update:model-value="handleChangeService"
       />
       <div class="col-span-12 md:col-span-6">
-        <InputWrapper v-model="order.quantity" label="Cantidad" type="number" />
+        <InputWrapper
+          id="order-form-modal-quantity"
+          v-model="order.quantity"
+          label="Cantidad"
+          type="number"
+        />
         <span class="text-subtle text-xs"
           >Base: ${{
             ORDER_SERVICE_TYPE_CATALOG[order.service as IOrderServiceType]?.serviceCost || 0
@@ -99,7 +123,29 @@
           }}</span
         >
       </div>
+      <section class="col-span-12 flex flex-col items-start gap-2">
+        <div class="flex w-full justify-between">
+          <span class="label-input-muted">Aditamientos</span>
+          <button class="btn btn-sm" @click="addProduct">
+            <MapIcon name="add" class="ico" />
+            Agregar
+          </button>
+        </div>
+        <div v-if="!products.length" class="label-input-muted text-text-subtle!">
+          Producto añadidos (jabón, suavizante, etc.) se suman al total
+        </div>
+        <ProductListForm
+          v-for="(product, index) in products"
+          v-else
+          :id="index"
+          :key="product.productId"
+          v-model="products[index]!"
+          @remove="removeProduct(index)"
+        />
+      </section>
+
       <InputWrapper
+        id="order-form-modal-comments"
         v-model="order.comments"
         label="Comentarios adicionales"
         type="text"

@@ -1,11 +1,14 @@
 export interface IProduct {
   id: number
   name: string
-  category: string
-  brand: string
-  unit: string
+  type?: string
   stock: number
-  minStock: number
   price: number
   description: string
+}
+
+export interface IProductOrder {
+  productId: number
+  quantity: number
+  totalPrice?: number
 }

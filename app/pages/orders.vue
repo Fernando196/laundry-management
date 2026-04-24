@@ -7,6 +7,7 @@
   import OrderFilterTabs from '~/components/orders/OrderFilterTabs.vue'
   import { useOrderStore } from '~/store/orders.store'
   import { ORDER_STATUS_CATALOG } from '~/const/orders.const'
+  import PageHeader from '~/components/ui/PageHeader.vue'
 
   definePageMeta({ title: 'Pedidos' })
 
@@ -71,20 +72,17 @@
   <div class="grid h-full w-full grid-cols-[1fr_auto] overflow-hidden">
     <div class="flex flex-col overflow-auto">
       <!-- Header -->
-      <div class="border-b-border flex flex-col gap-4 border-b px-5 py-2">
-        <div class="flex items-center justify-between">
-          <div class="flex items-center gap-2">
-            <h1 class="page-title">Pedidos -</h1>
-            <span class="page-subtitle"
-              >{{ orders.length }} pedidos totales - {{ filteredOrders.length }} mostrados</span
-            >
-          </div>
-          <!-- Search -->
-          <Search v-model="search" placeholder="Buscor por cliente o # pedido" />
-        </div>
-        <!-- Filter tabs -->
-        <OrderFilterTabs v-model="activeFilter" :orders="orders" />
-      </div>
+      <PageHeader
+        title="Pedidos"
+        :subtitle="`${orders.length} pedidos totales - ${filteredOrders.length} mostrados`"
+      >
+        <template #right>
+          <Search id="orders-search" v-model="search" placeholder="Buscor por cliente o # pedido" />
+        </template>
+        <template #bottom>
+          <OrderFilterTabs v-model="activeFilter" :orders="orders" />
+        </template>
+      </PageHeader>
 
       <!-- Orders list -->
       <div class="flex-1 overflow-auto">
