@@ -1,9 +1,9 @@
-import type { IOrder } from '~/types/order.type'
+import type { IOrder, IOrderProduct, IOrderResponse } from '~/types/order.type'
 
 export const orderService = {
-  async getOrders(): Promise<IOrder[]> {
+  async getOrders(): Promise<IOrderResponse[]> {
     const { $api } = useNuxtApp()
-    const response = await $api<IOrder[]>('/orders', {
+    const response = await $api<IOrderResponse[]>('/orders?_embed=order_products', {
       method: 'GET',
     })
     return response
@@ -29,5 +29,38 @@ export const orderService = {
     await $api(`/orders/${orderId}`, {
       method: 'DELETE',
     })
+  },
+  async postOrderProduct(orderId: number, product: IOrderProduct): Promise<IOrderProduct> {
+    const { $api } = useNuxtApp()
+    const response = await $api<IOrderProduct>(`/order_products`, {
+      method: 'POST',
+      body: {
+        orderId,
+        ...product,
+      },
+    })
+    return response
+  },
+  async deleteOrderProduct(orderProductId: number): Promise<void> {
+    const { $api } = useNuxtApp()
+    await $api(`/order_products/${orderProductId}`, {
+      method: 'DELETE',
+    })
+  },
+  async putOrderProduct(
+    orderProductId: number,
+    product: Partial<IOrderProduct>
+  ): Promise<IOrderProduct> {
+    const { $api } = useNuxtApp()
+    const response = await $api<IOrderProduct>(`/order_products/${orderProductId}`, {
+      method: 'PUT',
+      body: product,
+    })
+    return response
+  },
+  async getOrderProducts(orderId: number): Promise<IOrderProduct[]> {
+    const { $api } = useNuxtApp()
+    const response = await $api<IOrderProduct[]>(`/order_products?orderId=${orderId}`)
+    return response
   },
 }

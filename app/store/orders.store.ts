@@ -1,20 +1,28 @@
 import { ORDER_SERVICE_TYPE_CATALOG, ORDER_STATUS_CATALOG } from '~/const/orders.const'
 import { orderService } from '~/services/orders'
-import type { IOrder } from '~/types/order.type'
+import type { IOrder, IOrderProduct, IOrderResponse, IOrderServiceType } from '~/types/order.type'
+import { useProductStore } from './product.store'
 
 export const useOrderStore = defineStore('orders', () => {
   const orders = ref<IOrder[]>([])
   const pending = ref<boolean>(false)
+  const productStore = useProductStore()
+  const products = computed(() => productStore.products)
 
   async function fetchOrders() {
     pending.value = true
     try {
-      const data: IOrder[] = <IOrder[]>await orderService.getOrders()
-      orders.value = data.map((order: IOrder) => ({
+      const data: IOrderResponse[] = <IOrderResponse[]>await orderService.getOrders()
+      orders.value = data.map((order: IOrderResponse) => ({
         ...order,
         Service: ORDER_SERVICE_TYPE_CATALOG[order.service] || null,
         Status: ORDER_STATUS_CATALOG[order.status] || null,
+        OrderProducts: order.order_products.map((op) => ({
+          ...op,
+          Product: products.value.find((p) => p.id === op.productId),
+        })),
       }))
+      console.log(orders.value)
       return data
     } catch (error) {
       console.error('Error fetching orders:', error)
@@ -25,7 +33,28 @@ export const useOrderStore = defineStore('orders', () => {
   }
 
   const addOrder = async (order: IOrder) => {
-    const newOrder = await orderService.postOrder(order)
+    const amount = calculateOrderAmount(order)
+
+    const bodyOrder: IOrder = {
+      status: order.status,
+      service: order.service,
+      customerName: order.customerName,
+      amount: amount,
+      createdAt: new Date().toISOString(),
+      completedAt: '',
+      quantity: order.quantity,
+    }
+
+    const newOrder = await orderService.postOrder(bodyOrder)
+
+    if (order.OrderProducts?.length) {
+      const newProducts = await Promise.all(
+        order.OrderProducts.map((product) => orderService.postOrderProduct(newOrder.id!, product))
+      )
+      newOrder.OrderProducts = newProducts
+    }
+    newOrder.Service = ORDER_SERVICE_TYPE_CATALOG[newOrder.service] || null
+    newOrder.Status = ORDER_STATUS_CATALOG[newOrder.status] || null
     orders.value.push(newOrder)
   }
 
@@ -35,10 +64,65 @@ export const useOrderStore = defineStore('orders', () => {
   }
 
   const updatedOrder = async (id: number, updated: IOrder) => {
-    const updatedOrder = await orderService.putOrder(id, updated)
-    const index = orders.value.findIndex((order) => order.id === updatedOrder.id)
+    const updateOrder: IOrder = {
+      status: updated.status,
+      service: updated.service,
+      customerName: updated.customerName,
+      amount: updated.amount,
+      createdAt: new Date().toISOString(),
+      completedAt: '',
+      quantity: updated.quantity,
+    }
+
+    await orderService.putOrder(id, updateOrder)
+    const index = orders.value.findIndex((order) => order.id === updated.id)
     if (index !== -1) {
-      orders.value[index] = updatedOrder
+      orders.value[index] = {
+        ...orders.value[index],
+        ...updated,
+        Service: ORDER_SERVICE_TYPE_CATALOG[updated.service] || null,
+        Status: ORDER_STATUS_CATALOG[updated.status] || null,
+        amount: calculateOrderAmount(updated),
+      }
+    }
+  }
+
+  const calculateOrderAmount = (order: IOrder): number => {
+    const productsAmount =
+      order.OrderProducts?.reduce((acc, curr) => acc + (curr.totalPrice || 0), 0) || 0
+    const serviceAmount =
+      ORDER_SERVICE_TYPE_CATALOG[order.service as IOrderServiceType]?.serviceCost *
+        (order.quantity || 0) || 0
+    return productsAmount + serviceAmount
+  }
+
+  // Products
+
+  const addProductToOrder = async (orderId: number, product: IOrderProduct) => {
+    const newProduct = await orderService.postOrderProduct(orderId, product)
+    const order = orders.value.find((o) => o.id === orderId)
+    if (order) {
+      order.OrderProducts = order.OrderProducts || []
+      order.OrderProducts.push(newProduct)
+    }
+  }
+
+  const deleteProductFromOrder = async (orderProductId: number) => {
+    await orderService.deleteOrderProduct(orderProductId)
+    const order = orders.value.find((o) => o.OrderProducts?.some((p) => p.id === orderProductId))
+    if (order && order.OrderProducts) {
+      order.OrderProducts = order.OrderProducts.filter((p) => p.id !== orderProductId)
+    }
+  }
+
+  const updateProductInOrder = async (orderProductId: number, updated: IOrderProduct) => {
+    const updatedProduct = await orderService.putOrderProduct(orderProductId, updated)
+    const order = orders.value.find((o) => o.OrderProducts?.some((p) => p.id === orderProductId))
+    if (order && order.OrderProducts) {
+      const index = order.OrderProducts.findIndex((p) => p.id === updatedProduct.id)
+      if (index !== -1) {
+        order.OrderProducts[index] = updatedProduct
+      }
     }
   }
 
@@ -51,5 +135,9 @@ export const useOrderStore = defineStore('orders', () => {
     deleteOrder,
     updatedOrder,
     fetchOrders,
+
+    addProductToOrder,
+    deleteProductFromOrder,
+    updateProductInOrder,
   }
 })
