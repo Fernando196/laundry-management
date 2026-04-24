@@ -346,22 +346,42 @@
     {
       "id": 22,
       "customerName": "Sebastián Reyes",
-      "status": "pending",
+      "status": "ready",
       "service": "wash",
       "amount": 100,
       "comments": null,
       "createdAt": "2026-04-20T09:30:00.000Z",
-      "completedAt": null
+      "completedAt": null,
+      "Service": {
+        "id": 1,
+        "label": "Lavar",
+        "serviceCost": 100,
+        "description": "Servicio de lavado para prendas de ropa. Incluye el uso de detergentes y suavizantes adecuados para cada tipo de tela, garantizando una limpieza efectiva y cuidado de las prendas."
+      },
+      "Status": {
+        "id": 3,
+        "label": "Listo"
+      }
     },
     {
       "id": 23,
       "customerName": "Gabriela Santos",
-      "status": "pending",
+      "status": "completed",
       "service": "express",
       "amount": 300,
       "comments": "Necesita para hoy en la tarde",
       "createdAt": "2026-04-20T10:15:00.000Z",
-      "completedAt": null
+      "completedAt": null,
+      "Service": {
+        "id": 5,
+        "label": "Express",
+        "serviceCost": 300,
+        "description": "Servicio express para prendas de ropa. Garantiza una limpieza y entrega rápida, ideal para situaciones de urgencia."
+      },
+      "Status": {
+        "id": 5,
+        "label": "Completado"
+      }
     },
     {
       "id": 24,
