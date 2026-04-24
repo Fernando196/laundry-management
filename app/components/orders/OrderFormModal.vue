@@ -1,5 +1,10 @@
 <script setup lang="ts">
-  import type { IOrder, IOrderStatusType, IOrderServiceType } from '~/types/order.type'
+  import type {
+    IOrder,
+    IOrderStatusType,
+    IOrderServiceType,
+    IOrderProduct,
+  } from '~/types/order.type'
   import InputWrapper from '../common/InputWrapper.vue'
   import CustomModal from '../common/Modal/CustomModal.vue'
   import {
@@ -12,24 +17,27 @@
   import { useOrderStore } from '~/store/orders.store'
   import MapIcon from '../common/MapIcon/MapIcon.vue'
   import ProductListForm from './OrderProductInput.vue'
-  import type { IProductOrder } from '~/types/products.type'
 
   interface Props {
     order?: IOrder
-    isEdit?: boolean
   }
 
   const props = defineProps<Props>()
   const { close } = useModal()
   const orderStore = useOrderStore()
+  const products = ref<IOrderProduct[]>(
+    props.order?.OrderProducts ? [...props.order.OrderProducts] : []
+  )
 
   const order = ref<IOrder>({
+    id: props.order?.id || undefined,
     status: props.order?.status ?? ORDER_STATUS_TYPE.PENDING,
     customerName: props.order?.customerName ?? '',
     amount: props.order?.amount ?? 0,
     service: props.order?.service ?? ORDER_SERVICE_TYPE.WASH,
     comments: props.order?.comments ?? '',
     createdAt: props.order?.createdAt ?? new Date().toString(),
+    receivedAt: props.order?.receivedAt ?? new Date().toString(),
   })
 
   const optionsServiceType = (Object.keys(ORDER_SERVICE_TYPE_CATALOG) as IOrderServiceType[]).map(
@@ -54,8 +62,34 @@
     order.value.amount = ORDER_SERVICE_TYPE_CATALOG[service as IOrderServiceType].serviceCost
   }
 
+  const addProduct = () => {
+    products.value = [
+      ...products.value,
+      {
+        productId: 0,
+        quantity: 1,
+        totalPrice: 0,
+      },
+    ]
+  }
+  const updateProduct = (id: number, product: IOrderProduct) => {
+    products.value[id] = product
+  }
+  const removeProduct = (id: number) => {
+    products.value.splice(id, 1)
+  }
+
+  const totalProductsPrice = computed(() => {
+    return (
+      products.value.reduce((acc, curr) => {
+        return acc + (curr?.totalPrice || 0)
+      }, 0) + ORDER_SERVICE_TYPE_CATALOG[order.value.service as IOrderServiceType]?.serviceCost
+    )
+  })
+
   const onSave = () => {
-    if (props.isEdit) {
+    order.value.OrderProducts = products.value
+    if (props.order?.id) {
       orderStore.updatedOrder(order.value.id!, order.value)
     } else {
       orderStore.addOrder(order.value)
@@ -63,18 +97,9 @@
     close(order.value)
   }
 
-  const products = ref<IProductOrder[]>([])
-
-  const addProduct = () => {
-    products.value.push({
-      productId: 0,
-      quantity: 1,
-      totalPrice: 0,
-    })
-  }
-  const removeProduct = (id: number) => {
-    products.value.splice(id, 1)
-  }
+  const formattedReceivedAt = computed(() => {
+    return order.value.receivedAt ? new Date(order.value.receivedAt).toISOString().slice(0, 16) : ''
+  })
 </script>
 
 <template>
@@ -106,23 +131,13 @@
         placeholder="Seleccione el tipo de servicio"
         @update:model-value="handleChangeService"
       />
-      <div class="col-span-12 md:col-span-6">
-        <InputWrapper
-          id="order-form-modal-quantity"
-          v-model="order.quantity"
-          label="Cantidad"
-          type="number"
-        />
-        <span class="text-subtle text-xs"
-          >Base: ${{
-            ORDER_SERVICE_TYPE_CATALOG[order.service as IOrderServiceType]?.serviceCost || 0
-          }}
-          x {{ order.quantity || 0 }} = ${{
-            (ORDER_SERVICE_TYPE_CATALOG[order.service as IOrderServiceType]?.serviceCost || 0) *
-            (order.quantity || 0)
-          }}</span
-        >
-      </div>
+      <InputWrapper
+        id="order-form-modal-receivedAt"
+        v-model="formattedReceivedAt"
+        label="Fecha de recepción"
+        type="datetime-local"
+        class="col-span-12 md:col-span-6"
+      />
       <section class="col-span-12 flex flex-col items-start gap-2">
         <div class="flex w-full justify-between">
           <span class="label-input-muted">Aditamientos</span>
@@ -138,9 +153,10 @@
           v-for="(product, index) in products"
           v-else
           :id="index"
-          :key="product.productId"
+          :key="index"
           v-model="products[index]!"
           @remove="removeProduct(index)"
+          @update:model-value="updateProduct(index, $event)"
         />
       </section>
 
@@ -158,16 +174,13 @@
       <div class="flex w-full justify-between gap-2">
         <div class="flex items-center">
           <span class="">Total calculado</span>
-          <p class="ml-2 text-lg font-bold">
-            ${{
-              (ORDER_SERVICE_TYPE_CATALOG[order.service as IOrderServiceType]?.serviceCost || 0) *
-              (order.quantity || 0)
-            }}
-          </p>
+          <p class="ml-2 text-lg font-bold">${{ totalProductsPrice }}</p>
         </div>
         <div class="flex gap-2">
           <button class="btn" @click="close(false)">Cancelar</button>
-          <button class="btn btn-primary" @click="onSave">Crear pedido</button>
+          <button class="btn btn-primary" @click="onSave">
+            {{ props.order?.id ? 'Actualizar' : 'Crear' }} pedido
+          </button>
         </div>
       </div>
     </template>

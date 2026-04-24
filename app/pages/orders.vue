@@ -8,12 +8,15 @@
   import { useOrderStore } from '~/store/orders.store'
   import { ORDER_STATUS_CATALOG } from '~/const/orders.const'
   import PageHeader from '~/components/ui/PageHeader.vue'
+  import OrderFormModal from '~/components/orders/OrderFormModal.vue'
+  import ConfirmModal from '~/components/common/Modal/ConfirmModal.vue'
 
   definePageMeta({ title: 'Pedidos' })
 
+  const { open: openModal } = useModal()
   const orderStore = useOrderStore()
   const { orders } = storeToRefs(orderStore)
-  const { pending } = await useAsyncData('orders', () => orderStore.fetchOrders())
+  await useAsyncData('orders', () => orderStore.fetchOrders())
 
   // ── Filters ────────────────────────────────────────────────────────────────
   type FilterTab = 'all' | IOrderStatusType
@@ -66,6 +69,27 @@
       status: newStatus,
     })
   }
+
+  async function handleOrderEdit(order: IOrder) {
+    const response = await openModal(OrderFormModal, {
+      order,
+    })
+    if (response) {
+      selectedOrder.value = response
+    }
+  }
+  async function handleOrderDelete(order: IOrder) {
+    const confirmed = await openModal(ConfirmModal, {
+      title: 'Confirmar eliminación',
+      message: `¿Eliminar el pedido de ${order.customerName}? Esta acción no se puede deshacer.`,
+      confirmText: 'Sí, eliminar',
+      cancelText: 'Cancelar',
+    })
+    if (confirmed) {
+      await orderStore.deleteOrder(order.id!)
+      selectedOrder.value = null
+    }
+  }
 </script>
 
 <template>
@@ -108,6 +132,8 @@
         v-if="selectedOrder"
         :order="selectedOrder"
         @on-change-status="handleChangeStatus"
+        @on-open-edit="handleOrderEdit"
+        @on-delete="handleOrderDelete"
       />
 
       <!-- Empty state -->

@@ -14,6 +14,8 @@
   const props = defineProps<Props>()
   const emit = defineEmits<{
     onChangeStatus: [order: IOrder, newStatus: IOrderStatusType]
+    onOpenEdit: [order: IOrder]
+    onDelete: [order: IOrder]
   }>()
 
   function formatDateTime(iso: string) {
@@ -72,6 +74,14 @@
       }
     })
   )
+
+  const serviceTotal = computed(() => {
+    const serviceCost = ORDER_SERVICE_TYPE_CATALOG[props.order.service!].serviceCost
+    return serviceCost
+  })
+  const productsTotal = computed(() => {
+    return props.order?.OrderProducts?.reduce((total, op) => total + (op?.totalPrice || 0), 0) || 0
+  })
 </script>
 
 <template>
@@ -88,12 +98,15 @@
       </div>
       <h1 class="text-base font-semibold">{{ order.customerName }}</h1>
       <div class="flex justify-between">
-        <button class="btn btn-sm mt-2 w-max">
+        <button class="btn btn-sm mt-2 w-max" @click="() => emit('onOpenEdit', order)">
           <MapIcon name="edit" class="h-4 w-4" />
           Editar
         </button>
 
-        <button class="btn btn-sm btn-ghost stroke-error">
+        <button
+          class="btn btn-sm btn-ghost stroke-error hover:bg-error-soft!"
+          @click="() => emit('onDelete', order)"
+        >
           <MapIcon name="delete" class="h-4 w-4 fill-none" />
         </button>
       </div>
@@ -125,30 +138,28 @@
       <section class="flex flex-col gap-2">
         <div class="detail-section-label detail-section-border">CONCEPTO</div>
         <div class="flex flex-col">
-          <div class="grid grid-cols-[1fr_auto_auto] gap-2.5 py-1.5 text-[13px]">
+          <div
+            v-for="orderProduct in order.OrderProducts"
+            :key="'order-detail-concept-' + orderProduct.id"
+            class="grid grid-cols-[1fr_auto_auto] gap-2.5 py-1.5 text-[13px]"
+          >
             <div class="flex flex-col">
-              <span class="font-medium">Lavado de ropa</span>
-              <span class="text-subtle text-[11.5px]">$130 x 6kg</span>
+              <span class="font-medium">{{ orderProduct.Product?.name }}</span>
+              <span class="text-subtle text-[11.5px]"
+                >${{ orderProduct.Product?.price }} x {{ orderProduct.quantity }}</span
+              >
             </div>
-            <div class="text-muted min-w-8 text-right font-mono">6</div>
-            <div class="min-w-19 text-right font-mono">$730.00</div>
-          </div>
-          <div class="grid grid-cols-[1fr_auto_auto] gap-2.5 py-1.5 text-[13px]">
-            <div class="flex flex-col">
-              <span class="font-medium">Jabon liquido 1L</span>
-              <span class="text-subtle text-[11.5px]">$35 c/u</span>
-            </div>
-            <div class="text-muted min-w-8 text-right font-mono">x1</div>
-            <div class="min-w-19 text-right font-mono">$35.00</div>
+            <div class="text-muted min-w-8 text-right font-mono">{{ orderProduct.quantity }}</div>
+            <div class="min-w-19 text-right font-mono">${{ orderProduct.totalPrice }}</div>
           </div>
         </div>
         <div class="text-muted border-border grid grid-cols-[1fr_auto] border-t border-dashed pt-2">
           <div class="">Subtotal servicio</div>
-          <div class="text-right font-mono font-medium">${{ order.amount }}</div>
+          <div class="text-right font-mono font-medium">${{ serviceTotal }}</div>
         </div>
         <div class="text-muted grid grid-cols-[1fr_auto]">
           <div class="">Aditamentos</div>
-          <div class="text-right font-mono font-medium">${{ order.amount }}</div>
+          <div class="text-right font-mono font-medium">${{ productsTotal }}</div>
         </div>
         <div class="border-border grid grid-cols-[1fr_auto] border-t pt-2">
           <div class="font-bold">Total a cobrar</div>
