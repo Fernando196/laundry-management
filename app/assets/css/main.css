@@ -23,6 +23,7 @@
   --color-content-bg: oklch(0.995 0.003 240);
 
   --color-text: oklch(0.22 0.02 250);
+  --color-text-subtle: oklch(0.62 0.012 250);
   --color-muted: oklch(0.48 0.015 250);
   --color-muted-bg: oklch(0.955 0.007 240);
   --color-subtle: oklch(0.62 0.012 250);
@@ -44,8 +45,10 @@
   --color-success-bg: oklch(0.58 0.14 155);
   --color-warning: oklch(0.5 0.13 60);
   --color-warning-bg: oklch(0.97 0.04 80);
-  --color-error: oklch(0.5 0.16 40);
+  --color-error: oklch(0.58 0.2 25);
   --color-error-bg: oklch(0.96 0.03 40);
+  --color-error-text: oklch(0.48 0.19 25);
+  --color-error-soft: oklch(0.97 0.03 25);
 
   /* 📦 Estados de pedidos */
   --color-status-in-process: oklch(0.42 0.16 230);
@@ -89,11 +92,17 @@ body {
   line-height: 1.5;
 }
 
+/* Buttons */
 .btn {
   @apply border-border bg-surface text-text inline-flex cursor-pointer items-center gap-1.5 rounded-md border border-solid p-[7px_12px] text-[13px] font-medium text-nowrap shadow-xs;
 }
 .btn:hover {
   @apply bg-surface-hover border-border-strong;
+}
+.btn .ico {
+  width: 14px;
+  height: 14px;
+  stroke: currentColor;
 }
 .btn-primary {
   @apply bg-primary border-primary hover:bg-primary-dark active:bg-primary-darker focus:ring-primary cursor-pointer text-white;
@@ -104,15 +113,6 @@ body {
 }
 .btn-ghost {
   @apply border-transparent bg-transparent shadow-none;
-}
-
-.page-title {
-  @apply text-xl font-semibold;
-  letter-spacing: -0.02em;
-  margin: 0 0 4px;
-}
-.page-subtitle {
-  @apply text-muted m-0 text-[13.5px];
 }
 
 .badge {
@@ -140,4 +140,16 @@ body {
 }
 .badge-completed {
   @apply bg-status-completed-bg text-status-completed border-status-completed;
+}
+
+/* Inputs */
+
+.input-label-muted {
+  @apply text-muted truncate text-[12.5px] font-medium whitespace-nowrap;
+}
+.input-content {
+  @apply border-border focus:border-primary shadow-soft mt-2 w-full rounded-sm border bg-white px-2 py-2 outline-none;
+}
+.input-content.input-disabled {
+  @apply bg-muted-bg text-subtle cursor-not-allowed outline-none;
 }
