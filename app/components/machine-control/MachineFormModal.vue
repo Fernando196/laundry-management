@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import type { IMachine, IMachineType, MachineStatusType } from '~/types/machine.type'
+  import type { IMachine, IMachineStatusType } from '~/types/machine.type'
   import CustomModal from '../common/Modal/CustomModal.vue'
   import InputWrapper from '../common/InputWrapper.vue'
   import DropdownLabel from '../common/Dropdown/DropdownLabel.vue'
@@ -35,16 +35,14 @@
     { id: MACHINE_TYPES.DRYER, label: 'Secadora' },
   ]
 
-  const optionsMachineStatus = (Object.keys(MACHINE_STATUS_CATALOG) as MachineStatusType[]).map(
+  const optionsMachineStatus = (Object.keys(MACHINE_STATUS_CATALOG) as IMachineStatusType[]).map(
     (key) => ({ id: key, label: MACHINE_STATUS_CATALOG[key].label })
   )
 
   const title = computed(() => (props.isEdit ? 'Editar máquina' : 'Nueva máquina'))
 
   function onSave() {
-    const payload = props.isEdit
-      ? { ...form.value, id: props.machine!.id }
-      : form.value
+    const payload = props.isEdit ? { ...form.value, id: props.machine!.id } : form.value
     close(payload)
   }
 </script>
@@ -53,6 +51,7 @@
   <CustomModal :title="title" @close="close(false)">
     <div class="grid w-150 grid-cols-12 content-start gap-4 p-5">
       <InputWrapper
+        id="machine-form-modal-name"
         v-model="form.name"
         label="Nombre de la máquina"
         type="text"
@@ -60,13 +59,15 @@
         class="col-span-8"
       />
       <DropdownLabel
-        v-model="(form.type as IMachineType)"
+        id="machine-form-modal-type"
+        v-model="form.type"
         :options="optionsMachineType"
         label="Tipo"
         class="col-span-4"
       />
 
       <InputWrapper
+        id="machine-form-modal-brand"
         v-model="form.brand"
         label="Marca"
         type="text"
@@ -74,6 +75,7 @@
         class="col-span-6"
       />
       <InputWrapper
+        id="machine-form-modal-model"
         v-model="form.model"
         label="Modelo"
         type="text"
@@ -82,6 +84,7 @@
       />
 
       <InputWrapper
+        id="machine-form-modal-serialNumber"
         v-model="form.serialNumber"
         label="Número de serie"
         type="text"
@@ -89,6 +92,7 @@
         class="col-span-6"
       />
       <InputWrapper
+        id="machine-form-modal-color"
         v-model="form.color"
         label="Color"
         type="text"
@@ -97,6 +101,7 @@
       />
 
       <InputWrapper
+        id="machine-form-modal-capacityKg"
         v-model="form.capacityKg"
         label="Capacidad (kg)"
         type="number"
@@ -104,6 +109,7 @@
         class="col-span-4"
       />
       <InputWrapper
+        id="machine-form-modal-timeCycle"
         v-model="form.timeCycle"
         label="Duración ciclo (min)"
         type="number"
@@ -111,6 +117,7 @@
         class="col-span-4"
       />
       <InputWrapper
+        id="machine-form-modal-location"
         v-model="form.location"
         label="Ubicación"
         type="text"
@@ -119,12 +126,14 @@
       />
 
       <DropdownLabel
-        v-model="(form.status as MachineStatusType)"
+        id="machine-form-modal-status"
+        v-model="form.status"
         :options="optionsMachineStatus"
         label="Estado"
         class="col-span-6"
       />
       <InputWrapper
+        id="machine-form-modal-buyDate"
         v-model="form.buyDate"
         label="Fecha de compra"
         type="date"
@@ -132,12 +141,14 @@
       />
 
       <InputWrapper
+        id="machine-form-modal-lastMaintenanceDate"
         v-model="form.lastMaintenanceDate"
         label="Último mantenimiento"
         type="date"
         class="col-span-6"
       />
       <InputWrapper
+        id="machine-form-modal-nextMaintenanceDate"
         v-model="form.nextMaintenanceDate"
         label="Próximo mantenimiento"
         type="date"
@@ -145,6 +156,7 @@
       />
 
       <InputWrapper
+        id="machine-form-modal-description"
         v-model="form.description"
         label="Descripción / Notas"
         type="text"

@@ -4,11 +4,20 @@ import type { IMachine } from '~/types/machine.type'
 
 export const useMachineStore = defineStore('machine', () => {
   const machines = ref<IMachine[]>([])
+  const peding = ref<boolean>(false)
 
   async function fetchMachines() {
-    const data = await machineService.getMachines()
-    machines.value = data
-    return data
+    peding.value = true
+    try {
+      const data = await machineService.getMachines()
+      machines.value = data
+      return data
+    } catch (error) {
+      console.error('Error fetching machines:', error)
+      throw error
+    } finally {
+      peding.value = false
+    }
   }
 
   async function addMachine(machine: Omit<IMachine, 'id'>) {

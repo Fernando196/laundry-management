@@ -1,7 +1,8 @@
 import type { MACHINE_STATUS, MACHINE_TYPES } from '~/const/machine.const'
 
 export type IMachineType = (typeof MACHINE_TYPES)[keyof typeof MACHINE_TYPES]
-export type MachineStatusType = (typeof MACHINE_STATUS)[keyof typeof MACHINE_STATUS]
+export type IMachineStatusType = (typeof MACHINE_STATUS)[keyof typeof MACHINE_STATUS]
+export type IMachineFilterTab = 'all' | IMachineStatusType
 
 export interface IMachine {
   id: number
@@ -13,7 +14,7 @@ export interface IMachine {
   serialNumber?: string
   capacityKg?: number
   location?: string
-  status: MachineStatusType
+  status: IMachineStatusType
   timeCycle: number // duración estándar del ciclo en minutos
   buyDate?: string // ISO date string
   lastMaintenanceDate?: string
@@ -27,7 +28,7 @@ export interface IMachine {
 }
 
 export type IMachineEstatusCatalog = Record<
-  MachineStatusType,
+  IMachineStatusType,
   {
     label: string
     classChip?: string

@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import InputWrapper from '../common/InputWrapper.vue';
+  import InputWrapper from '../common/InputWrapper.vue'
 
-
-const machineCycle = {
+  const machineCycle = {
     clothes: 0,
     detergent: 0,
     bleach: 0,
@@ -10,39 +9,72 @@ const machineCycle = {
     powderDetergent: 0,
     liquidDetergent: 0,
     detergentPods: 0,
-}
+  }
 
-const { close } = useModal();
+  const { close } = useModal()
 
-const onSave = () => {
-    close(machineCycle);
-}
-
+  const onSave = () => {
+    close(machineCycle)
+  }
 </script>
 <template>
-    <div class="flex flex-col gap-2 w-120 bg-white px-8 py-4 rounded-2xl">
-        <h1>Detalle del ciclo</h1>
-        <div class="grid grid-cols-12 gap-4">
-            <InputWrapper class="col-span-6" type="number" label="Total de ropa:" v-model="machineCycle.clothes" />
-            <InputWrapper class="col-span-6" type="number" label="Total de detergente:"
-                v-model="machineCycle.detergent" />
-            <InputWrapper class="col-span-6" type="number" label="Total de blanqueador:"
-                v-model="machineCycle.bleach" />
-            <InputWrapper class="col-span-6" type="number" label="Total de quitamanchas:"
-                v-model="machineCycle.stainRemover" />
-            <InputWrapper class="col-span-6" type="number" label="Total de Jabon en polvo:"
-                v-model="machineCycle.powderDetergent" />
-            <InputWrapper class="col-span-6" type="number" label="Total de jabon liquido:"
-                v-model="machineCycle.liquidDetergent" />
-        </div>
-
-        <div class="flex justify-end gap-2 mt-2">
-            <button @click="close(false)" class="focus:outline-none px-5 py-1 bg-accent text-white rounded-sm">
-                Cancelar
-            </button>
-            <button @click="onSave" class="focus:outline-none px-5 py-1 bg-primary text-white rounded-sm">
-                Iniciar
-            </button>
-        </div>
+  <div class="flex w-120 flex-col gap-2 rounded-2xl bg-white px-8 py-4">
+    <h1>Detalle del ciclo</h1>
+    <div class="grid grid-cols-12 gap-4">
+      <InputWrapper
+        id="clothes"
+        v-model="machineCycle.clothes"
+        class="col-span-6"
+        type="number"
+        label="Total de ropa:"
+      />
+      <InputWrapper
+        id="detergent"
+        v-model="machineCycle.detergent"
+        class="col-span-6"
+        type="number"
+        label="Total de detergente:"
+      />
+      <InputWrapper
+        id="bleach"
+        v-model="machineCycle.bleach"
+        class="col-span-6"
+        type="number"
+        label="Total de blanqueador:"
+      />
+      <InputWrapper
+        id="stainRemover"
+        v-model="machineCycle.stainRemover"
+        class="col-span-6"
+        type="number"
+        label="Total de quitamanchas:"
+      />
+      <InputWrapper
+        id="powderDetergent"
+        v-model="machineCycle.powderDetergent"
+        class="col-span-6"
+        type="number"
+        label="Total de Jabon en polvo:"
+      />
+      <InputWrapper
+        id="liquidDetergent"
+        v-model="machineCycle.liquidDetergent"
+        class="col-span-6"
+        type="number"
+        label="Total de jabon liquido:"
+      />
     </div>
+
+    <div class="mt-2 flex justify-end gap-2">
+      <button
+        class="bg-accent rounded-sm px-5 py-1 text-white focus:outline-none"
+        @click="close(false)"
+      >
+        Cancelar
+      </button>
+      <button class="bg-primary rounded-sm px-5 py-1 text-white focus:outline-none" @click="onSave">
+        Iniciar
+      </button>
+    </div>
+  </div>
 </template>
