@@ -1,32 +1,40 @@
 <script setup lang="ts">
-  import type { IProductOrder } from '~/types/products.type'
   import MapIcon from '../common/MapIcon/MapIcon.vue'
   import DropdownLabel from '../common/Dropdown/DropdownLabel.vue'
   import { useProductStore } from '~/store/product.store'
+  import type { IOrderProduct } from '~/types/order.type'
 
   interface Props {
     id: number
   }
   defineProps<Props>()
   defineEmits(['remove'])
-  const product = defineModel<IProductOrder>({ required: true })
+  const product = defineModel<IOrderProduct>({ required: true })
 
   const productStore = useProductStore()
   await useAsyncData('products-orders', () => productStore.fetchProducts())
   const products = computed(() => productStore.products)
 
   const productsOptions = computed(() =>
-    products.value.map((product) => ({
-      label: product.name + ' - $' + product.price + ' MXN',
-      id: product.id,
+    products.value.map((p) => ({
+      label: p.name + ' - $' + p.price + ' MXN',
+      id: p.id,
     }))
   )
-
-  const totalPrice = computed(() => {
-    const selectedProduct = products.value.find((p) => p.id === product.value.productId)
-    if (!selectedProduct) return 0
-    return `$ ${selectedProduct.price * Number(product.value.quantity || 0)}`
-  })
+  const selectedProduct = computed(() =>
+    products.value.find((p) => p.id === product.value.productId)
+  )
+  function handleProductSelect(productId: number | string | null) {
+    product.value = {
+      ...product.value,
+      productId: productId as number,
+      totalPrice: products.value.find((p) => p.id === productId)?.price || 0,
+    }
+  }
+  function handleChangeQuantity() {
+    if (!selectedProduct.value) return
+    product.value.totalPrice = (product.value.quantity || 0) * selectedProduct.value.price
+  }
 </script>
 <template>
   <div
@@ -34,8 +42,9 @@
   >
     <DropdownLabel
       :id="`order-dropdown-form-${id}`"
-      v-model="product.productId"
+      :model-value="product.productId"
       :options="productsOptions"
+      @update:model-value="handleProductSelect"
     />
 
     <input
@@ -43,10 +52,11 @@
       v-model="product.quantity"
       type="text"
       class="input-content"
+      @change="handleChangeQuantity"
     />
     <input
       :id="'order-product-input-' + id + '-total-price'"
-      v-model="totalPrice"
+      v-model="product.totalPrice"
       type="text"
       class="input-content input-disabled text-right"
       readonly
