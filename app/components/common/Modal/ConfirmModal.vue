@@ -5,7 +5,8 @@
   interface Props {
     title: string
     icon?: Icons
-    description?: string
+    message?: string
+    cancelText?: string
     confirmText?: string
   }
 
@@ -15,20 +16,24 @@
   const { close } = useModal()
 </script>
 <template>
-  <div class="relative flex h-auto w-auto flex-col rounded-2xl bg-white text-black">
-    <button class="absolute top-3 right-5 h-6 w-6 cursor-pointer" @click="$emit('close')">
-      <MapIcon name="close" class="stroke-black" />
-    </button>
-
-    <main class="flex flex-1 flex-col px-3 text-center">
-      <h2 class="text-xl">{{ title }}</h2>
-      <span v-if="description" class="mt-4 text-neutral-500">{{ description }}</span>
-    </main>
-    <footer class="flex w-full justify-end gap-3 border-t border-t-gray-200 px-3 py-4">
-      <button class="rounded-md bg-gray-200 px-5 py-1 text-gray-500" @click="close(false)">
-        Cancelar
+  <div class="relative flex max-h-[90vh] w-auto flex-col rounded-2xl bg-white">
+    <header class="flex shrink-0 items-center justify-between rounded-t-2xl bg-white p-5 font-bold">
+      <h2 class="text-[16px] font-semibold">{{ title }}</h2>
+      <button class="h-6 w-6 cursor-pointer" @click="$emit('close')">
+        <MapIcon name="close" class="stroke-muted fill-none" />
       </button>
-      <button class="bg-primary rounded-md px-5 py-1 text-white" @click="close(true)">
+    </header>
+
+    <main class="min-h-0 flex-1 overflow-y-auto px-5 pb-5">
+      <span v-if="message" class="mt-4 text-sm text-neutral-500">{{ message }}</span>
+    </main>
+    <footer
+      class="bg-subtle-bg flex w-full shrink-0 justify-end gap-3 rounded-b-2xl border-t border-gray-200 px-5.5 py-3.5"
+    >
+      <button class="btn" @click="close(false)">
+        {{ cancelText ?? 'Cancelar' }}
+      </button>
+      <button class="btn btn-primary" @click="close(true)">
         {{ confirmText ?? 'Confirmar' }}
       </button>
     </footer>
