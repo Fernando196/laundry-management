@@ -25,6 +25,7 @@
       :disabled="disabled"
       :type="type"
       class="input-content"
+      autocomplete="off"
     />
     <textarea
       v-else
@@ -33,6 +34,7 @@
       :placeholder="placeholder"
       :rows="rows || 3"
       class="input-content resize-none"
+      autocomplete="off"
     />
   </div>
 </template>
