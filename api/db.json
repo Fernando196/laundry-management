@@ -132,6 +132,28 @@
       "id": 7
     }
   ],
+  "machine-brands": [
+    {
+      "id": 1,
+      "name": "LG"
+    },
+    {
+      "id": 2,
+      "name": "Samsung"
+    },
+    {
+      "id": 3,
+      "name": "Whirlpool"
+    },
+    {
+      "id": 4,
+      "name": "Mabe"
+    },
+    {
+      "id": 5,
+      "name": "Electrolux"
+    }
+  ],
   "orders": [
     {
       "status": "pending",
@@ -143,16 +165,16 @@
       "id": 1
     },
     {
-      "status": "pending",
+      "status": "ready",
       "service": "wash",
       "customerName": "Cecilia Mendoza",
       "amount": 85,
-      "createdAt": "2026-04-24T23:24:17.040Z",
+      "createdAt": "2026-04-25T06:50:08.147Z",
       "completedAt": "",
       "id": 2
     }
   ],
-  "order_products": [
+  "order-products": [
     {
       "orderId": 1,
       "productId": 2,
@@ -201,105 +223,6 @@
       "minStock": 10,
       "price": 85,
       "description": "Detergente líquido de alta concentración para uso industrial."
-    },
-    {
-      "id": 2,
-      "name": "Suavizante de telas",
-      "category": "suavizante",
-      "brand": "Downy",
-      "unit": "litro",
-      "stock": 30,
-      "minStock": 8,
-      "price": 65,
-      "description": "Suavizante con fragancia larga duración."
-    },
-    {
-      "id": 3,
-      "name": "Blanqueador de ropa",
-      "category": "blanqueador",
-      "brand": "Clorox",
-      "unit": "litro",
-      "stock": 20,
-      "minStock": 5,
-      "price": 45,
-      "description": "Blanqueador con cloro activo para ropa blanca."
-    },
-    {
-      "id": 4,
-      "name": "Detergente en polvo",
-      "category": "detergente",
-      "brand": "Persil",
-      "unit": "kg",
-      "stock": 60,
-      "minStock": 15,
-      "price": 120,
-      "description": "Detergente en polvo para lavadoras industriales."
-    },
-    {
-      "id": 5,
-      "name": "Bolsas laundry medianas",
-      "category": "empaque",
-      "brand": "GenericPro",
-      "unit": "paquete (100 pzas)",
-      "stock": 8,
-      "minStock": 3,
-      "price": 95,
-      "description": "Bolsas transparentes para entrega de ropa limpia."
-    },
-    {
-      "id": 6,
-      "name": "Ganchos plásticos",
-      "category": "empaque",
-      "brand": "GenericPro",
-      "unit": "paquete (50 pzas)",
-      "stock": 12,
-      "minStock": 4,
-      "price": 55,
-      "description": "Ganchos resistentes para ropa planchada."
-    },
-    {
-      "id": 7,
-      "name": "Quitamanchas en spray",
-      "category": "especial",
-      "brand": "Vanish",
-      "unit": "pieza (500ml)",
-      "stock": 15,
-      "minStock": 5,
-      "price": 78,
-      "description": "Removedor de manchas difíciles pre-lavado."
-    },
-    {
-      "id": 8,
-      "name": "Neutralizador de olores",
-      "category": "especial",
-      "brand": "OdorGone",
-      "unit": "litro",
-      "stock": 4,
-      "minStock": 5,
-      "price": 110,
-      "description": "Elimina olores fuertes en prendas. Stock bajo."
-    },
-    {
-      "id": 9,
-      "name": "Detergente para ropa delicada",
-      "category": "detergente",
-      "brand": "Woolite",
-      "unit": "litro",
-      "stock": 18,
-      "minStock": 6,
-      "price": 95,
-      "description": "Fórmula suave para telas delicadas y lana."
-    },
-    {
-      "id": 10,
-      "name": "Etiquetas de identificación",
-      "category": "empaque",
-      "brand": "GenericPro",
-      "unit": "rollo (500 pzas)",
-      "stock": 7,
-      "minStock": 2,
-      "price": 40,
-      "description": "Etiquetas autoadheribles para identificar prendas por cliente."
     }
   ]
 }
