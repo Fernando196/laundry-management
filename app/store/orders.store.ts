@@ -1,9 +1,10 @@
 import { ORDER_SERVICE_TYPE_CATALOG, ORDER_STATUS_CATALOG } from '~/const/orders.const'
-import { orderService } from '~/services/orders'
+import { OrderService } from '~/services/orders'
 import type { IOrder, IOrderProduct, IOrderResponse, IOrderServiceType } from '~/types/order.type'
 import { useProductStore } from './product.store'
 
 export const useOrderStore = defineStore('orders', () => {
+  const orderService = OrderService()
   const orders = ref<IOrder[]>([])
   const pending = ref<boolean>(false)
   const productStore = useProductStore()
@@ -22,7 +23,6 @@ export const useOrderStore = defineStore('orders', () => {
           Product: products.value.find((p) => p.id === op.productId),
         })),
       }))
-      console.log(orders.value)
       return data
     } catch (error) {
       console.error('Error fetching orders:', error)
@@ -43,6 +43,7 @@ export const useOrderStore = defineStore('orders', () => {
       createdAt: new Date().toISOString(),
       completedAt: '',
       quantity: order.quantity,
+      receivedAt: order.receivedAt,
     }
 
     const newOrder = await orderService.postOrder(bodyOrder)
@@ -72,6 +73,7 @@ export const useOrderStore = defineStore('orders', () => {
       createdAt: new Date().toISOString(),
       completedAt: '',
       quantity: updated.quantity,
+      receivedAt: updated.receivedAt,
     }
 
     await orderService.putOrder(id, updateOrder)

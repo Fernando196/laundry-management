@@ -1,7 +1,8 @@
-import { productService } from '~/services/product'
+import { ProductService } from '~/services/product'
 import type { IProduct } from '~/types/products.type'
 
 export const useProductStore = defineStore('products', () => {
+  const productService = ProductService()
   const products = ref<IProduct[]>([])
   const pending = ref<boolean>(false)
 

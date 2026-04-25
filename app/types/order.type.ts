@@ -18,12 +18,12 @@ export interface IOrder {
   assignedMachine?: number
   weight?: number
   quantity?: number
+  receivedAt: string
 
   Status?: IOrderStatus
   Service?: IOrderService
   OrderProducts?: IOrderProduct[]
   Machine?: IMachine
-  receivedAt: string
 }
 
 export interface IOrderProduct {
@@ -46,6 +46,7 @@ export interface IOrderResponse {
   assignedMachine: number
   weight: number
   quantity: number
+  receivedAt: string
 
   order_products: IOrderProduct[]
 }
