@@ -22,4 +22,5 @@ export const CAT_ICONS = {
   SOAP: 'soap',
   MENU: 'menu',
   LABEL: 'label',
+  ALERT: 'alert',
 } as const

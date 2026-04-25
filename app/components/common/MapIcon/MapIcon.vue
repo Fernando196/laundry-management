@@ -26,6 +26,7 @@
     [CAT_ICONS.SOAP]: defineAsyncComponent(() => import('./icons/SoapIcon.vue')),
     [CAT_ICONS.MENU]: defineAsyncComponent(() => import('./icons/MenuIcon.vue')),
     [CAT_ICONS.LABEL]: defineAsyncComponent(() => import('./icons/LabelIcon.vue')),
+    [CAT_ICONS.ALERT]: defineAsyncComponent(() => import('./icons/AlertIcon.vue')),
   }
   defineProps<{
     name: Icons
