@@ -93,7 +93,7 @@
 </script>
 
 <template>
-  <div class="grid h-full w-full grid-cols-[1fr_auto] overflow-hidden">
+  <div class="grid h-full w-full grid-cols-[1fr_auto] gap-5 overflow-hidden">
     <div class="flex flex-col overflow-auto">
       <!-- Header -->
       <PageHeader
@@ -104,7 +104,7 @@
           <Search id="orders-search" v-model="search" placeholder="Buscor por cliente o # pedido" />
         </template>
         <template #bottom>
-          <OrderFilterTabs v-model="activeFilter" :orders="orders" />
+          <OrderFilterTabs v-model="activeFilter" :orders="orders" class="mb-2" />
         </template>
       </PageHeader>
 
@@ -112,7 +112,7 @@
       <div class="flex-1 overflow-auto">
         <div
           v-if="filteredOrders.length"
-          class="grid h-full w-full grid-cols-12 content-start gap-4 p-4"
+          class="grid h-full w-full grid-cols-12 content-start gap-4"
         >
           <OrderRow
             v-for="order in filteredOrders"
@@ -127,7 +127,7 @@
       </div>
     </div>
 
-    <div class="hidden overflow-hidden p-8 sm:flex sm:w-80 xl:w-120">
+    <div class="hidden overflow-hidden sm:flex sm:w-80 xl:w-120">
       <OrderDetailPanel
         v-if="selectedOrder"
         :order="selectedOrder"

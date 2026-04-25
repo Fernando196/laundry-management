@@ -22,7 +22,7 @@
   @reference '~/assets/css/main.css';
 
   .page-header {
-    @apply border-b-border flex flex-col gap-4 border-b px-5 py-2;
+    @apply flex flex-col gap-4;
   }
   .page-header-content {
     @apply flex items-center justify-between;

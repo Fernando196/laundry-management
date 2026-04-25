@@ -82,6 +82,8 @@
 
   --font-sans: 'Geist', ui-sans-serif, system-ui, -apple-system, sans-serif;
   --font-mono: 'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  --transition-border: border-color 0.1s, box-shadow 0.1s;
 }
 
 body {

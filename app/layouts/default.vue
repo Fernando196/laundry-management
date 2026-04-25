@@ -29,7 +29,9 @@
     >
       <AsideMenu />
     </div>
-    <main class="bg-content-bg col-span-2 overflow-x-hidden overflow-y-auto md:col-span-1">
+    <main
+      class="bg-content-bg col-span-2 overflow-x-hidden overflow-y-auto p-[28px_32px_48px] md:col-span-1"
+    >
       <slot />
     </main>
     <button
