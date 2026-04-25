@@ -55,7 +55,10 @@
         <MachineFilterTabs v-model="activeFilter" :machines="machines" />
       </template>
     </PageHeader>
-    <div v-if="!pending && machines.length" class="grid flex-1 grid-cols-12 gap-4">
+    <div
+      v-if="!pending && machines.length"
+      class="grid flex-1 grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-3.5"
+    >
       <MachineCard
         v-for="machine in machines"
         :key="machine.id + 'machine-card'"

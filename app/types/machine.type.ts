@@ -8,15 +8,15 @@ export interface IMachine {
   id: number
   name: string
   type: IMachineType
+  status: IMachineStatusType
   brand: string
   model?: string
-  color?: string
   serialNumber?: string
-  capacityKg?: number
   location?: string
-  status: IMachineStatusType
-  timeCycle: number // duración estándar del ciclo en minutos
-  buyDate?: string // ISO date string
+  capacityKg?: number
+  timeCycle?: number
+
+  buyDate?: string
   lastMaintenanceDate?: string
   nextMaintenanceDate?: string
   description?: string
@@ -25,13 +25,19 @@ export interface IMachine {
   updatedAt?: string
   updatedBy?: string
   image?: string
+
+  Status: IMachineStatus
+  Brand: IMachineBrand
 }
 
-export type IMachineEstatusCatalog = Record<
+export interface IMachineBrand {
+  id: number
+  name: string
+}
+
+export type IMachineStatus = { id: number; label: string; description: string }
+export type IMachineStatusClass = Record<
   IMachineStatusType,
-  {
-    label: string
-    classChip?: string
-    class: string
-  }
+  { class: string; dot: string; messageIconCard: string }
 >
+export type IMachineEstatusCatalog = Record<IMachineStatusType, IMachineStatus>

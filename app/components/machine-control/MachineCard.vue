@@ -1,7 +1,8 @@
 <script setup lang="ts">
-  import type { IMachine, MachineStatusType } from '~/types/machine.type'
+  import type { IMachine, IMachineStatusType } from '~/types/machine.type'
+  import { MACHINE_STATUS, MACHINE_STATUS_CLASS } from '~/const/machine.const'
   import MapIcon from '../common/MapIcon/MapIcon.vue'
-  import { MACHINE_STATUS_CATALOG, MACHINE_STATUS } from '~/const/machine.const'
+  import type { Icons } from '~/types/icons.type'
 
   interface Props {
     machine: IMachine
@@ -14,79 +15,67 @@
     details: [machine: IMachine]
   }>()
 
-  const machineTypeSpanish = {
-    washer: 'Lavadora',
-    dryer: 'Secadora',
-  }
-
-  const machineStatus = computed(() => MACHINE_STATUS_CATALOG[props.machine.status] || null)
   const isDisabled = computed(() =>
-    [MACHINE_STATUS.MAINTENANCE, MACHINE_STATUS['OUT-OF-SERVICE'] as MachineStatusType].includes(
+    [MACHINE_STATUS.MAINTENANCE, MACHINE_STATUS['OUT-OF-SERVICE'] as IMachineStatusType].includes(
       props.machine.status
     )
   )
   const isRunning = computed(() => props.machine.status === 'running')
+
+  const errorMachine = computed(() => {
+    if (props.machine.status === MACHINE_STATUS.MAINTENANCE) {
+      return {
+        status: MACHINE_STATUS.MAINTENANCE,
+        icon: 'config' as Icons,
+        message: 'La máquina está en mantenimiento.',
+      }
+    }
+    if (props.machine.status === MACHINE_STATUS['OUT-OF-SERVICE']) {
+      return {
+        status: MACHINE_STATUS['OUT-OF-SERVICE'],
+        icon: 'alert' as Icons,
+        message: 'La máquina está fuera de servicio.',
+      }
+    }
+    return null
+  })
 </script>
 <template>
   <div
-    class="col-span-12 flex flex-col overflow-hidden rounded-2xl border border-b-0 border-neutral-100 bg-white shadow-sm sm:col-span-6 md:col-span-4 lg:col-span-3"
+    class="border-border bg-surface transition-border hover:border-border-strong relative flex flex-col overflow-hidden rounded-lg border hover:shadow-sm"
   >
-    <!-- Header -->
-    <div class="flex items-center justify-between px-4 pt-4">
-      <span class="text-xs font-medium tracking-wide text-neutral-400 uppercase">
-        {{ machineTypeSpanish[machine.type] }}
+    <div class="text-subtle relative grid aspect-4/3 place-items-center">
+      <span
+        class="text-subtle border-border absolute top-3 left-3 flex items-center gap-1 rounded-sm border bg-white px-2 py-0.5 text-[11px] font-medium"
+      >
+        <span class="h-2 w-2 rounded-full" :class="MACHINE_STATUS_CLASS[machine.status].dot" />
+        {{ machine.Status.label }}
       </span>
-      <span :class="machineStatus?.class" class="rounded-full px-2 py-0.5 text-xs font-semibold">
-        {{ machineStatus?.label }}
-      </span>
-    </div>
-
-    <!-- Image -->
-    <div class="mx-auto h-70 w-70 px-6 py-4">
-      <img
-        :src="machine.image"
-        :alt="machine.name"
-        class="aspect-square w-full rounded-xl object-contain"
-      />
-    </div>
-
-    <!-- Info -->
-    <div class="flex flex-col gap-0.5 px-4 pb-4">
-      <div class="flex items-center gap-2">
-        <span class="text-base font-semibold text-neutral-900">{{ machine.name }}</span>
-        <button class="h-6 w-6 cursor-pointer outline-none" @click="$emit('details', machine)">
-          <MapIcon name="info" class="stroke-neutral-900" />
-        </button>
+      <div class="text-subtle border-border border px-2 py-1 font-mono text-[11px]">
+        FOTO · LAVADORA · M-{{ machine.id }}
       </div>
-      <span class="text-sm text-neutral-400"
-        >{{ machine.brand }} · {{ machine.timeCycle }} min</span
-      >
     </div>
-
-    <!-- Actions -->
-    <div class="flex divide-x divide-neutral-100 border-t border-neutral-100">
-      <button
-        class="flex-1 py-3 text-sm font-medium transition-colors"
-        :class="{
-          'cursor-pointer bg-red-500 text-white hover:bg-white hover:text-red-500': isRunning,
-          'cursor-pointer bg-green-600 text-white hover:bg-white hover:text-green-600':
-            !isRunning && !isDisabled,
-          'cursor-default bg-gray-300 text-gray-500': isDisabled,
-        }"
-        @click="!isDisabled ? $emit('changeCycle', machine) : null"
+    <div class="flex-1 px-4 py-3.5">
+      <div class="mb-2.5 flex items-center justify-between">
+        <div class="flex flex-col">
+          <span class="text-[13px] font-semibold">{{ machine.name }} {{ machine.id }}</span>
+          <span class="text-muted font-mono text-[12px] uppercase"
+            >{{ machine.brand }} · {{ machine.model }} · {{ machine.capacityKg }}</span
+          >
+        </div>
+      </div>
+      <div
+        v-if="errorMachine"
+        class="flex gap-1.5"
+        :class="MACHINE_STATUS_CLASS[errorMachine.status].messageIconCard"
       >
-        {{ isRunning ? 'Detener Ciclo' : 'Iniciar Ciclo' }}
-      </button>
-      <button
-        class="flex-1 cursor-pointer bg-orange-400 py-3 text-sm font-medium text-white transition-colors hover:bg-white hover:text-orange-400"
-        @click="$emit('changeState', machine)"
-      >
-        Cambiar estado
-      </button>
-      <!-- <button @click="$emit('details', machine)"
-                class="flex-1 py-3 text-sm font-medium text-neutral-700 transition-colors hover:bg-neutral-50  cursor-pointer">
-                Detalles
-            </button> -->
+        <MapIcon :name="errorMachine.icon" class="h-4 w-4" />
+        <span class="text-xs">{{ errorMachine.message }}</span>
+      </div>
+    </div>
+    <div class="flex gap-2 px-4 pb-3.5">
+      <button class="btn btn-sm btn-primary flex-1 justify-center">Iniciar ciclo</button>
+      <button class="btn btn-sm flex-1 justify-center">Cambiar estado</button>
     </div>
   </div>
 </template>

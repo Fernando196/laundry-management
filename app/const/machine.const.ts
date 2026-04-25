@@ -1,9 +1,9 @@
-import type { IMachineEstatusCatalog } from '~/types/machine.type'
-import { ORDER_STATUS_TYPE } from './orders.const'
+import type { IMachineEstatusCatalog, IMachineStatusClass } from '~/types/machine.type'
 
 export const MACHINE_TYPES = {
   WASHER: 'washer',
   DRYER: 'dryer',
+  WASHER_DRYER: 'washer-dryer',
 } as const
 export const MACHINE_STATUS = {
   ACTIVE: 'active',
@@ -13,23 +13,46 @@ export const MACHINE_STATUS = {
 } as const
 export const MACHINE_STATUS_CATALOG: IMachineEstatusCatalog = {
   active: {
+    id: 1,
     label: 'Activo',
-    classChip: `text-white bg-status-${ORDER_STATUS_TYPE.READY}`,
-    class: `bg-status-${ORDER_STATUS_TYPE.READY}-bg text-status-${ORDER_STATUS_TYPE.READY}`,
+    description: 'Disponible para nuevo ciclo',
   },
   running: {
+    id: 2,
     label: 'En ciclo',
-    classChip: `text-white bg-status-${ORDER_STATUS_TYPE['IN-PROCESS']}`,
-    class: `bg-status-${ORDER_STATUS_TYPE['IN-PROCESS']}-bg text-status-${ORDER_STATUS_TYPE['IN-PROCESS']}`,
+    description: 'Ciclo en curso',
   },
   maintenance: {
+    id: 3,
     label: 'Mantenimiento',
-    classChip: `text-white bg-status-${ORDER_STATUS_TYPE.PENDING}`,
-    class: `bg-status-${ORDER_STATUS_TYPE.PENDING}-bg text-status-${ORDER_STATUS_TYPE.PENDING}`,
+    description: 'Revisión o reparación en curso',
   },
   'out-of-service': {
+    id: 4,
     label: 'Fuera de servicio',
-    classChip: `text-white bg-status-${ORDER_STATUS_TYPE.CANCELED}`,
-    class: `bg-status-${ORDER_STATUS_TYPE.CANCELED}-bg text-status-${ORDER_STATUS_TYPE.CANCELED}`,
+    description: 'Requiere reparación, no disponible',
   },
 } as const
+
+export const MACHINE_STATUS_CLASS: IMachineStatusClass = {
+  active: {
+    class: 'text-success bg-success-bg',
+    dot: 'bg-success',
+    messageIconCard: 'text-success fill-success ',
+  },
+  running: {
+    class: 'text-info bg-info-bg',
+    dot: 'bg-info',
+    messageIconCard: 'text-info fill-info ',
+  },
+  maintenance: {
+    class: 'text-warning bg-warning-bg',
+    dot: 'bg-warning',
+    messageIconCard: 'text-warning fill-warning ',
+  },
+  'out-of-service': {
+    class: 'text-error bg-error-bg',
+    dot: 'bg-error',
+    messageIconCard: 'text-error fill-error ',
+  },
+}

@@ -1,16 +1,21 @@
 import { defineStore } from 'pinia'
-import { machineService } from '~/services/machine'
+import { MACHINE_STATUS_CATALOG } from '~/const/machine.const'
+import { MachineService } from '~/services/machine'
 import type { IMachine } from '~/types/machine.type'
 
 export const useMachineStore = defineStore('machine', () => {
+  const machineService = MachineService()
   const machines = ref<IMachine[]>([])
   const peding = ref<boolean>(false)
 
   async function fetchMachines() {
     peding.value = true
     try {
-      const data = await machineService.getMachines()
-      machines.value = data
+      const data: IMachine[] = await machineService.getMachines()
+      machines.value = data.map((machine: IMachine) => ({
+        ...machine,
+        Status: MACHINE_STATUS_CATALOG[machine.status] || null,
+      }))
       return data
     } catch (error) {
       console.error('Error fetching machines:', error)
