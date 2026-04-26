@@ -13,7 +13,7 @@
 
   definePageMeta({ title: 'Pedidos' })
 
-  const { open: openModal } = useModal()
+  const { openModal } = useModal()
   const orderStore = useOrderStore()
   const { orders } = storeToRefs(orderStore)
   await useAsyncData('orders', () => orderStore.fetchOrders())

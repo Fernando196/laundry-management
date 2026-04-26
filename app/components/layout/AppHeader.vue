@@ -3,7 +3,7 @@
   import MapIcon from '../common/MapIcon/MapIcon.vue'
   import OrderFormModal from '../orders/OrderFormModal.vue'
 
-  const { open: openModal } = useModal()
+  const { openModal } = useModal()
   const handleAddOrder = async () => {
     await openModal<IOrder>(OrderFormModal)
   }

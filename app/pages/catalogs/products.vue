@@ -8,7 +8,7 @@
   import type { IProduct } from '~/types/products.type'
   import type { TableColumn } from '~/types/table.type'
 
-  const { open: openModal } = useModal()
+  const { openModal } = useModal()
   const route = useRoute()
   const menuStore = useMenuStore()
   const name = route.params.name as string
