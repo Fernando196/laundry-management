@@ -21,7 +21,6 @@
     serialNumber: props.machine?.serialNumber ?? '',
     capacityKg: props.machine?.capacityKg ?? undefined,
     location: props.machine?.location ?? '',
-    color: props.machine?.color ?? '',
     status: props.machine?.status ?? MACHINE_STATUS.ACTIVE,
     timeCycle: props.machine?.timeCycle ?? 45,
     buyDate: props.machine?.buyDate ?? '',
@@ -89,14 +88,6 @@
         label="Número de serie"
         type="text"
         placeholder="Ej. LG-2021-001"
-        class="col-span-6"
-      />
-      <InputWrapper
-        id="machine-form-modal-color"
-        v-model="form.color"
-        label="Color"
-        type="text"
-        placeholder="Ej. Blanco"
         class="col-span-6"
       />
 
