@@ -4,17 +4,21 @@
   import TableToolbar from '~/components/ui/TableToolbar.vue'
   import DataTable from '~/components/ui/DataTable.vue'
   import MachineFormModal from '~/components/machine-control/MachineFormModal.vue'
-  import { MACHINE_STATUS_CATALOG, MACHINE_TYPES } from '~/const/machine.const'
+  import {
+    MACHINE_STATUS_CATALOG,
+    MACHINE_STATUS_CLASS,
+    MACHINE_TYPES,
+  } from '~/const/machine.const'
   import { useMachineStore } from '~/store/machine.store'
   import MapIcon from '~/components/common/MapIcon/MapIcon.vue'
   import ConfirmModal from '~/components/common/Modal/ConfirmModal.vue'
 
   const machineStore = useMachineStore()
-  const { open: openModal } = useModal()
+  const { openModal } = useModal()
 
   await useAsyncData('machines', () => machineStore.fetchMachines())
 
-  const columns: TableColumn[] = [
+  const columns: TableColumn<IMachine>[] = [
     { key: 'name', label: 'Nombre' },
     { key: 'type', label: 'Tipo', width: '110px' },
     { key: 'brand', label: 'Marca', width: '110px' },
@@ -82,7 +86,7 @@
       <template #cell-status="{ value }">
         <span
           class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium"
-          :class="MACHINE_STATUS_CATALOG[value as keyof typeof MACHINE_STATUS_CATALOG]?.class ?? ''"
+          :class="MACHINE_STATUS_CLASS[value as keyof typeof MACHINE_STATUS_CATALOG]?.class ?? ''"
         >
           {{ MACHINE_STATUS_CATALOG[value as keyof typeof MACHINE_STATUS_CATALOG]?.label ?? value }}
         </span>
