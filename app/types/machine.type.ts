@@ -26,8 +26,11 @@ export interface IMachine {
   updatedBy?: string
   image?: string
 
-  Status: IMachineStatus
-  Brand: IMachineBrand
+  Status?: IMachineStatus
+  Brand?: IMachineBrand
+
+  cycleStartTime?: string
+  cycleDuration?: number
 }
 
 export interface IMachineBrand {
