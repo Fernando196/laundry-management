@@ -27,6 +27,8 @@
     [CAT_ICONS.MENU]: defineAsyncComponent(() => import('./icons/MenuIcon.vue')),
     [CAT_ICONS.LABEL]: defineAsyncComponent(() => import('./icons/LabelIcon.vue')),
     [CAT_ICONS.ALERT]: defineAsyncComponent(() => import('./icons/AlertIcon.vue')),
+    [CAT_ICONS.SQUARE]: defineAsyncComponent(() => import('./icons/SquareIcon.vue')),
+    [CAT_ICONS.PLAY]: defineAsyncComponent(() => import('./icons/PlayIcon.vue')),
   }
   defineProps<{
     name: Icons

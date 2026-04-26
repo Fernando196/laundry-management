@@ -23,4 +23,6 @@ export const CAT_ICONS = {
   MENU: 'menu',
   LABEL: 'label',
   ALERT: 'alert',
+  SQUARE: 'square',
+  PLAY: 'play',
 } as const
