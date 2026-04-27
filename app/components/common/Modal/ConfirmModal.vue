@@ -20,7 +20,7 @@
     <header class="flex shrink-0 items-center justify-between rounded-t-2xl bg-white p-5 font-bold">
       <h2 class="text-[16px] font-semibold">{{ title }}</h2>
       <button class="h-6 w-6 cursor-pointer" @click="$emit('close')">
-        <MapIcon name="close" class="stroke-muted fill-none" />
+        <MapIcon name="close" class="fill-muted h-4 w-4" />
       </button>
     </header>
 
