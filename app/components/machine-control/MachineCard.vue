@@ -1,14 +1,17 @@
 <script setup lang="ts">
-  import type { IMachine } from '~/types/machine.type'
+  import type { IMachine, IMachineStatusType } from '~/types/machine.type'
   import { MACHINE_STATUS, MACHINE_STATUS_CLASS } from '~/const/machine.const'
   import MapIcon from '../common/MapIcon/MapIcon.vue'
   import type { Icons } from '~/types/icons.type'
   import MachineCycleModal from './MachineCycleModal.vue'
+  import { useMachineStore } from '~/store/machine.store'
+  import MachineStatusModal from './MachineStatusModal.vue'
 
   const props = defineProps<{
     machine: IMachine
   }>()
 
+  const machineStore = useMachineStore()
   const { openModal } = useModal()
   const emit = defineEmits<{ 'update:machine': [machine: IMachine] }>()
 
@@ -41,26 +44,36 @@
     }
   })
 
-  const handleChangeState = async () => {
-    if (props.machine.status === MACHINE_STATUS.ACTIVE) {
+  const handleChangeState = async (manual: boolean = false) => {
+    const updateMachine: IMachine = {
+      ...props.machine,
+    }
+
+    if (manual) {
+      const respone = await openModal<{ status: IMachineStatusType; observations: string } | null>(
+        MachineStatusModal,
+        {
+          status: props.machine.status,
+        }
+      )
+      if (!respone) return
+      updateMachine.status = respone.status
+    } else if (props.machine.status === MACHINE_STATUS.ACTIVE) {
       const response = await openModal(MachineCycleModal, {
         machine: props.machine,
       })
       if (!response) return
-      emit('update:machine', {
-        ...props.machine,
-        status: MACHINE_STATUS.RUNNING,
-        cycleStartTime: new Date().toISOString(),
-        cycleDuration: 30 * 60 * 1000, // 30 minutos
-      })
+      updateMachine.status = MACHINE_STATUS.RUNNING
+      updateMachine.cycleStartTime = new Date().toISOString()
+      updateMachine.cycleDuration = 30 * 60 * 1000
     } else if (props.machine.status === MACHINE_STATUS.RUNNING) {
-      emit('update:machine', {
-        ...props.machine,
-        status: MACHINE_STATUS.ACTIVE,
-        cycleStartTime: undefined,
-        cycleDuration: undefined,
-      })
+      updateMachine.status = MACHINE_STATUS.ACTIVE
+      delete updateMachine.cycleStartTime
+      delete updateMachine.cycleDuration
     }
+
+    await machineStore.updateMachine(updateMachine)
+    emit('update:machine', updateMachine)
   }
 
   const cycleTime = computed(() => {
@@ -82,7 +95,6 @@
 
     const elapsed = Date.now() - new Date(props.machine.cycleStartTime).getTime()
     return Math.min(100, (elapsed / props.machine.cycleDuration) * 100)
-    return 0
   })
 </script>
 <template>
@@ -121,16 +133,18 @@
         <span class="text-xs">{{ errorMachine.message }}</span>
       </div>
       <div v-else-if="machine.status === MACHINE_STATUS.RUNNING" class="mt-2">
-        <div class="h-2 w-full rounded-full bg-gray-200">
-          <div
-            class="bg-primary h-full rounded-full transition-all"
-            :style="{ width: progress + '%' }"
-          />
-        </div>
-        <div class="text-muted mt-1 flex justify-between font-mono text-[11px]">
-          <span>{{ progress.toFixed(0) }}%</span>
-          <span>{{ cycleTime }}m restantes</span>
-        </div>
+        <ClientOnly>
+          <div class="h-2 w-full rounded-full bg-gray-200">
+            <div
+              class="bg-primary h-full rounded-full transition-all"
+              :style="{ width: progress + '%' }"
+            />
+          </div>
+          <div class="text-muted mt-1 flex justify-between font-mono text-[11px]">
+            <span>{{ progress.toFixed(0) }}%</span>
+            <span>{{ cycleTime || 0 }}m restantes</span>
+          </div>
+        </ClientOnly>
       </div>
     </div>
     <div class="flex gap-2 px-4 pb-3.5">
@@ -138,7 +152,7 @@
         v-if="!errorMachine"
         class="btn btn-sm flex-1 justify-center"
         :class="machine.status === MACHINE_STATUS.RUNNING ? '' : 'btn-primary'"
-        @click="handleChangeState"
+        @click="handleChangeState(false)"
       >
         <MapIcon
           v-if="machine.status === MACHINE_STATUS.RUNNING"
@@ -147,7 +161,11 @@
         />
         {{ labelStatus }}
       </button>
-      <button class="btn btn-sm flex-1 justify-center" :class="errorMachine ? 'btn-primary' : ''">
+      <button
+        class="btn btn-sm flex-1 justify-center"
+        :class="errorMachine ? 'btn-primary' : ''"
+        @click="handleChangeState(true)"
+      >
         Cambiar estado
       </button>
     </div>
