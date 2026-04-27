@@ -10,11 +10,11 @@
     machine: IMachine
   }
   defineProps<Props>()
-  const orderSelected = ref<number>(0)
   const { close } = useModal()
   const orderStore = useOrderStore()
   await useAsyncData('orders', () => orderStore.fetchOrders())
   const orders = computed(() => orderStore.orders)
+  const orderSelected = ref<number>(orders.value.length > 0 ? orders.value[0]!.id! : 0)
 
   const ordersPending = computed(() =>
     orders.value
