@@ -184,16 +184,19 @@
       "completedAt": "",
       "receivedAt": "Mon Apr 27 2026 09:40:21 GMT-0500 (Central Daylight Time)",
       "id": 2
+    },
+    {
+      "status": "pending",
+      "service": "wash",
+      "customerName": "pruebas",
+      "amount": 100,
+      "createdAt": "2026-04-27T15:51:02.496Z",
+      "completedAt": "",
+      "receivedAt": "Mon Apr 27 2026 10:50:22 GMT-0500 (Central Daylight Time)",
+      "id": 3
     }
   ],
   "order-products": [
-    {
-      "orderId": 1,
-      "productId": 2,
-      "quantity": "2",
-      "totalPrice": 130,
-      "id": 1
-    },
     {
       "orderId": 2,
       "productId": 1,
