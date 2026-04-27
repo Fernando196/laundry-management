@@ -1,6 +1,6 @@
 import { ORDER_SERVICE_TYPE_CATALOG, ORDER_STATUS_CATALOG } from '~/const/orders.const'
 import { OrderService } from '~/services/orders'
-import type { IOrder, IOrderProduct, IOrderResponse, IOrderServiceType } from '~/types/order.type'
+import type { IOrder, IOrderProduct, IOrderResponse } from '~/types/order.type'
 import { useProductStore } from './product.store'
 
 export const useOrderStore = defineStore('orders', () => {
@@ -11,6 +11,7 @@ export const useOrderStore = defineStore('orders', () => {
   const products = computed(() => productStore.products)
 
   async function fetchOrders() {
+    if (orders.value.length > 0) return orders.value
     pending.value = true
     try {
       const data: IOrderResponse[] = <IOrderResponse[]>await orderService.getOrders()
@@ -92,9 +93,7 @@ export const useOrderStore = defineStore('orders', () => {
   const calculateOrderAmount = (order: IOrder): number => {
     const productsAmount =
       order.OrderProducts?.reduce((acc, curr) => acc + (curr.totalPrice || 0), 0) || 0
-    const serviceAmount =
-      ORDER_SERVICE_TYPE_CATALOG[order.service as IOrderServiceType]?.serviceCost *
-        (order.quantity || 0) || 0
+    const serviceAmount = ORDER_SERVICE_TYPE_CATALOG[order.service].serviceCost
     return productsAmount + serviceAmount
   }
 

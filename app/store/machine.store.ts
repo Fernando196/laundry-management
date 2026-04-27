@@ -9,6 +9,7 @@ export const useMachineStore = defineStore('machine', () => {
   const peding = ref<boolean>(false)
 
   async function fetchMachines() {
+    if (machines.value.length > 0) return machines.value
     peding.value = true
     try {
       const data: IMachine[] = await machineService.getMachines()
