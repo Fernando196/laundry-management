@@ -39,8 +39,8 @@
 
   async function handleDelete(row: Record<string, unknown>) {
     const result = await openModal(ConfirmModal, {
-      title: 'Usuario a eliminar',
-      description: '¿Estás seguro de que deseas eliminar este usuario?',
+      title: 'Eliminar ' + row.name,
+      message: '¿Estás seguro de que deseas eliminar este usuario?',
       confirmText: 'Eliminar',
     })
     if (!result) return
