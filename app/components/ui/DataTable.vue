@@ -1,9 +1,9 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="T extends Record<string, unknown>">
   import type { TableColumn } from '~/types/table.type'
 
   interface Props {
-    columns: TableColumn[]
-    rows: Record<string, unknown>[]
+    columns: TableColumn<T>[]
+    rows: T[]
     emptyMessage?: string
   }
 
