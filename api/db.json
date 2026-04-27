@@ -210,18 +210,28 @@
       "role": "admin",
       "active": true,
       "createdAt": "2024-01-01T00:00:00.000Z"
+    },
+    {
+      "id": 2,
+      "name": "fernando morales ",
+      "email": "fm@hotmail.com",
+      "role": "admin",
+      "active": false,
+      "createdAt": "2026-04-27T15:27:26.577Z"
     }
   ],
   "user-role": [
     {
       "id": 1,
       "role": "admin",
-      "description": "Usuario con acceso completo a todas las funciones del sistema."
+      "description": "Usuario con acceso completo a todas las funciones del sistema.",
+      "label": "Administrador"
     },
     {
       "id": 2,
       "role": "employee",
-      "description": "Usuario con acceso limitado a funciones operativas, como gestión de órdenes y máquinas."
+      "description": "Usuario con acceso limitado a funciones operativas, como gestión de órdenes y máquinas.",
+      "label": "Empleado"
     }
   ],
   "products": [
