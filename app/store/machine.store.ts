@@ -33,7 +33,9 @@ export const useMachineStore = defineStore('machine', () => {
   async function updateMachine(updated: IMachine) {
     const updatedMachine = await machineService.putMachine(updated.id, updated)
     const idx = machines.value.findIndex((m) => m.id === updatedMachine.id)
-    if (idx !== -1) machines.value[idx] = updatedMachine
+    if (idx === -1) return
+    machines.value[idx] = updatedMachine
+    machines.value[idx].Status = MACHINE_STATUS_CATALOG[updatedMachine.status] || null
   }
 
   async function deleteMachine(id: number) {
