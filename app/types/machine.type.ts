@@ -41,6 +41,6 @@ export interface IMachineBrand {
 export type IMachineStatus = { id: number; label: string; description: string }
 export type IMachineStatusClass = Record<
   IMachineStatusType,
-  { class: string; dot: string; messageIconCard: string }
+  { class: string; dot: string; messageIconCard: string; chip: string }
 >
 export type IMachineEstatusCatalog = Record<IMachineStatusType, IMachineStatus>

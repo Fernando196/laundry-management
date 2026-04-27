@@ -39,20 +39,24 @@ export const MACHINE_STATUS_CLASS: IMachineStatusClass = {
     class: 'text-success bg-success-bg',
     dot: 'bg-success',
     messageIconCard: 'text-success fill-success ',
+    chip: 'badge-ready',
   },
   running: {
     class: 'text-info bg-info-bg',
     dot: 'bg-info',
     messageIconCard: 'text-info fill-info ',
+    chip: 'badge-in-process',
   },
   maintenance: {
     class: 'text-warning bg-warning-bg',
     dot: 'bg-warning',
     messageIconCard: 'text-warning fill-warning ',
+    chip: 'badge-pending',
   },
   'out-of-service': {
     class: 'text-error bg-error-bg',
     dot: 'bg-error',
     messageIconCard: 'text-error fill-error ',
+    chip: 'badge-canceled',
   },
 }
