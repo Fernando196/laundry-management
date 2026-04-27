@@ -36,7 +36,7 @@
         />
       </template>
       <template #bottom>
-        <MachineFilterTabs v-model="activeFilter" :machines="machines" />
+        <MachineFilterTabs v-model="activeFilter" :machines="machineStore.machines" />
       </template>
     </PageHeader>
     <div
