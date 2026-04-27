@@ -9,13 +9,21 @@
 
   const machineStore = useMachineStore()
   const { pending } = await useAsyncData('machines', () => machineStore.fetchMachines())
-  const machines = computed(() => machineStore.machines)
   const search = ref('')
   const activeFilter = ref<IMachineFilterTab>('all')
+  const machines = computed(() => {
+    return machineStore.machines.filter((machine) => {
+      const matchesSearch =
+        machine.name.toLowerCase().includes(search.value.toLowerCase()) ||
+        machine.status.toLowerCase().includes(search.value.toLowerCase())
+      const matchesFilter = activeFilter.value === 'all' || machine.status === activeFilter.value
+      return matchesSearch && matchesFilter
+    })
+  })
 </script>
 
 <template>
-  <div class="flex h-full w-full flex-col overflow-auto p-4">
+  <div class="">
     <PageHeader
       title="Control de máquinas"
       :subtitle="`Monitoreo en tiempo real - ${machines.length} máquinas`"
