@@ -21,7 +21,11 @@
             :style="col.width ? `width: ${col.width}` : ''"
             :class="[
               'px-4 py-3 font-semibold text-neutral-700',
-              col.align === 'center' ? 'text-center' : col.align === 'right' ? 'text-right' : 'text-left',
+              col.align === 'center'
+                ? 'text-center'
+                : col.align === 'right'
+                  ? 'text-right'
+                  : 'text-left',
             ]"
           >
             {{ col.label }}
@@ -45,10 +49,14 @@
             :key="col.key"
             :class="[
               'px-4 py-3 text-neutral-700',
-              col.align === 'center' ? 'text-center' : col.align === 'right' ? 'text-right' : 'text-left',
+              col.align === 'center'
+                ? 'text-center'
+                : col.align === 'right'
+                  ? 'text-right'
+                  : 'text-left',
             ]"
           >
-            <slot :name="`cell-${col.key}`" :row="row" :value="row[col.key]">
+            <slot :name="`cell-${col.key as any}`" :row="row" :value="row[col.key]">
               {{ row[col.key] ?? '—' }}
             </slot>
           </td>
