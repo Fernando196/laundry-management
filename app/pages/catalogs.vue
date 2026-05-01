@@ -1,5 +1,7 @@
 <script setup lang="ts">
   import ProductsTable from '~/components/catalogs/ProductsTable.vue'
+  import RolesTable from '~/components/catalogs/RolesTable.vue'
+  import BrandsTable from '~/components/catalogs/BrandsTable.vue'
   import MapIcon from '~/components/common/MapIcon/MapIcon.vue'
   import PageHeader from '~/components/ui/PageHeader.vue'
 
@@ -8,7 +10,6 @@
     { id: 'products', label: 'Productos', singular: 'producto' },
     { id: 'roles', label: 'Roles', singular: 'rol' },
     { id: 'brand', label: 'Marcas', singular: 'marca' },
-    { id: '' },
   ]
   const activeTab = computed(() => tabs.find((t) => t.id === selectedTab.value))
 
@@ -39,5 +40,7 @@
     </div>
 
     <ProductsTable v-if="selectedTab === 'products'" />
+    <RolesTable v-else-if="selectedTab === 'roles'" />
+    <BrandsTable v-else-if="selectedTab === 'brand'" />
   </div>
 </template>
