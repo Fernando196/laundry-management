@@ -235,6 +235,12 @@
       "role": "employee",
       "description": "Usuario con acceso limitado a funciones operativas, como gestión de órdenes y máquinas.",
       "label": "Empleado"
+    },
+    {
+      "label": "Pruebas",
+      "role": "AD-123",
+      "description": "Pruebas",
+      "id": 3
     }
   ],
   "products": [
