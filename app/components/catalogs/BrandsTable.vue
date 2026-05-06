@@ -2,6 +2,7 @@
   import type { IMachineBrand } from '~/types/machine.type'
   import type { TableColumn } from '~/types/table.type'
   import ConfirmModal from '../common/Modal/ConfirmModal.vue'
+  import BrandFormModal from './BrandFormModal.vue'
   import { useCatalogStore } from '~/store/catalog.store'
   import DataTable from '../ui/DataTable.vue'
   import MapIcon from '../common/MapIcon/MapIcon.vue'
@@ -16,7 +17,13 @@
     { key: 'name', label: 'Nombre' },
   ]
 
-  async function handleEdit(_row: Record<string, unknown>) {}
+  async function handleEdit(row: Record<string, unknown>) {
+    const brand = brands.value.find((b) => b.id === row.id)
+    if (!brand) return
+    const result = await openModal(BrandFormModal, { brand })
+    if (!result) return
+    catalogStore.updateBrand(brand.id, result)
+  }
 
   async function handleDelete(row: Record<string, unknown>) {
     const result = await openModal(ConfirmModal, {

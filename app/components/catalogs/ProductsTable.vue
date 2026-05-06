@@ -2,6 +2,7 @@
   import type { IProduct } from '~/types/products.type'
   import type { TableColumn } from '~/types/table.type'
   import ConfirmModal from '../common/Modal/ConfirmModal.vue'
+  import ProductFormModal from './ProductFormModal.vue'
   import { useProductStore } from '~/store/product.store'
   import DataTable from '../ui/DataTable.vue'
   import MapIcon from '../common/MapIcon/MapIcon.vue'
@@ -22,11 +23,11 @@
   ]
 
   async function handleEdit(row: Record<string, unknown>) {
-    const user = products.value.find((u) => u.id === row.id)
-    if (!user) return
-    // const result = await openModal(Prod, { user })
-    // if (!result) return
-    // products.value = products.value.map((u) => (u.id === user.id ? { ...u, ...result } : u))
+    const product = products.value.find((p) => p.id === row.id)
+    if (!product) return
+    const result = await openModal(ProductFormModal, { product })
+    if (!result) return
+    productStore.updatedProduct(product.id as number, { ...product, ...result })
   }
 
   async function handleDelete(row: Record<string, unknown>) {
@@ -37,7 +38,6 @@
     })
     if (!result) return
     productStore.deleteProduct(row.id as number)
-    productStore.products = products.value.filter((u) => u.id !== row.id)
   }
 </script>
 <template>

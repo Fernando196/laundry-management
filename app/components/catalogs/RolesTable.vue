@@ -2,6 +2,7 @@
   import type { IUserRole } from '~/types/user.type'
   import type { TableColumn } from '~/types/table.type'
   import ConfirmModal from '../common/Modal/ConfirmModal.vue'
+  import RoleFormModal from './RoleFormModal.vue'
   import { useCatalogStore } from '~/store/catalog.store'
   import DataTable from '../ui/DataTable.vue'
   import MapIcon from '../common/MapIcon/MapIcon.vue'
@@ -17,7 +18,13 @@
     { key: 'description', label: 'Descripción' },
   ]
 
-  async function handleEdit(_row: Record<string, unknown>) {}
+  async function handleEdit(row: Record<string, unknown>) {
+    const role = roles.value.find((r) => r.id === row.id)
+    if (!role) return
+    const result = await openModal(RoleFormModal, { role })
+    if (!result) return
+    catalogStore.updateRole(role.id, result)
+  }
 
   async function handleDelete(row: Record<string, unknown>) {
     const result = await openModal(ConfirmModal, {
