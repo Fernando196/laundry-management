@@ -24,7 +24,7 @@ const chartData = computed(() => ({
     {
       label: 'Pedidos',
       data: props.data,
-      backgroundColor: '#4F46E5',
+      backgroundColor: '#007b6c',
       borderRadius: 8,
       borderSkipped: false,
     },

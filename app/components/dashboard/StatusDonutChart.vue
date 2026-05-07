@@ -56,7 +56,7 @@
   <div class="flex flex-col rounded-2xl border border-neutral-100 bg-white p-5 shadow-sm">
     <p class="mb-1 text-sm font-semibold text-neutral-900">Estado de pedidos</p>
     <p class="mb-4 text-xs text-neutral-400">{{ total }} pedidos en total</p>
-    <div class="relative flex-1" style="min-height: 220px">
+    <div class="relative" style="height: 200px">
       <Doughnut :data="chartData" :options="chartOptions" />
     </div>
   </div>

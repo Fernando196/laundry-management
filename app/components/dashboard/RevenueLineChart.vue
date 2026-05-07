@@ -25,8 +25,8 @@ const chartData = computed(() => ({
     {
       label: 'Ingresos',
       data: props.data,
-      borderColor: '#4F46E5',
-      backgroundColor: 'rgba(79,70,229,0.08)',
+      borderColor: '#007b6c',
+      backgroundColor: 'rgba(0,123,108,0.08)',
       borderWidth: 2,
       pointRadius: 0,
       pointHoverRadius: 5,
