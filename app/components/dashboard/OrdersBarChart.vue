@@ -18,6 +18,8 @@ interface Props {
 
 const props = defineProps<Props>()
 
+const weekTotal = computed(() => props.data.reduce((a, b) => a + b, 0))
+
 const chartData = computed(() => ({
   labels: props.labels,
   datasets: [
@@ -59,7 +61,16 @@ const chartOptions = {
 
 <template>
   <div class="flex h-full flex-col rounded-2xl border border-neutral-100 bg-white p-5 shadow-sm">
-    <p class="mb-4 text-sm font-semibold text-neutral-900">Pedidos — últimos 7 días</p>
+    <div class="mb-4 flex items-start justify-between">
+      <div>
+        <p class="text-sm font-semibold text-neutral-900">Pedidos</p>
+        <p class="text-xs text-neutral-400">Últimos 7 días</p>
+      </div>
+      <div class="text-right">
+        <p class="text-xl font-bold text-neutral-900">{{ weekTotal }}</p>
+        <p class="text-xs text-neutral-400">esta semana</p>
+      </div>
+    </div>
     <div class="min-h-0 flex-1">
       <Bar :data="chartData" :options="chartOptions" />
     </div>

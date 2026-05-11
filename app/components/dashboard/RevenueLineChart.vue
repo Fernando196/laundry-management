@@ -19,18 +19,20 @@ interface Props {
 
 const props = defineProps<Props>()
 
+const monthTotal = computed(() => props.data.reduce((a, b) => a + b, 0))
+
 const chartData = computed(() => ({
   labels: props.labels,
   datasets: [
     {
       label: 'Ingresos',
       data: props.data,
-      borderColor: '#007b6c',
-      backgroundColor: 'rgba(0,123,108,0.08)',
+      borderColor: '#7c3aed',
+      backgroundColor: 'rgba(124,58,237,0.07)',
       borderWidth: 2,
       pointRadius: 0,
       pointHoverRadius: 5,
-      pointHoverBackgroundColor: '#4F46E5',
+      pointHoverBackgroundColor: '#7c3aed',
       tension: 0.4,
       fill: true,
     },
@@ -70,7 +72,16 @@ const chartOptions = {
 
 <template>
   <div class="flex h-full flex-col rounded-2xl border border-neutral-100 bg-white p-5 shadow-sm">
-    <p class="mb-4 text-sm font-semibold text-neutral-900">Ingresos — últimos 30 días</p>
+    <div class="mb-4 flex items-start justify-between">
+      <div>
+        <p class="text-sm font-semibold text-neutral-900">Ingresos</p>
+        <p class="text-xs text-neutral-400">Últimos 30 días</p>
+      </div>
+      <div class="text-right">
+        <p class="text-xl font-bold text-secondary">${{ monthTotal.toLocaleString('es-MX') }}</p>
+        <p class="text-xs text-neutral-400">del mes</p>
+      </div>
+    </div>
     <div class="min-h-0 flex-1">
       <Line :data="chartData" :options="chartOptions" />
     </div>

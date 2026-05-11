@@ -18,7 +18,9 @@ const accentMap = {
 </script>
 
 <template>
-  <div class="relative overflow-hidden rounded-xl border border-neutral-100 bg-white shadow-sm">
+  <div
+    class="group relative overflow-hidden rounded-xl border border-neutral-100 bg-white shadow-sm transition-shadow duration-200 hover:shadow-md"
+  >
     <div :class="accentMap[accent].bar" class="absolute inset-y-0 left-0 w-1" />
     <div class="py-4 pr-4 pl-5">
       <div class="flex items-start justify-between gap-3">
@@ -26,12 +28,12 @@ const accentMap = {
           <p class="truncate text-[11px] font-medium tracking-wider text-neutral-400 uppercase">
             {{ title }}
           </p>
-          <p class="mt-1 text-2xl font-bold leading-tight text-neutral-900">{{ value }}</p>
+          <p class="mt-1.5 text-2xl font-bold leading-tight text-neutral-900">{{ value }}</p>
           <p v-if="subtitle" class="mt-1 text-xs text-neutral-400">{{ subtitle }}</p>
         </div>
         <div
           :class="[accentMap[accent].bg, accentMap[accent].icon]"
-          class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg"
+          class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl transition-transform duration-200 group-hover:scale-110"
         >
           <slot name="icon" />
         </div>
