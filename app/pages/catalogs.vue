@@ -22,25 +22,23 @@
   const catalogStore = useCatalogStore()
   const productStore = useProductStore()
 
+  const TAB_ACTIONS: Record<string, { modal: Component; add: (r: any) => void }> = {
+    brand: { modal: BrandFormModal, add: (r) => catalogStore.addBrand(r) },
+    roles: { modal: RoleFormModal, add: (r) => catalogStore.addRole(r) },
+    products: { modal: ProductFormModal, add: (r) => productStore.addProduct(r) },
+  }
+
   const handleCreate = async () => {
-    if (selectedTab.value === 'brand') {
-      const result = await openModal(BrandFormModal)
-      if (!result) return
-      catalogStore.addBrand(result)
-    } else if (selectedTab.value === 'roles') {
-      const result = await openModal(RoleFormModal)
-      if (!result) return
-      catalogStore.addRole(result)
-    } else if (selectedTab.value === 'products') {
-      const result = await openModal(ProductFormModal)
-      if (!result) return
-      productStore.addProduct(result)
-    }
+    const config = TAB_ACTIONS[selectedTab.value]
+    if (!config) return
+    const result = await openModal(config.modal)
+    if (!result) return
+    config.add(result)
   }
 </script>
 
 <template>
-  <div>
+  <div class="w-full h-full overflow-auto">
     <PageHeader title="Catálogos" subtitle="Datos maestros del sistema">
       <template #right>
         <button class="btn btn-primary" @click="handleCreate">
